@@ -1,234 +1,226 @@
-# TEFA Canning Transaction & Monitoring System
+<div align="center">
+  <img src="public/images/politeknik_logo_red.png" alt="TEFA Canning SIP" width="80">
+  <h1>TEFA Canning SIP</h1>
+  <p><strong>Teaching Factory Sardine Canning Transaction & Monitoring System</strong></p>
+  <p>Sistem transaksi dan monitoring pre-order sarden kaleng berbasis batch untuk Teaching Factory di Politeknik Negeri Jember</p>
 
-Sistem transaksi dan monitoring berbasis web untuk Teaching Factory (TEFA) Canning di Politeknik Negeri Jember. Mengelola pre-order sarden kaleng berbasis batch, dengan panel admin dan customer terpisah.
+  <br/>
 
-## Tech Stack
+  <img src="https://img.shields.io/badge/PHP-8.3-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
+  <img src="https://img.shields.io/badge/Laravel-10.50-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
+  <img src="https://img.shields.io/badge/FilamentPHP-3.x-FDAE4B?style=for-the-badge&logo=filament&logoColor=white" alt="Filament">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3.x-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind">
+  <img src="https://img.shields.io/badge/MariaDB-10.x-003545?style=for-the-badge&logo=mariadb&logoColor=white" alt="MariaDB">
 
-- **Backend:** PHP 8.3 & Laravel 10.50
-- **Frontend:** Tailwind CSS (CDN for public, Filament built-in for admin)
-- **Admin Panel:** FilamentPHP v3 with Filament Shield
-- **Customer Panel:** FilamentPHP v3 (separate panel with customer auth)
-- **Database:** MariaDB (Eloquent Soft Deletes)
-- **PDF:** DomPDF (order reports)
-- **API:** Fonnte API (WhatsApp notifications)
-- **Font:** Inter (Google Fonts via bunny.net CDN)
+  <br/><br/>
 
-## Features
+  <img src="public/images/3_logo_in_1.png" alt="Partner Logos" width="280">
+</div>
 
-### 🏪 Landing Page (`/`)
-- Product catalog (3 varian sarden: Saus Tomat, Asin, Saus Cabai)
-- Dynamic batch news (open batches from database)
-- Google Maps widget in footer (4-column layout)
-- SNI disclaimer section
-- Blade component architecture (`<x-landing.*>`)
-- Responsive, minimalistic red-themed design
+---
+
+## 📋 Deskripsi
+
+**TEFA Canning SIP** adalah sistem informasi berbasis web yang dibangun untuk mendigitalisasi proses transaksi dan monitoring di Teaching Factory (TEFA) pengalengan ikan sarden, Politeknik Negeri Jember. Sistem ini mengadopsi model **Pre-Order Berbasis Batch** yang terintegrasi dengan event kampus, memastikan volume produksi sesuai demand aktual dan mematuhi regulasi sertifikasi SNI.
+
+### 🎯 Tujuan Utama
+- Digitalisasi manajemen pesanan dan data pelanggan
+- Monitoring volume penjualan melalui dashboard visual
+- Automasi pelaporan keuangan (Omzet, Profit, Modal)
+- Role-based access control untuk efisiensi operasional
+- Notifikasi otomatis via WhatsApp (Fonnte API)
+
+---
+
+## ⚡ Tech Stack
+
+| Layer | Teknologi |
+|-------|-----------|
+| **Backend** | PHP 8.3, Laravel 10.50, Eloquent ORM |
+| **Admin & Customer Panel** | FilamentPHP v3, Filament Shield (RBAC) |
+| **Frontend** | Tailwind CSS, DaisyUI, Blade Components |
+| **Database** | MariaDB with Soft Deletes |
+| **Charts** | ApexCharts (Dashboard Visualizations) |
+| **PDF** | DomPDF (Order Reports) |
+| **Notifications** | Fonnte API (WhatsApp) |
+| **Auth** | Dual Guard System (Admin + Customer) |
+| **Audit** | Spatie Activity Log |
+| **Export** | Laravel Excel (Maatwebsite) |
+
+---
+
+## ✨ Fitur Utama
+
+### 🏪 Landing Page
+- Katalog produk 3 varian sarden (Saus Tomat, Asin, Saus Cabai)
+- Berita batch aktif dari database
+- Google Maps widget & SNI disclaimer
+- Responsive red-themed design
 
 ### 👤 Customer Panel (`/customer`)
-- Customer registration (name, email, phone, organization, address)
-- Customer login with separate auth guard
-- **Dashboard widgets:** Welcome card, order summary stats, latest batch info, available products list
-- **Pre-Order page:** Select batch, add products (min 100, max 3000 kaleng), auto-calculate subtotals
-- **Order History:** Table with status badges, pickup codes, PDF download, edit & delete actions (pending only)
-- **Edit Order:** Modify products/quantities on pending orders (batch locked)
-- Red-themed Filament panel with collapsible sidebar
+- Registrasi & login dengan guard terpisah
+- Dashboard: Welcome card, statistik pesanan, batch terbaru, produk tersedia
+- Pre-Order: Pilih batch → tambah produk → auto-calculate
+- Riwayat Pesanan: Status badge, kode pickup, unduh PDF
+- Edit/Hapus pesanan (hanya status pending)
+- Edit Profil (dikunci saat pesanan diproses)
 
 ### 🔧 Admin Panel (`/admin`)
-- **Batch Management:** Create/manage production batches tied to campus events
-- **Order Management:** Full CRUD, pickup validation, PDF download, status workflow
-- **Product Management:** SKU, pricing, stock tracking, image upload (3 core products protected from deletion)
-- **Customer Database:** Persistent records with transaction history
-- **User Management:** CRUD for admin users (Super Admin only), cannot delete super_admin accounts
-- **Dashboard:** Financial stats (revenue, profit, capital) with charts, recent orders table
-- **Role-Based Access:** Superadmin vs Teknisi permissions
-- **Audit Log:** Spatie Activity Log on all models
-- Dark mode with red Polije logo
+- Manajemen Batch (linked ke event kampus)
+- CRUD Pesanan dengan validasi pickup & workflow status
+- Manajemen Produk (3 produk inti dilindungi dari penghapusan)
+- Database Pelanggan persisten
+- Manajemen User (Super Admin only)
+- Dashboard finansial dengan charts
+- Audit Log untuk semua aksi
 
-### 📄 PDF Reports
-- Order report with customer info, batch details, product table, totals
-- Pickup code section
-- Professional A4 layout with TEFA branding
-- Download/stream from admin and customer panel
+### 📄 Laporan PDF
+- Layout profesional A4 dengan branding TEFA
+- Logo Polije di header, 3 logo partner di footer
+- Tabel produk dengan breakdown subtotal per produk
+- Kode pengambilan & informasi batch
 
-## User Roles
+### 📱 WhatsApp Notifications
+- Konfirmasi pesanan otomatis
+- Notifikasi batch siap ambil ke semua pelanggan
 
-### Superadmin (Full Access)
-- Full user management
-- Edit product prices
-- Financial reports access (Omzet, Profit, Modal)
-- Audit log review
-- Restore soft-deleted data
+---
 
-### Teknisi (Operational Access)
-- Update batch status
-- Monitor order volume
-- Validate pickup
-- No financial data or permanent deletion access
+## 👥 Roles & Akses
 
-### Customer (Self-Service)
-- Register/login via `/customer`
-- Place pre-orders during open batches
-- View order history and pickup codes
-- Download order PDF reports
+| Fitur | Super Admin | Teknisi | Customer |
+|-------|:-----------:|:-------:|:--------:|
+| Manajemen User | ✅ | ❌ | ❌ |
+| Edit Harga Produk | ✅ | ❌ | ❌ |
+| Laporan Keuangan | ✅ | ❌ | ❌ |
+| Audit Log | ✅ | ❌ | ❌ |
+| Update Status Batch | ✅ | ✅ | ❌ |
+| Validasi Pickup | ✅ | ✅ | ❌ |
+| Buat Pesanan | ✅ | ✅ | ✅ |
+| Lihat Pesanan Sendiri | ✅ | ✅ | ✅ |
+| Unduh PDF Laporan | ✅ | ✅ | ✅ |
 
-## Installation
+---
 
-### Prerequisites
+## 🚀 Instalasi
 
-- PHP 8.2 or higher
+### Prasyarat
+
+- PHP ≥ 8.2
 - Composer
-- MariaDB or MySQL
-- Node.js & NPM (for frontend build)
+- MariaDB / MySQL
+- Node.js & NPM
 
-### Step 1: Install Dependencies
+### Setup
 
 ```bash
+# 1. Clone repository
+git clone https://github.com/ucilmenangis/tefacanning.git
+cd tefacanning
+
+# 2. Install dependencies
 composer install
 npm install
-```
 
-### Step 2: Environment Configuration
-
-```bash
+# 3. Environment setup
 cp .env.example .env
 php artisan key:generate
+
+# 4. Konfigurasi database di .env
+# DB_DATABASE=tefa_canning_db
+# DB_USERNAME=root
+# DB_PASSWORD=
+
+# 5. Migrasi & seed database
+php artisan migrate --seed
+
+# 6. Buat akun admin
+php artisan make:filament-user
+
+# 7. Build assets & jalankan
+npm run build
+php artisan serve
 ```
 
-Configure your `.env` file:
+### Konfigurasi Tambahan
 
 ```env
-APP_NAME="TEFA Canning System"
-APP_ENV=local
-APP_KEY=base64:your_generated_key
-APP_DEBUG=true
-APP_URL=http://localhost:8000
-
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=tefa_canning_db
-DB_USERNAME=your_db_user
-DB_PASSWORD=your_db_password
-
-# Fonnte API Configuration
+# Fonnte API (WhatsApp Notifications)
 FONNTE_TOKEN=your_fonnte_api_token
+FONNTE_DEVICE=your_device_number
 ```
 
-### Step 3: Database Setup
+---
 
-```bash
-php artisan migrate
-php artisan db:seed
-```
+## 🔗 Akses Aplikasi
 
-### Step 4: Install Filament & Dependencies
+| Halaman | URL |
+|---------|-----|
+| Landing Page | `http://localhost:8000` |
+| Admin Panel | `http://localhost:8000/admin` |
+| Customer Panel | `http://localhost:8000/customer` |
+| Order PDF | `http://localhost:8000/order/{id}/pdf` |
 
-```bash
-# Install Filament Panel
-php artisan filament:install --panels
+---
 
-# Install Filament Shield for role management
-composer require filament/spatie-laravel-permission-plugin
-php artisan filament:install --shield
-
-# Install other required packages
-composer require spatie/laravel-permission
-composer require spatie/laravel-activitylog
-composer require maatwebsite/excel
-composer require barryvdh/laravel-dompdf
-
-# Publish configs
-php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
-php artisan vendor:publish --provider="Spatie\Activitylog\ActivitylogServiceProvider"
-```
-
-### Step 5: Create Admin User
-
-```bash
-php artisan make:filament-user
-```
-
-Follow the prompts to create a Superadmin account.
-
-## Development Commands
-
-```bash
-# Start development server
-php artisan serve
-
-# Build frontend assets
-npm run dev
-
-# Run tests
-php artisan test
-
-# Code formatting
-./vendor/bin/pint
-
-# Clear cache
-php artisan optimize:clear
-```
-
-## Access Points
-
-- **Landing Page:** `http://localhost:8000`
-- **Admin Panel:** `http://localhost:8000/admin`
-- **Customer Panel:** `http://localhost:8000/customer`
-- **Order PDF:** `http://localhost:8000/order/{id}/pdf`
-
-## Project Structure
+## 📁 Struktur Proyek
 
 ```
 app/
 ├── Filament/
 │   ├── Customer/
-│   │   ├── Pages/              # Customer panel (PreOrder, OrderHistory, EditOrder, Dashboard)
-│   │   │   └── Auth/Register.php   # Custom registration form
-│   │   └── Widgets/            # Dashboard widgets (Welcome, OrderSummary, LatestBatch, AvailableProducts)
-│   ├── Resources/              # Admin panel resources (Batch, Customer, Order, Product, User)
-│   └── Widgets/                # Admin dashboard widgets (Stats, RecentOrders)
+│   │   ├── Pages/           # Dashboard, PreOrder, OrderHistory, EditOrder, EditProfile
+│   │   │   └── Auth/        # Custom Registration
+│   │   └── Widgets/         # Welcome, OrderSummary, LatestBatch, AvailableProducts
+│   ├── Resources/           # Batch, Customer, Order, Product, User (Admin)
+│   └── Widgets/             # DashboardStats, RecentOrders (Admin)
 ├── Http/
-│   ├── Controllers/            # OrderPdfController
-│   └── Middleware/             # CustomerPanelMiddleware
-├── Models/                     # Eloquent models with SoftDeletes & LogsActivity
-├── Policies/                   # Authorization policies
-├── Providers/Filament/         # AdminPanelProvider, CustomerPanelProvider
-└── Services/                   # FonnteService
+│   ├── Controllers/         # OrderPdfController
+│   └── Middleware/          # CustomerPanelMiddleware
+├── Models/                  # Eloquent Models (SoftDeletes + ActivityLog)
+├── Providers/Filament/      # AdminPanelProvider, CustomerPanelProvider
+└── Services/                # FonnteService (WhatsApp API)
 
 resources/views/
-├── components/landing/         # Blade components (layout, navbar, footer, product-card)
-├── filament/                   # Brand logos, customer panel views
-├── pdf/                        # Order report PDF template
-└── welcome.blade.php           # Landing page
+├── components/landing/      # Blade Components (layout, navbar, footer, product-card)
+├── filament/customer/       # Customer Panel Views
+├── pdf/                     # Order Report Template
+└── welcome.blade.php        # Landing Page
 ```
 
-## UI Colors
+---
 
-- **Primary:** #DC2626 (Red-600)
-- **Accent:** #EF4444 (Red-500)
-- **Dark:** #991B1B (Red-800)
+## 🎨 Brand Identity
 
-## Security Notes
+| | Warna | Kode |
+|-|-------|------|
+| 🔴 | Primary | `#DC2626` |
+| 🔴 | Accent | `#EF4444` |
+| 🔴 | Dark | `#991B1B` |
 
-- All admin routes are protected by Filament authentication
-- Price editing restricted to Superadmin via Laravel Policies
-- Soft deletes enabled on all major models
-- All sensitive actions logged via Spatie Activity Log
-- Pickup codes generated with cryptographically secure random strings
+Font: **Inter** (Google Fonts via Bunny CDN)
 
-## API Integrations
+---
 
-### Fonnte API (WhatsApp Notifications)
+## 🛡️ Keamanan
 
-**Trigger 1 - Order Confirmation:**
-Sent when admin creates a new order with order details and pickup code.
+- Dual authentication guard (admin & customer)
+- Role-based access control via Filament Shield
+- Edit harga dibatasi Super Admin (Laravel Policy)
+- Soft deletes pada semua model utama
+- Audit trail via Spatie Activity Log
+- API token disimpan di environment variables
+- Pickup code menggunakan cryptographically secure random
+- 3 produk inti dilindungi dari penghapusan
 
-**Trigger 2 - Ready for Pickup:**
-Sent when batch status changes to "Ready for Pickup" to notify all customers.
+---
 
-## License
+## 📝 Lisensi
 
-This project is developed for TEFA Canning Politeknik Negeri Jember.
+Dikembangkan untuk **Teaching Factory Pengalengan Ikan** — Politeknik Negeri Jember.
 
-## Support
+---
 
-For detailed development guidance, see [CLAUDE.md](./CLAUDE.md).
+<div align="center">
+  <sub>Built with ❤️ by TEFA Canning Team — Politeknik Negeri Jember</sub>
+</div>

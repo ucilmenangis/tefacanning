@@ -38,9 +38,11 @@ class EditOrder extends Page implements HasForms
 
     public Order $order;
 
-    public function mount(int $order): void
+    public function mount(Order|int $order): void
     {
-        $this->order = Order::where('id', $order)
+        $orderId = $order instanceof Order ? $order->id : $order;
+
+        $this->order = Order::where('id', $orderId)
             ->where('customer_id', auth('customer')->id())
             ->where('status', 'pending')
             ->firstOrFail();

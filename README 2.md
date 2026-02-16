@@ -1,66 +1,155 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📋 README 2 — Catatan Pengembangan Pribadi
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> ⚠️ File ini TIDAK di-push ke GitHub (sudah ditambahkan di `.gitignore`)
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🔑 Kredensial & Token
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Database
+- **Host:** 127.0.0.1:3306
+- **Database:** tefa_canning_db
+- **Username:** root
+- **Password:** _(kosong)_
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Fonnte API (WhatsApp)
+- **Token:** 3EtBjue3SGQNgC7hiS1a
+- **Device:** 6281358610650
+- **Dashboard:** https://md.fonnte.com
+- ⚠️ **JANGAN** share token ini. Siapapun yang punya token bisa kirim WhatsApp dari device kamu.
+- Jika token bocor, segera regenerate dari dashboard Fonnte.
 
-## Learning Laravel
+### GitHub
+- **Repo:** https://github.com/ucilmenangis/tefacanning
+- **Branch:** main
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Admin Account
+- **URL:** http://localhost:8000/admin
+- **Buat akun:** `php artisan make:filament-user`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 📌 Catatan Teknis Penting
 
-## Laravel Sponsors
+### Dual Auth Guard System
+- **`web`** → User model (admin panel `/admin`)
+- **`customer`** → Customer model (customer panel `/customer`)
+- Config di `config/auth.php`
+- Middleware: `CustomerPanelMiddleware.php`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 3 Produk Inti (Protected)
+SKU yang dilindungi dari penghapusan:
+1. `TEFA-SST-001` — Sarden Saus Tomat
+2. `TEFA-ASN-001` — Sarden Asin
+3. `TEFA-SSC-001` — Sarden Saus Cabai
 
-### Premium Partners
+Dilindungi di:
+- `Product::booted()` → mencegah delete di model level
+- `ProductResource` → hidden delete action di UI
+- Constant: `Product::PROTECTED_SKUS`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Navigation Badge Return Type
+Filament v3 HARUS return `(string)` dari `getNavigationBadge()`, bukan `int`. Jika return int → TypeError.
 
-## Contributing
+### EditOrder Mount Signature
+```php
+// BENAR — Handle Filament route model binding
+public function mount(Order|int $order): void
+{
+    $orderId = $order instanceof Order ? $order->id : $order;
+}
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### PreOrder Price Integrity
+Unit price di-lookup dari database (server-side), TIDAK dari form submission. Mencegah price manipulation.
 
-## Code of Conduct
+### Customer Profile Edit Lock
+Customer TIDAK bisa edit profil jika ada order dengan status `processing` atau `ready`. Ini untuk menjaga konsistensi data di pesanan yang sedang berjalan.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🛠️ Command Cheat Sheet
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+# Development
+php artisan serve                    # Start server
+npm run dev                          # Watch frontend
+npm run build                        # Build untuk production
 
-## License
+# Database
+php artisan migrate                  # Run migrations
+php artisan migrate:fresh --seed     # Reset + seed (HAPUS DATA!)
+php artisan db:seed                  # Seed saja
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Filament
+php artisan make:filament-user       # Buat admin
+php artisan make:filament-resource   # Buat resource baru
+php artisan filament:optimize        # Cache Filament components
+php artisan filament:optimize-clear  # Clear Filament cache
+
+# Cache & Debug
+php artisan optimize:clear           # Clear semua cache
+php artisan route:list               # Lihat semua routes
+php artisan tinker                   # Interactive PHP shell
+
+# Git
+git add . && git commit -m "msg"     # Commit
+git push -u origin main              # Push ke GitHub
+
+# Testing
+php artisan test                     # Run tests
+./vendor/bin/pint                    # Code formatting
+```
+
+---
+
+## 📁 File-file Kunci yang Sering Diedit
+
+| File | Fungsi |
+|------|--------|
+| `app/Providers/Filament/AdminPanelProvider.php` | Konfigurasi panel admin |
+| `app/Providers/Filament/CustomerPanelProvider.php` | Konfigurasi panel customer |
+| `app/Filament/Customer/Pages/PreOrder.php` | Halaman pre-order customer |
+| `app/Filament/Customer/Pages/EditOrder.php` | Edit pesanan pending |
+| `app/Filament/Customer/Pages/EditProfile.php` | Edit profil customer |
+| `app/Services/FonnteService.php` | WhatsApp notification service |
+| `resources/views/pdf/order-report.blade.php` | Template PDF laporan |
+| `resources/views/welcome.blade.php` | Landing page |
+| `resources/views/components/landing/footer.blade.php` | Footer dengan Google Maps |
+| `CLAUDE.md` | Panduan untuk AI assistant |
+
+---
+
+## 🐛 Bug yang Pernah Ditemui & Solusinya
+
+1. **NavigationBadge TypeError** → Return `(string)` bukan `int`
+2. **EditOrder mount() TypeError** → Union type `Order|int` dengan instanceof check
+3. **PreOrder unit_price manipulation** → Server-side price lookup
+4. **Filament brand logo dark mode** → Gunakan `politeknik_logo_red.png`
+5. **Google Maps di footer** → Pindah ke kolom ke-4 grid
+6. **create_file on existing file** → Harus pakai replace_string_in_file
+
+---
+
+## 📅 Timeline Pengembangan
+
+- **Sprint 1:** Setup Laravel + Filament, model & migration, basic CRUD
+- **Sprint 2:** Dashboard widgets, charts, Fonnte API integration
+- **Sprint 3:** Landing page, Blade components, red theme
+- **Sprint 4:** Customer panel, registration, pre-order system
+- **Sprint 5:** Customer dashboard widgets, order history, edit/delete
+- **Sprint 6:** PDF reports, profile editing, code optimization, GitHub deploy
+
+---
+
+## 💡 Ide Pengembangan Selanjutnya
+
+- [ ] QR Code scanning untuk pickup (integrasi mobile)
+- [ ] Payment gateway (Midtrans/Xendit)
+- [ ] Email notifications sebagai fallback
+- [ ] Export laporan ke Excel
+- [ ] Multi-warehouse support
+- [ ] Customer order tracking realtime
+- [ ] Dashboard analytics yang lebih detail
+- [ ] Dark mode untuk landing page
+
