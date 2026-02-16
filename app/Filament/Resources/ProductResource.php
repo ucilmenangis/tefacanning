@@ -77,8 +77,8 @@ class ProductResource extends Resource
                                     ->required()
                                     ->numeric()
                                     ->prefix('Rp')
-                                    ->disabled(fn () => ! auth()->user()?->hasRole('super_admin'))
-                                    ->helperText(fn () => ! auth()->user()?->hasRole('super_admin') ? 'Hanya Superadmin yang dapat mengubah harga' : null),
+                                    ->disabled(fn() => !auth()->user()?->hasRole('super_admin'))
+                                    ->helperText(fn() => !auth()->user()?->hasRole('super_admin') ? 'Hanya Superadmin yang dapat mengubah harga' : null),
                                 Forms\Components\TextInput::make('stock')
                                     ->label('Stok')
                                     ->numeric()
@@ -112,12 +112,12 @@ class ProductResource extends Resource
                             ->schema([
                                 Forms\Components\Placeholder::make('created_at')
                                     ->label('Dibuat')
-                                    ->content(fn (?Product $record): string => $record?->created_at?->format('d M Y, H:i') ?? '-'),
+                                    ->content(fn(?Product $record): string => $record?->created_at?->format('d M Y, H:i') ?? '-'),
                                 Forms\Components\Placeholder::make('updated_at')
                                     ->label('Terakhir diupdate')
-                                    ->content(fn (?Product $record): string => $record?->updated_at?->format('d M Y, H:i') ?? '-'),
+                                    ->content(fn(?Product $record): string => $record?->updated_at?->format('d M Y, H:i') ?? '-'),
                             ])
-                            ->hidden(fn (?Product $record) => $record === null),
+                            ->hidden(fn(?Product $record) => $record === null),
                     ])->columnSpan(['lg' => 1]),
             ])->columns(3);
     }
@@ -135,19 +135,19 @@ class ProductResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->weight('bold')
-                    ->description(fn (Product $record): string => $record->sku),
+                    ->description(fn(Product $record): string => $record->sku),
                 Tables\Columns\TextColumn::make('price')
                     ->label('Harga')
                     ->money('IDR')
                     ->sortable()
-                    ->visible(fn () => auth()->user()?->hasRole('super_admin'))
+                    ->visible(fn() => auth()->user()?->hasRole('super_admin'))
                     ->color('primary'),
                 Tables\Columns\TextColumn::make('stock')
                     ->label('Stok')
                     ->sortable()
                     ->alignCenter()
                     ->badge()
-                    ->color(fn (Product $record): string => $record->stock > 10 ? 'success' : ($record->stock > 0 ? 'warning' : 'danger')),
+                    ->color(fn(Product $record): string => $record->stock > 10 ? 'success' : ($record->stock > 0 ? 'warning' : 'danger')),
                 Tables\Columns\TextColumn::make('unit')
                     ->label('Satuan')
                     ->color('gray'),
@@ -180,7 +180,7 @@ class ProductResource extends Resource
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make()
-                        ->hidden(fn (Product $record) => $record->isProtected())
+                        ->hidden(fn(Product $record) => $record->isProtected())
                         ->before(function (Product $record) {
                             if ($record->isProtected()) {
                                 \Filament\Notifications\Notification::make()

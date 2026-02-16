@@ -10,15 +10,20 @@
         </a>
 
         <div class="flex items-center gap-4 sm:gap-6">
-            <a href="/#produk" class="text-sm text-gray-500 hover:text-brand-600 transition font-medium hidden sm:block">Produk</a>
-            <a href="/#tentang" class="text-sm text-gray-500 hover:text-brand-600 transition font-medium hidden sm:block">Tentang</a>
-            <a href="/#batch" class="text-sm text-gray-500 hover:text-brand-600 transition font-medium hidden sm:block">Info Batch</a>
+            <a href="/#produk"
+                class="text-sm text-gray-500 hover:text-brand-600 transition font-medium hidden sm:block">Produk</a>
+            <a href="/#tentang"
+                class="text-sm text-gray-500 hover:text-brand-600 transition font-medium hidden sm:block">Tentang</a>
+            <a href="/#batch"
+                class="text-sm text-gray-500 hover:text-brand-600 transition font-medium hidden sm:block">Info Batch</a>
             @auth('customer')
-                <a href="/customer" class="text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 px-4 py-2 rounded-lg transition shadow-sm">
+                <a href="/customer"
+                    class="text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 px-4 py-2 rounded-lg transition shadow-sm">
                     Pre-Order
                 </a>
             @else
-                <a href="/customer/login" class="text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 px-4 py-2 rounded-lg transition shadow-sm">
+                <a href="/customer/login"
+                    class="text-sm font-semibold text-white bg-brand-600 hover:bg-brand-700 px-4 py-2 rounded-lg transition shadow-sm">
                     Login
                 </a>
             @endauth

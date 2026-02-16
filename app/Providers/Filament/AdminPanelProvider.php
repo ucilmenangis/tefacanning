@@ -31,8 +31,8 @@ class AdminPanelProvider extends PanelProvider
             ->registration()
             ->passwordReset()
             ->brandName('TEFA Canning SIP')
-            ->brandLogo(fn () => view('filament.brand-logo'))
-            ->darkModeBrandLogo(fn () => view('filament.brand-logo-dark'))
+            ->brandLogo(fn() => view('filament.brand-logo'))
+            ->darkModeBrandLogo(fn() => view('filament.brand-logo-dark'))
             ->brandLogoHeight('3rem')
             ->favicon(asset('images/politeknik_logo_red.png'))
             ->colors([

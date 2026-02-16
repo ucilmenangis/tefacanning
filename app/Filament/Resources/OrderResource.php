@@ -59,7 +59,7 @@ class OrderResource extends Resource
                             ->schema([
                                 Forms\Components\TextInput::make('order_number')
                                     ->label('Nomor Pesanan')
-                                    ->default(fn () => 'ORD-' . strtoupper(Str::random(8)))
+                                    ->default(fn() => 'ORD-' . strtoupper(Str::random(8)))
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
@@ -67,7 +67,7 @@ class OrderResource extends Resource
                                     ->prefixIcon('heroicon-o-hashtag'),
                                 Forms\Components\TextInput::make('pickup_code')
                                     ->label('Kode Pickup')
-                                    ->default(fn () => strtoupper(Str::random(8)))
+                                    ->default(fn() => strtoupper(Str::random(8)))
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
@@ -94,7 +94,7 @@ class OrderResource extends Resource
                                     ->native(false),
                                 Forms\Components\Select::make('batch_id')
                                     ->label('Batch')
-                                    ->relationship('batch', 'name', fn (Builder $query) => $query->where('status', 'open'))
+                                    ->relationship('batch', 'name', fn(Builder $query) => $query->where('status', 'open'))
                                     ->searchable()
                                     ->preload()
                                     ->required()
@@ -200,20 +200,20 @@ class OrderResource extends Resource
                                     ->numeric()
                                     ->prefix('Rp')
                                     ->default(0)
-                                    ->visible(fn () => auth()->user()?->hasRole('super_admin')),
+                                    ->visible(fn() => auth()->user()?->hasRole('super_admin')),
                             ])
-                            ->visible(fn () => auth()->user()?->hasRole('super_admin')),
+                            ->visible(fn() => auth()->user()?->hasRole('super_admin')),
 
                         Forms\Components\Section::make('Informasi Pickup')
                             ->schema([
                                 Forms\Components\Placeholder::make('picked_up_at_display')
                                     ->label('Diambil pada')
-                                    ->content(fn (?Order $record): string => $record?->picked_up_at?->format('d M Y, H:i') ?? 'Belum diambil'),
+                                    ->content(fn(?Order $record): string => $record?->picked_up_at?->format('d M Y, H:i') ?? 'Belum diambil'),
                                 Forms\Components\Placeholder::make('created_at')
                                     ->label('Dibuat')
-                                    ->content(fn (?Order $record): string => $record?->created_at?->format('d M Y, H:i') ?? '-'),
+                                    ->content(fn(?Order $record): string => $record?->created_at?->format('d M Y, H:i') ?? '-'),
                             ])
-                            ->hidden(fn (?Order $record) => $record === null),
+                            ->hidden(fn(?Order $record) => $record === null),
                     ])->columnSpan(['lg' => 1]),
             ])->columns(3);
     }
@@ -233,7 +233,7 @@ class OrderResource extends Resource
                     ->label('Pelanggan')
                     ->searchable()
                     ->sortable()
-                    ->description(fn (Order $record): ?string => $record->customer?->phone),
+                    ->description(fn(Order $record): ?string => $record->customer?->phone),
                 Tables\Columns\TextColumn::make('batch.name')
                     ->label('Batch')
                     ->searchable()
@@ -242,19 +242,19 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'processing' => 'info',
                         'ready' => 'success',
                         'picked_up' => 'gray',
                     })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'pending' => 'Pending',
                         'processing' => 'Processing',
                         'ready' => 'Ready',
                         'picked_up' => 'Picked Up',
                     })
-                    ->icon(fn (string $state): string => match ($state) {
+                    ->icon(fn(string $state): string => match ($state) {
                         'pending' => 'heroicon-o-clock',
                         'processing' => 'heroicon-o-arrow-path',
                         'ready' => 'heroicon-o-check-circle',
@@ -271,7 +271,7 @@ class OrderResource extends Resource
                     ->label('Total')
                     ->money('IDR')
                     ->sortable()
-                    ->visible(fn () => auth()->user()?->hasRole('super_admin'))
+                    ->visible(fn() => auth()->user()?->hasRole('super_admin'))
                     ->color('primary'),
                 Tables\Columns\TextColumn::make('picked_up_at')
                     ->label('Diambil')
@@ -306,7 +306,7 @@ class OrderResource extends Resource
                     ->label('PDF')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('danger')
-                    ->url(fn (Order $record) => route('order.pdf.download', $record))
+                    ->url(fn(Order $record) => route('order.pdf.download', $record))
                     ->openUrlInNewTab(),
                 Tables\Actions\Action::make('pickup')
                     ->label('Pickup')
@@ -316,7 +316,7 @@ class OrderResource extends Resource
                     ->modalHeading('Validasi Pickup')
                     ->modalDescription('Pastikan pelanggan menunjukkan kode pickup yang benar.')
                     ->modalIcon('heroicon-o-check-badge')
-                    ->visible(fn (Order $record) => $record->status === 'ready' && ! $record->picked_up_at)
+                    ->visible(fn(Order $record) => $record->status === 'ready' && !$record->picked_up_at)
                     ->action(function (Order $record) {
                         $record->update([
                             'status' => 'picked_up',

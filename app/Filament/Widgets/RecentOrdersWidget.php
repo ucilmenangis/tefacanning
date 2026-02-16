@@ -30,7 +30,7 @@ class RecentOrdersWidget extends BaseWidget
                     ->searchable(),
                 Tables\Columns\TextColumn::make('customer.name')
                     ->label('Pelanggan')
-                    ->description(fn (Order $record): ?string => $record->customer?->phone),
+                    ->description(fn(Order $record): ?string => $record->customer?->phone),
                 Tables\Columns\TextColumn::make('batch.name')
                     ->label('Batch')
                     ->badge()
@@ -38,7 +38,7 @@ class RecentOrdersWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'processing' => 'info',
                         'ready' => 'success',
@@ -48,7 +48,7 @@ class RecentOrdersWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('total_amount')
                     ->label('Total')
                     ->money('IDR')
-                    ->visible(fn () => auth()->user()?->hasRole('super_admin')),
+                    ->visible(fn() => auth()->user()?->hasRole('super_admin')),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal')
                     ->dateTime('d M Y, H:i')

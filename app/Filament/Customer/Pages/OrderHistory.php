@@ -65,21 +65,21 @@ class OrderHistory extends Page implements HasTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->formatStateUsing(fn (string $state) => match ($state) {
+                    ->formatStateUsing(fn(string $state) => match ($state) {
                         'pending' => 'Menunggu',
                         'processing' => 'Diproses',
                         'ready' => 'Siap Ambil',
                         'picked_up' => 'Sudah Diambil',
                         default => $state,
                     })
-                    ->color(fn (string $state) => match ($state) {
+                    ->color(fn(string $state) => match ($state) {
                         'pending' => 'warning',
                         'processing' => 'info',
                         'ready' => 'success',
                         'picked_up' => 'gray',
                         default => 'secondary',
                     })
-                    ->icon(fn (string $state) => match ($state) {
+                    ->icon(fn(string $state) => match ($state) {
                         'pending' => 'heroicon-o-clock',
                         'processing' => 'heroicon-o-cog-6-tooth',
                         'ready' => 'heroicon-o-check-circle',
@@ -92,7 +92,7 @@ class OrderHistory extends Page implements HasTable
                     ->fontFamily('mono')
                     ->weight('bold')
                     ->copyable()
-                    ->visible(fn ($record) => $record?->status === 'ready'),
+                    ->visible(fn($record) => $record?->status === 'ready'),
 
                 TextColumn::make('created_at')
                     ->label('Tanggal')
@@ -107,19 +107,19 @@ class OrderHistory extends Page implements HasTable
                     ->label('Edit')
                     ->icon('heroicon-o-pencil-square')
                     ->color('warning')
-                    ->url(fn (Order $record) => EditOrder::getUrl(['order' => $record->id]))
-                    ->visible(fn (Order $record) => $record->status === 'pending'),
+                    ->url(fn(Order $record) => EditOrder::getUrl(['order' => $record->id]))
+                    ->visible(fn(Order $record) => $record->status === 'pending'),
 
                 Action::make('download_pdf')
                     ->label('PDF')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('gray')
-                    ->url(fn (Order $record) => url("/order/{$record->id}/pdf"))
+                    ->url(fn(Order $record) => url("/order/{$record->id}/pdf"))
                     ->openUrlInNewTab(),
 
                 DeleteAction::make()
                     ->label('Hapus')
-                    ->visible(fn (Order $record) => $record->status === 'pending')
+                    ->visible(fn(Order $record) => $record->status === 'pending')
                     ->modalHeading('Hapus Pesanan')
                     ->modalDescription('Apakah Anda yakin ingin menghapus pesanan ini? Tindakan ini tidak dapat dibatalkan.')
                     ->modalSubmitActionLabel('Ya, Hapus')

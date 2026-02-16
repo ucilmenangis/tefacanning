@@ -56,7 +56,7 @@ class PreOrder extends Page implements HasForms
                         Select::make('batch_id')
                             ->label('Batch Produksi')
                             ->options(
-                                $openBatches->mapWithKeys(fn (Batch $batch) => [
+                                $openBatches->mapWithKeys(fn(Batch $batch) => [
                                     $batch->id => $batch->name . ' — ' . ($batch->event_name ?? 'Umum') . ' (' . ($batch->event_date ? $batch->event_date->format('d M Y') : '-') . ')',
                                 ])->toArray()
                             )
@@ -91,7 +91,7 @@ class PreOrder extends Page implements HasForms
                                     '</div>'
                                 );
                             })
-                            ->visible(fn (Get $get) => filled($get('batch_id'))),
+                            ->visible(fn(Get $get) => filled($get('batch_id'))),
                     ]),
 
                 Section::make('Pilih Produk')
@@ -106,7 +106,7 @@ class PreOrder extends Page implements HasForms
                                         Select::make('product_id')
                                             ->label('Produk')
                                             ->options(
-                                                $activeProducts->mapWithKeys(fn (Product $product) => [
+                                                $activeProducts->mapWithKeys(fn(Product $product) => [
                                                     $product->id => $product->name . ' — Rp ' . number_format((float) $product->price, 0, ',', '.') . '/' . $product->unit,
                                                 ])->toArray()
                                             )

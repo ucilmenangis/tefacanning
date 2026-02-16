@@ -70,12 +70,12 @@ class UserResource extends Resource
                             ->label('Password')
                             ->password()
                             ->revealable()
-                            ->required(fn (string $context): bool => $context === 'create')
-                            ->dehydrateStateUsing(fn ($state) => $state ? Hash::make($state) : null)
-                            ->dehydrated(fn ($state) => filled($state))
+                            ->required(fn(string $context): bool => $context === 'create')
+                            ->dehydrateStateUsing(fn($state) => $state ? Hash::make($state) : null)
+                            ->dehydrated(fn($state) => filled($state))
                             ->maxLength(255)
-                            ->placeholder(fn (string $context): string => $context === 'edit' ? 'Kosongkan jika tidak ingin mengubah' : 'Masukkan password')
-                            ->helperText(fn (string $context): ?string => $context === 'edit' ? 'Kosongkan jika tidak ingin mengubah password' : null),
+                            ->placeholder(fn(string $context): string => $context === 'edit' ? 'Kosongkan jika tidak ingin mengubah' : 'Masukkan password')
+                            ->helperText(fn(string $context): ?string => $context === 'edit' ? 'Kosongkan jika tidak ingin mengubah password' : null),
 
                         Forms\Components\Select::make('roles')
                             ->label('Role')
@@ -108,12 +108,12 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('roles.name')
                     ->label('Role')
                     ->badge()
-                    ->color(fn (string $state) => match ($state) {
+                    ->color(fn(string $state) => match ($state) {
                         'super_admin' => 'danger',
                         'teknisi' => 'info',
                         default => 'gray',
                     })
-                    ->formatStateUsing(fn (string $state) => match ($state) {
+                    ->formatStateUsing(fn(string $state) => match ($state) {
                         'super_admin' => 'Super Admin',
                         'teknisi' => 'Teknisi',
                         default => ucfirst($state),
@@ -144,7 +144,7 @@ class UserResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make()
-                        ->hidden(fn (User $record) => $record->hasRole('super_admin'))
+                        ->hidden(fn(User $record) => $record->hasRole('super_admin'))
                         ->before(function (User $record) {
                             if ($record->hasRole('super_admin')) {
                                 Notification::make()

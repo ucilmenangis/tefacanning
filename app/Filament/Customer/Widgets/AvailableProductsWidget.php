@@ -11,7 +11,7 @@ class AvailableProductsWidget extends Widget
 
     protected static ?int $sort = 4;
 
-    protected int | string | array $columnSpan = 1;
+    protected int|string|array $columnSpan = 1;
 
     public function getProducts(): \Illuminate\Database\Eloquent\Collection
     {

@@ -94,15 +94,15 @@ class BatchResource extends Resource
                             ->schema([
                                 Forms\Components\Placeholder::make('orders_count')
                                     ->label('Total Pesanan')
-                                    ->content(fn (?Batch $record): string => $record ? $record->orders()->count() . ' pesanan' : '0 pesanan'),
+                                    ->content(fn(?Batch $record): string => $record ? $record->orders()->count() . ' pesanan' : '0 pesanan'),
                                 Forms\Components\Placeholder::make('created_at')
                                     ->label('Dibuat pada')
-                                    ->content(fn (?Batch $record): string => $record?->created_at?->format('d M Y, H:i') ?? '-'),
+                                    ->content(fn(?Batch $record): string => $record?->created_at?->format('d M Y, H:i') ?? '-'),
                                 Forms\Components\Placeholder::make('updated_at')
                                     ->label('Terakhir diupdate')
-                                    ->content(fn (?Batch $record): string => $record?->updated_at?->format('d M Y, H:i') ?? '-'),
+                                    ->content(fn(?Batch $record): string => $record?->updated_at?->format('d M Y, H:i') ?? '-'),
                             ])
-                            ->hidden(fn (?Batch $record) => $record === null),
+                            ->hidden(fn(?Batch $record) => $record === null),
                     ])->columnSpan(['lg' => 1]),
             ])->columns(3);
     }
@@ -128,13 +128,13 @@ class BatchResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'open' => 'success',
                         'processing' => 'warning',
                         'ready' => 'info',
                         'closed' => 'danger',
                     })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'open' => 'Open',
                         'processing' => 'Processing',
                         'ready' => 'Ready',

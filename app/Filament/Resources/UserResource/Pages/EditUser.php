@@ -15,7 +15,7 @@ class EditUser extends EditRecord
     {
         return [
             Actions\DeleteAction::make()
-                ->hidden(fn () => $this->record->hasRole('super_admin'))
+                ->hidden(fn() => $this->record->hasRole('super_admin'))
                 ->before(function () {
                     if ($this->record->hasRole('super_admin')) {
                         Notification::make()

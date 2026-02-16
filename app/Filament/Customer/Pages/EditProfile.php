@@ -205,7 +205,7 @@ class EditProfile extends Page implements Forms\Contracts\HasForms
         return Order::where('customer_id', $customer->id)
             ->whereIn('status', ['processing', 'ready'])
             ->get()
-            ->map(fn ($order) => [
+            ->map(fn($order) => [
                 'order_number' => $order->order_number,
                 'status' => match ($order->status) {
                     'processing' => 'Diproses',

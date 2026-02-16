@@ -2,7 +2,8 @@
     <x-filament::section>
         @php $data = $this->getCustomerData(); @endphp
         <div class="flex items-start gap-4">
-            <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center shadow-lg">
+            <div
+                class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center shadow-lg">
                 <span class="text-xl font-bold text-white">{{ strtoupper(substr($data['name'], 0, 1)) }}</span>
             </div>
             <div class="flex-1 min-w-0">

@@ -15,7 +15,7 @@ class BatchOrderSummaryWidget extends BaseWidget
 
     protected static ?string $heading = 'Ringkasan Produksi Batch Aktif';
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     public function table(Table $table): Table
     {
@@ -24,8 +24,8 @@ class BatchOrderSummaryWidget extends BaseWidget
         return $table
             ->query(
                 Order::query()
-                    ->when($activeBatch, fn (Builder $query) => $query->where('batch_id', $activeBatch->id))
-                    ->when(! $activeBatch, fn (Builder $query) => $query->whereRaw('1 = 0'))
+                    ->when($activeBatch, fn(Builder $query) => $query->where('batch_id', $activeBatch->id))
+                    ->when(!$activeBatch, fn(Builder $query) => $query->whereRaw('1 = 0'))
             )
             ->columns([
                 Tables\Columns\TextColumn::make('order_number')

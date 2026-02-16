@@ -48,7 +48,7 @@ class EditOrder extends Page implements HasForms
             ->firstOrFail();
 
         // Pre-fill form with existing order data
-        $items = $this->order->products->map(fn ($product) => [
+        $items = $this->order->products->map(fn($product) => [
             'product_id' => $product->id,
             'quantity' => $product->pivot->quantity,
             'unit_price' => $product->pivot->unit_price,
@@ -77,7 +77,7 @@ class EditOrder extends Page implements HasForms
                             ->options(
                                 Batch::whereIn('id', [$this->order->batch_id])
                                     ->get()
-                                    ->mapWithKeys(fn (Batch $batch) => [
+                                    ->mapWithKeys(fn(Batch $batch) => [
                                         $batch->id => $batch->name . ' — ' . ($batch->event_name ?? 'Umum'),
                                     ])->toArray()
                             )
@@ -100,7 +100,7 @@ class EditOrder extends Page implements HasForms
                                         Select::make('product_id')
                                             ->label('Produk')
                                             ->options(
-                                                $activeProducts->mapWithKeys(fn (Product $product) => [
+                                                $activeProducts->mapWithKeys(fn(Product $product) => [
                                                     $product->id => $product->name . ' — Rp ' . number_format((float) $product->price, 0, ',', '.') . '/' . $product->unit,
                                                 ])->toArray()
                                             )
