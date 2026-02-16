@@ -1,0 +1,177 @@
+/* TEFA Canning - Custom Filament Theme */
+
+/* ===== SIDEBAR DARK THEME ===== */
+.fi-sidebar {
+    background: linear-gradient(180deg, #1e1b2e 0%, #2d1f3d 50%, #1a1229 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Sidebar header */
+.fi-sidebar-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Navigation group labels */
+.fi-sidebar-group-label {
+    color: rgba(255, 255, 255, 0.45) !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+}
+
+/* Navigation items */
+.fi-sidebar-item a,
+.fi-sidebar-item button {
+    color: rgba(255, 255, 255, 0.7) !important;
+    border-radius: 0.5rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.fi-sidebar-item a:hover,
+.fi-sidebar-item button:hover {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: #fff !important;
+}
+
+/* Active navigation item */
+.fi-sidebar-item-active a,
+.fi-sidebar-item-active button {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.15) 100%) !important;
+    color: #fca5a5 !important;
+    border-left: 3px solid #ef4444 !important;
+    font-weight: 600 !important;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-icon {
+    color: #f87171 !important;
+}
+
+/* Navigation item icons */
+.fi-sidebar-item-icon {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.fi-sidebar-item a:hover .fi-sidebar-item-icon,
+.fi-sidebar-item button:hover .fi-sidebar-item-icon {
+    color: #f87171 !important;
+}
+
+/* Navigation badge */
+.fi-sidebar-item-badge {
+    font-size: 0.65rem !important;
+}
+
+/* Group collapse button */
+.fi-sidebar-group-button {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.fi-sidebar-group-button:hover {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ===== TOPBAR ===== */
+.fi-topbar {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ===== MAIN CONTENT AREA ===== */
+.fi-main {
+    background: #f8f9fb !important;
+}
+
+/* ===== CARDS & SECTIONS ===== */
+.fi-section {
+    border-radius: 0.75rem !important;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* ===== STATS WIDGETS ===== */
+.fi-wi-stats-overview-stat {
+    border-radius: 0.75rem !important;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ===== TABLE STYLES ===== */
+.fi-ta {
+    border-radius: 0.75rem !important;
+    overflow: hidden !important;
+}
+
+.fi-ta-header-cell {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #64748b !important;
+}
+
+/* ===== BUTTONS ===== */
+.fi-btn-primary {
+    border-radius: 0.5rem !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+}
+
+.fi-btn-primary:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* ===== BADGE REFINEMENT ===== */
+.fi-badge {
+    font-weight: 600 !important;
+    font-size: 0.7rem !important;
+}
+
+/* ===== EMPTY STATE ===== */
+.fi-ta-empty-state {
+    padding: 3rem !important;
+}
+
+.fi-ta-empty-state-icon {
+    color: #e2e8f0 !important;
+}
+
+/* ===== MODAL ===== */
+.fi-modal-window {
+    border-radius: 1rem !important;
+}
+
+/* ===== BREADCRUMBS ===== */
+.fi-breadcrumbs li {
+    font-size: 0.8rem !important;
+}
+
+/* ===== LOGO OVERRIDE ===== */
+.fi-logo {
+    height: 2.5rem !important;
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+.fi-sidebar nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.fi-sidebar nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.fi-sidebar nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.fi-sidebar nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
