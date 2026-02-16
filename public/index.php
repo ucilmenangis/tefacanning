@@ -7,16 +7,25 @@ define('LARAVEL_START', microtime(true));
 
 /*
 |--------------------------------------------------------------------------
-| Check If The Application Is Under Maintenance
+| Detect Laravel Base Path (Local vs cPanel Hosting)
 |--------------------------------------------------------------------------
 |
-| If the application is in maintenance / demo mode via the "down" command
-| we will load this file so that any pre-rendered content can be shown
-| instead of starting the framework, which could cause an exception.
+| On cPanel hosting, the project is split: public files go to public_html/
+| and Laravel core goes to ~/laravel/. This auto-detects the correct path.
 |
 */
 
-if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+$basePath = file_exists(__DIR__.'/../laravel/bootstrap/app.php')
+    ? __DIR__.'/../laravel'
+    : __DIR__.'/..';
+
+/*
+|--------------------------------------------------------------------------
+| Check If The Application Is Under Maintenance
+|--------------------------------------------------------------------------
+*/
+
+if (file_exists($maintenance = $basePath.'/storage/framework/maintenance.php')) {
     require $maintenance;
 }
 
@@ -24,27 +33,22 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 |--------------------------------------------------------------------------
 | Register The Auto Loader
 |--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader for
-| this application. We just need to utilize it! We'll simply require it
-| into the script here so we don't need to manually load our classes.
-|
 */
 
-require __DIR__.'/../vendor/autoload.php';
+require $basePath.'/vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
 | Run The Application
 |--------------------------------------------------------------------------
-|
-| Once we have the application, we can handle the incoming request using
-| the application's HTTP kernel. Then, we will send the response back
-| to this client's browser, allowing them to enjoy our application.
-|
 */
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+$app = require_once $basePath.'/bootstrap/app.php';
+
+// Set the public path to this directory (required for cPanel split layout)
+$app->bind('path.public', function() {
+    return __DIR__;
+});
 
 $kernel = $app->make(Kernel::class);
 

@@ -28,7 +28,6 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->registration()
             ->passwordReset()
             ->brandName('TEFA Canning SIP')
             ->brandLogo(fn() => view('filament.brand-logo'))
@@ -65,6 +64,9 @@ class AdminPanelProvider extends PanelProvider
                     ->collapsible(),
                 NavigationGroup::make('Manajemen Produksi')
                     ->icon('heroicon-o-cog-6-tooth')
+                    ->collapsible(),
+                NavigationGroup::make('Audit & Log')
+                    ->icon('heroicon-o-clipboard-document-list')
                     ->collapsible(),
                 NavigationGroup::make('Pengaturan')
                     ->icon('heroicon-o-adjustments-horizontal')

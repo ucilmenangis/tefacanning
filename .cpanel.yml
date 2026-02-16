@@ -4,5 +4,21 @@ deployment:
     - export REPOPATH=/home/tefa1338/repositories/tefacanning
     - export LARAVELPATH=/home/tefa1338/laravel
     - export PUBLICPATH=/home/tefa1338/public_html
-    - /bin/cp -R $REPOPATH/* $LARAVELPATH/
+    # Copy Laravel core files (exclude public folder)
+    - /bin/cp -R $REPOPATH/app $LARAVELPATH/
+    - /bin/cp -R $REPOPATH/bootstrap $LARAVELPATH/
+    - /bin/cp -R $REPOPATH/config $LARAVELPATH/
+    - /bin/cp -R $REPOPATH/database $LARAVELPATH/
+    - /bin/cp -R $REPOPATH/resources $LARAVELPATH/
+    - /bin/cp -R $REPOPATH/routes $LARAVELPATH/
+    - /bin/cp -R $REPOPATH/storage $LARAVELPATH/
+    - /bin/cp -R $REPOPATH/vendor $LARAVELPATH/
+    - /bin/cp $REPOPATH/artisan $LARAVELPATH/
+    - /bin/cp $REPOPATH/composer.json $LARAVELPATH/
+    - /bin/cp $REPOPATH/composer.lock $LARAVELPATH/ 2>/dev/null; true
+    # Copy public files to public_html
     - /bin/cp -R $REPOPATH/public/* $PUBLICPATH/
+    - /bin/cp $REPOPATH/public/.htaccess $PUBLICPATH/ 2>/dev/null; true
+    # Set permissions
+    - chmod -R 775 $LARAVELPATH/storage
+    - chmod -R 775 $LARAVELPATH/bootstrap/cache
