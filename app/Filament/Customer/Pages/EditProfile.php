@@ -24,6 +24,7 @@ class EditProfile extends Page implements Forms\Contracts\HasForms
 
     public ?array $profileData = [];
     public ?array $passwordData = [];
+    protected ?bool $activeOrdersCache = null;
 
     public function mount(): void
     {
@@ -186,9 +187,13 @@ class EditProfile extends Page implements Forms\Contracts\HasForms
 
     protected function hasActiveOrders(): bool
     {
+        if ($this->activeOrdersCache !== null) {
+            return $this->activeOrdersCache;
+        }
+
         $customer = Auth::guard('customer')->user();
 
-        return Order::where('customer_id', $customer->id)
+        return $this->activeOrdersCache = Order::where('customer_id', $customer->id)
             ->whereIn('status', ['processing', 'ready'])
             ->exists();
     }

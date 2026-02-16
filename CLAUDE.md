@@ -52,16 +52,20 @@ Admin panel uses FilamentPHP v3 with custom red palette, Inter font, and SPA mod
 ## Design Decisions
 
 - **Admin Panel (Filament):** Red theme, collapsible sidebar, NavigationGroup objects, database notifications, red Polije logo for dark mode
-- **Customer Panel (Filament):** Separate Filament panel at `/customer` with customer guard, registration with phone/address/organization fields, pre-order page, order history with edit/delete (pending only), dashboard with 4 widgets (welcome, order summary, latest batch, available products), collapsible sidebar
+- **Customer Panel (Filament):** Separate Filament panel at `/customer` with customer guard, registration with phone/address/organization fields, pre-order page, order history with edit/delete (pending only), dashboard with 4 widgets (welcome, order summary, latest batch, available products), collapsible sidebar, profile editing with active order lock
 - **Public Pages:** Product catalog at `/` using Blade components (`<x-landing.*>`), dynamic batch news from database, Google Maps in footer 4-column grid
 - **Navigation Badges:** Must return `(string) $count`, not raw `int`, to avoid Filament TypeError
 - **Livewire:** Included automatically by Filament v3, no separate installation needed
-- **PDF Reports:** DomPDF for order reports with customer/batch/product details, downloadable from admin and customer panel
+- **PDF Reports:** DomPDF for order reports with Polije logo in header, product subtotal breakdown, 3_logo_in_1.png in footer, @page margins 25mm/20mm, downloadable from admin and customer panel
 - **Dual Authentication:** `web` guard for admin users, `customer` guard for customer users (separate auth system)
 - **Core Product Protection:** 3 base products (TEFA-SST-001, TEFA-ASN-001, TEFA-SSC-001) cannot be deleted by anyone, enforced at model level via `booted()` and UI level via hidden delete actions
 - **User Management:** UserResource in admin panel, visible only to super_admin, super_admin accounts cannot be deleted, users cannot delete themselves
 - **Order Edit by Customer:** Pending orders can be edited (products/quantities) but batch cannot be changed. Non-pending orders are locked.
 - **Price Integrity:** Pre-order submission uses server-side product price lookup, never trusts form-submitted unit_price
+- **Profile Edit Lock:** Customer cannot edit profile info when orders are in `processing` or `ready` status. Password change is always available.
+- **Order Helpers:** Use `Order::generateOrderNumber()` and `Order::generatePickupCode()` instead of inline `Str::random()`. Use `Order::getStatusColor()`, `Order::getStatusIcon()`, `Order::getStatusLabel()` for consistent status display.
+- **Query Optimization:** Use single consolidated queries (selectRaw) instead of multiple count/sum queries. Cache `hasActiveOrders()` result in properties to avoid repeated DB calls.
+- **Fonnte Device:** config/services.php includes `device` parameter from `FONNTE_DEVICE` env var. FonnteService sends device param when configured.
 
 ## User Roles & Permissions
 
@@ -356,6 +360,31 @@ php artisan make:filament-user
 - Multi-warehouse support
 - SMS notifications fallback
 
+## Prompt Rules & Development Guidelines
+
+### When Working on This Project
+1. **Language:** Use Bahasa Indonesia for all UI labels, notifications, form fields, and user-facing text. Use English for code comments and variable names.
+2. **No Confirmation Needed:** Just implement features directly. Ask only for crucial/destructive operations (e.g., database wipe, deleting files).
+3. **Red Theme:** Always use `#DC2626` as primary color. Never introduce other brand colors.
+4. **Filament Conventions:** Follow Filament v3 patterns — Pages for custom views, Resources for CRUD, Widgets for dashboard cards.
+5. **Security First:** Never expose API tokens or credentials. Always use `.env` variables via `config()`.
+6. **Server-Side Price:** Never trust client-submitted prices. Always look up from database.
+7. **Soft Deletes:** All major models must use `SoftDeletes` trait.
+8. **Activity Log:** All models should use `LogsActivity` trait for audit trail.
+9. **Guard Awareness:** Customer panel uses `customer` guard. Admin panel uses `web` guard. Always specify the guard explicitly.
+10. **Status Badge Types:** Return `(string)` from `getNavigationBadge()`, never raw `int`.
+11. **Edit Tool:** When modifying existing files, use `replace_string_in_file` — never `create_file` on existing files.
+12. **Order Helpers:** Use `Order::generateOrderNumber()`, `Order::generatePickupCode()`, `Order::getStatusColor()`, `Order::getStatusLabel()`, `Order::getStatusIcon()` for consistency.
+13. **Query Optimization:** Consolidate multiple COUNT/SUM queries into single selectRaw. Cache repeated boolean checks in properties.
+
+### Prompt Suggestions for Common Tasks
+- "Tambahkan fitur [X] di panel customer" → Creates new Page in `app/Filament/Customer/Pages/`
+- "Buat widget baru di dashboard" → Creates Widget + Blade view, registers in Dashboard
+- "Kirim notifikasi WhatsApp saat [event]" → Uses `FonnteService::sendMessage()`
+- "Tambah kolom di tabel [model]" → Creates migration, updates model fillable/casts, updates Resource form/table
+- "Proteksi [resource] dari [action]" → Model booted() guard + UI hidden action
+- "Export data ke PDF" → DomPDF view + controller route
+
 ## Architecture: Multi-Panel Filament System
 
 ### Admin Panel (`/admin`)
@@ -370,8 +399,8 @@ php artisan make:filament-user
 ### Customer Panel (`/customer`)
 - **Guard:** `customer` (Customer model)
 - **Provider:** `CustomerPanelProvider`
-- **Pages:** Dashboard (4 widgets), PreOrder (form-based ordering), OrderHistory (table with edit/delete), EditOrder (modify pending orders)
-- **Widgets:** WelcomeWidget (profile card), OrderSummaryWidget (4 stats), LatestBatchWidget (batch info + CTA), AvailableProductsWidget (product list + prices)
+- **Pages:** Dashboard (4 widgets), PreOrder (form-based ordering), OrderHistory (table with edit/delete), EditOrder (modify pending orders), EditProfile (profile & password with active order lock)
+- **Widgets:** WelcomeWidget (profile card), OrderSummaryWidget (4 stats, single query), LatestBatchWidget (batch info + CTA), AvailableProductsWidget (product list + prices)
 - **Registration:** Custom form with name, email, phone, organization, address, password
 - **Auth:** Customer model extends Authenticatable, implements FilamentUser
 - **Order Rules:** Edit/delete only when status is `pending`, batch cannot be changed on edit
@@ -391,6 +420,7 @@ app/
 │   │   │   ├── Auth/Register.php    # Custom registration form
 │   │   │   ├── Dashboard.php        # Dashboard with 4 widgets
 │   │   │   ├── EditOrder.php        # Edit pending order (batch locked)
+│   │   │   ├── EditProfile.php      # Profile editing with active order lock
 │   │   │   ├── OrderHistory.php     # Table with edit/delete/PDF actions
 │   │   │   └── PreOrder.php         # Form-based ordering
 │   │   └── Widgets/                 # Customer dashboard widgets
@@ -432,7 +462,8 @@ resources/views/
 │       ├── pages/
 │       │   ├── pre-order.blade.php
 │       │   ├── order-history.blade.php
-│       │   └── edit-order.blade.php
+│       │   ├── edit-order.blade.php
+│       │   └── edit-profile.blade.php
 │       └── widgets/
 │           ├── welcome-widget.blade.php
 │           ├── latest-batch-widget.blade.php

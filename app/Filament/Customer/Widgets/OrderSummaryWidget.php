@@ -16,10 +16,18 @@ class OrderSummaryWidget extends BaseWidget
     {
         $customerId = auth('customer')->id();
 
-        $totalOrders = Order::where('customer_id', $customerId)->count();
-        $totalSpent = Order::where('customer_id', $customerId)->sum('total_amount');
-        $pendingOrders = Order::where('customer_id', $customerId)->where('status', 'pending')->count();
-        $readyOrders = Order::where('customer_id', $customerId)->where('status', 'ready')->count();
+        // Single query instead of 4 separate queries
+        $stats = Order::where('customer_id', $customerId)
+            ->selectRaw('COUNT(*) as total_orders')
+            ->selectRaw('COALESCE(SUM(total_amount), 0) as total_spent')
+            ->selectRaw("SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending_orders")
+            ->selectRaw("SUM(CASE WHEN status = 'ready' THEN 1 ELSE 0 END) as ready_orders")
+            ->first();
+
+        $totalOrders = (int) $stats->total_orders;
+        $totalSpent = $stats->total_spent;
+        $pendingOrders = (int) $stats->pending_orders;
+        $readyOrders = (int) $stats->ready_orders;
 
         return [
             Stat::make('Total Pesanan', $totalOrders)

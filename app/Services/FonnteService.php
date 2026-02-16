@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Log;
 class FonnteService
 {
     protected string $token;
+    protected string $device;
     protected string $apiUrl = 'https://api.fonnte.com/send';
 
     public function __construct()
     {
         $this->token = config('services.fonnte.token', '');
+        $this->device = config('services.fonnte.device', '');
     }
 
     /**
@@ -26,12 +28,18 @@ class FonnteService
         }
 
         try {
-            $response = Http::withHeaders([
-                'Authorization' => $this->token,
-            ])->post($this->apiUrl, [
+            $payload = [
                 'target' => $phone,
                 'message' => $message,
-            ]);
+            ];
+
+            if (!empty($this->device)) {
+                $payload['device'] = $this->device;
+            }
+
+            $response = Http::withHeaders([
+                'Authorization' => $this->token,
+            ])->post($this->apiUrl, $payload);
 
             if ($response->successful()) {
                 Log::info('Fonnte: Message sent to ' . $phone);
