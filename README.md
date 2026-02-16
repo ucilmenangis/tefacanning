@@ -38,11 +38,19 @@ Sistem informasi berbasis web untuk mendigitalisasi proses transaksi dan monitor
 | 📋 **Audit Trail** | Pencatatan otomatis semua aktivitas untuk transparansi |
 | 🗃️ **Manajemen Data** | CRUD lengkap untuk Batch, Produk, Pesanan, dan Pelanggan |
 
----
-
 ## 📖 Reason 
 
 Sistem ini dirancang sebagai implementasi langsung dari mata kuliah **Workshop Proyek Perangkat Lunak (Semester 2)** di **Politeknik Negeri Jember**. Proyek ini dibuat untuk memenuhi tugas mata kuliah **Workshop Proyek Perangkat Lunak (Semester 2)** di **Politeknik Negeri Jember**.
+
+---
+
+## 💻 Preview
+
+![Landing Page](public/images/landing_page.png)
+
+![Customer Dashboard](public/images/customer_dashboard.png)
+
+![Admin Dashboard](public/images/dashboard.png)
 
 ---
 
