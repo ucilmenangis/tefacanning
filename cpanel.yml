@@ -1,5 +1,8 @@
 ---
 deployment:
-tasks:
-- export DEPLOYPATH=/home/usercpanel/public_html
-- /bin/cp -r * $DEPLOYPATH
+  tasks:
+    - export REPOPATH=/home/tefa1338/repositories/tefacanning
+    - export LARAVELPATH=/home/tefa1338/laravel
+    - export PUBLICPATH=/home/tefa1338/public_html
+    - /bin/cp -R $REPOPATH/* $LARAVELPATH/
+    - /bin/cp -R $REPOPATH/public/* $PUBLICPATH/
