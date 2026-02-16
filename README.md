@@ -40,18 +40,9 @@ Sistem informasi berbasis web untuk mendigitalisasi proses transaksi dan monitor
 
 ---
 
-## 🚀 Quick Start
+## 📖 Reason 
 
-```bash
-git clone https://github.com/ucilmenangis/tefacanning.git
-cd tefacanning
-composer install && npm install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate --seed
-php artisan make:filament-user
-npm run build && php artisan serve
-```
+Sistem ini dirancang sebagai implementasi langsung dari mata kuliah **Workshop Proyek Perangkat Lunak (Semester 2)** di **Politeknik Negeri Jember**. Proyek ini dibuat untuk memenuhi tugas mata kuliah **Workshop Proyek Perangkat Lunak (Semester 2)** di **Politeknik Negeri Jember**.
 
 ---
 
@@ -60,13 +51,13 @@ npm run build && php artisan serve
 Proyek ini dilindungi di bawah lisensi **PolyForm Noncommercial License 1.0.0**.
 
 Anda diperbolehkan untuk:
-✅ Melihat dan mempelajari kode sumber (Source Available).
-✅ Mengubah kode untuk keperluan pribadi atau edukasi.
-✅ Membagikan ulang salinan proyek ini dengan menyertakan lisensi yang sama.
+- ✅ Melihat dan mempelajari kode sumber (Source Available).
+- ✅ Mengubah kode untuk keperluan pribadi atau edukasi.
+- ✅ Membagikan ulang salinan proyek ini dengan menyertakan lisensi yang sama.
 
 Anda **DILARANG** untuk:
-❌ Menggunakan kode ini untuk tujuan komersial (dijual atau dijadikan layanan berbayar).
-❌ Menggunakan kode ini untuk kepentingan perusahaan tanpa izin tertulis.
+- ❌ Menggunakan kode ini untuk tujuan komersial (dijual atau dijadikan layanan berbayar).
+- ❌ Menggunakan kode ini untuk kepentingan perusahaan tanpa izin tertulis.
 
 Lihat file [LICENSE](LICENSE) untuk detail lengkapnya.
 
