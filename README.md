@@ -46,11 +46,17 @@ Sistem ini dirancang sebagai implementasi langsung dari mata kuliah **Workshop P
 
 ## 💻 Preview
 
+- Landing page :
+
 ![Landing Page](public/images/landing_page.png)
+
+- Customer dashboard :
 
 ![Customer Dashboard](public/images/customer_dashboard.png)
 
-![Admin Dashboard](public/images/dashboard.png)
+- Admin dashboard :
+
+![Admin Dashboard](public/images/admin_dashboard.png)
 
 ---
 
