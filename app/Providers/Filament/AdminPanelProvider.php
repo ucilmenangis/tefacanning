@@ -28,7 +28,6 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->passwordReset()
             ->brandName('TEFA Canning SIP')
             ->brandLogo(fn() => view('filament.brand-logo'))
             ->darkModeBrandLogo(fn() => view('filament.brand-logo-dark'))
