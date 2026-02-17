@@ -65,9 +65,6 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make('Manajemen Produksi')
                     ->icon('heroicon-o-cog-6-tooth')
                     ->collapsible(),
-                NavigationGroup::make('Audit & Log')
-                    ->icon('heroicon-o-clipboard-document-list')
-                    ->collapsible(),
                 NavigationGroup::make('Pengaturan')
                     ->icon('heroicon-o-adjustments-horizontal')
                     ->collapsible()
