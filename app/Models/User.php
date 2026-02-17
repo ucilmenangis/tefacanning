@@ -23,6 +23,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
     ];
 
@@ -55,7 +56,7 @@ class User extends Authenticatable
     {
         return LogOptions::defaults()
             ->logFillable()
-            ->logOnly(['name', 'email'])
+            ->logOnly(['name', 'email', 'phone'])
             ->setDescriptionForEvent(fn(string $eventName) => "User has been {$eventName}");
     }
 }

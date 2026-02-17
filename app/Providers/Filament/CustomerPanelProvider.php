@@ -6,6 +6,7 @@ use App\Filament\Customer\Pages\Dashboard;
 use App\Http\Middleware\CustomerPanelMiddleware;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -54,6 +55,12 @@ class CustomerPanelProvider extends PanelProvider
                 'gray' => Color::Slate,
             ])
             ->font('Inter')
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Edit Profil')
+                    ->url(fn (): string => \App\Filament\Customer\Pages\EditProfile::getUrl())
+                    ->icon('heroicon-o-user-circle'),
+            ])
             ->authGuard('customer')
             ->discoverPages(in: app_path('Filament/Customer/Pages'), for: 'App\\Filament\\Customer\\Pages')
             ->pages([

@@ -54,10 +54,7 @@
             <div>
                 <h4 class="text-sm font-semibold text-white mb-3">Peta Lokasi</h4>
                 <div class="rounded-lg overflow-hidden border border-gray-700">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.488!2d113.72177!3d-8.16463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b617d4f0a3%3A0x4027a76e352ea70!2sPoliteknik%20Negeri%20Jember!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
-                        class="w-full h-40 border-0 grayscale hover:grayscale-0 transition-all duration-500"
-                        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4540.858133447697!2d113.72431441119326!3d-8.155649781669197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695f2c7074ec7%3A0x40c147ea5d0ce7c8!2sUnit%20Pengalengan%20Ikan%20Politeknik%20Negeri%20Jember!5e1!3m2!1sen!2sid!4v1771326757344!5m2!1sen!2sid" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>

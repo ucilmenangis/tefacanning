@@ -1,7 +1,7 @@
 <x-landing.layout>
 
     {{-- ═══════════════ HERO ═══════════════ --}}
-    <section class="relative pt-32 pb-20 overflow-hidden">
+    <section class="relative min-h-screen flex flex-col justify-center overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-brand-50 via-white to-red-50/40"></div>
         <div class="absolute top-0 right-0 w-96 h-96 bg-brand-100/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
 

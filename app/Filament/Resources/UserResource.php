@@ -66,6 +66,13 @@ class UserResource extends Resource
                             ->maxLength(255)
                             ->placeholder('contoh@polije.ac.id'),
 
+                        Forms\Components\TextInput::make('phone')
+                            ->label('No. WhatsApp')
+                            ->tel()
+                            ->maxLength(20)
+                            ->placeholder('628xxxxxxxxxx')
+                            ->helperText('Format: 628xxxxxxxxxx (untuk notifikasi Fonnte)'),
+
                         Forms\Components\TextInput::make('password')
                             ->label('Password')
                             ->password()
@@ -104,6 +111,15 @@ class UserResource extends Resource
                     ->sortable()
                     ->icon('heroicon-o-envelope')
                     ->copyable(),
+
+                Tables\Columns\TextColumn::make('phone')
+                    ->label('WhatsApp')
+                    ->searchable()
+                    ->icon('heroicon-m-phone')
+                    ->copyable()
+                    ->copyMessage('Nomor disalin')
+                    ->placeholder('—')
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('roles.name')
                     ->label('Role')

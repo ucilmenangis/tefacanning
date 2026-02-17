@@ -5,6 +5,7 @@ namespace App\Filament\Customer\Pages;
 use App\Models\Batch;
 use App\Models\Order;
 use App\Models\Product;
+use App\Services\FonnteService;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
@@ -267,6 +268,13 @@ class PreOrder extends Page implements HasForms
                 'unit_price' => $item['unit_price'],
                 'subtotal' => $item['subtotal'],
             ]);
+        }
+
+        // Notify superadmins via WhatsApp
+        try {
+            app(FonnteService::class)->sendNewOrderToSuperAdmin($order);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::warning('Fonnte: Failed to notify superadmin - ' . $e->getMessage());
         }
 
         // Reset form

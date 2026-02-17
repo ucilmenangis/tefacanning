@@ -38,6 +38,11 @@ class Customer extends Authenticatable implements FilamentUser
         return $panel->getId() === 'customer';
     }
 
+    public function getFilamentName(): string
+    {
+        return $this->name;
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);

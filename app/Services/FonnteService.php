@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -102,5 +103,32 @@ class FonnteService
             . "Jangan lupa bawa kode pickup Anda! 🙏";
 
         return $this->sendMessage($order->customer->phone, $message);
+    }
+
+    public function sendNewOrderToSuperAdmin($order): void
+    {
+        $order->load(['customer', 'batch', 'products']);
+
+        $items = $order->products->map(function ($product) {
+            return "- {$product->name} x{$product->pivot->quantity}";
+        })->join("\n");
+
+        $message = "🔔 *Pesanan Baru Masuk!*\n\n"
+            . "📋 *No. Pesanan:* {$order->order_number}\n"
+            . "👤 *Pelanggan:* {$order->customer->name}\n"
+            . "📞 *Kontak:* {$order->customer->phone}\n"
+            . "📦 *Batch:* {$order->batch->name}\n\n"
+            . "*Detail Pesanan:*\n{$items}\n\n"
+            . "💰 *Total:* Rp " . number_format($order->total_amount, 0, ',', '.') . "\n\n"
+            . "Silakan cek panel admin untuk detail lebih lanjut.";
+
+        $superAdmins = User::role('super_admin')
+            ->whereNotNull('phone')
+            ->where('phone', '!=', '')
+            ->get();
+
+        foreach ($superAdmins as $admin) {
+            $this->sendMessage($admin->phone, $message);
+        }
     }
 }
