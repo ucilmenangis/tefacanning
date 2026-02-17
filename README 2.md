@@ -153,3 +153,58 @@ php artisan test                     # Run tests
 - [ ] Dashboard analytics yang lebih detail
 - [ ] Dark mode untuk landing page
 
+---
+
+## 🗂️ File Structure
+
+### Admin Panel (`/admin`)
+| File | Purpose |
+|------|---------|
+| `app/Providers/Filament/AdminPanelProvider.php` | Admin panel configuration, nav groups, colors |
+| `app/Filament/Resources/OrderResource.php` | Order management (CRUD, PDF, pickup) |
+| `app/Filament/Resources/CustomerResource.php` | Customer management |
+| `app/Filament/Resources/ProductResource.php` | Product management |
+| `app/Filament/Resources/BatchResource.php` | Batch management |
+| `app/Filament/Resources/UserResource.php` | Admin user management (super_admin only) |
+| `app/Filament/Resources/ActivityLogResource.php` | Audit trail viewer (super_admin only) |
+| `app/Filament/Widgets/DashboardStatsWidget.php` | Dashboard stat cards |
+| `app/Filament/Widgets/BatchOrderSummaryWidget.php` | Active batch order table |
+| `app/Filament/Widgets/ProductionSummaryWidget.php` | Product quantity summary |
+| `app/Filament/Widgets/RecentOrdersWidget.php` | Recent orders table |
+
+### Customer Panel (`/customer`)
+| File | Purpose |
+|------|---------|
+| `app/Providers/Filament/CustomerPanelProvider.php` | Customer panel config, auth guard |
+| `app/Filament/Customer/Pages/PreOrder.php` | Pre-order form (batch + product selection) |
+| `app/Filament/Customer/Pages/OrderHistory.php` | Customer's order history table |
+| `app/Filament/Customer/Pages/EditOrder.php` | Edit pending orders |
+| `app/Filament/Customer/Pages/EditProfile.php` | Customer profile editing |
+| `app/Filament/Customer/Pages/Dashboard.php` | Customer dashboard |
+| `app/Filament/Customer/Pages/Auth/Register.php` | Customer registration |
+| `app/Filament/Customer/Widgets/WelcomeWidget.php` | Welcome greeting card |
+| `app/Filament/Customer/Widgets/OrderSummaryWidget.php` | Order stat cards |
+| `app/Filament/Customer/Widgets/LatestBatchWidget.php` | Current batch info |
+| `app/Filament/Customer/Widgets/AvailableProductsWidget.php` | Product catalog |
+
+### Landing Page (`/`)
+| File | Purpose |
+|------|---------|
+| `resources/views/welcome.blade.php` | Landing page (hero, products, batches) |
+| `resources/views/components/landing/layout.blade.php` | Landing layout wrapper |
+| `resources/views/components/landing/navbar.blade.php` | Navigation bar |
+| `resources/views/components/landing/footer.blade.php` | Footer with map |
+| `resources/views/components/landing/product-card.blade.php` | Product card component |
+
+### Shared / Services
+| File | Purpose |
+|------|---------|
+| `app/Models/Order.php` | Order model (statuses, relationships, activity log) |
+| `app/Models/Customer.php` | Customer model (auth, soft deletes) |
+| `app/Models/Product.php` | Product model |
+| `app/Models/Batch.php` | Batch model (lifecycle states) |
+| `app/Models/User.php` | Admin user model (roles, permissions) |
+| `app/Services/FonnteService.php` | WhatsApp notification via Fonnte API |
+| `resources/views/orders/order-report.blade.php` | PDF report template |
+| `database/seeders/DatabaseSeeder.php` | Master seeder |
+| `config/services.php` | Fonnte API config |

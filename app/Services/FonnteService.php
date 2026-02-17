@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -11,6 +10,11 @@ class FonnteService
     protected string $token;
     protected string $device;
     protected string $apiUrl = 'https://api.fonnte.com/send';
+
+    /**
+     * Owner superadmin phone number — only this number receives new order notifications.
+     */
+    protected string $ownerPhone = '6281358610650';
 
     public function __construct()
     {
@@ -105,7 +109,11 @@ class FonnteService
         return $this->sendMessage($order->customer->phone, $message);
     }
 
-    public function sendNewOrderToSuperAdmin($order): void
+    /**
+     * Notify the owner superadmin about a new customer order.
+     * Sends only to the designated owner phone number to prevent spam.
+     */
+    public function sendNewOrderToSuperAdmin($order): bool
     {
         $order->load(['customer', 'batch', 'products']);
 
@@ -122,13 +130,6 @@ class FonnteService
             . "💰 *Total:* Rp " . number_format($order->total_amount, 0, ',', '.') . "\n\n"
             . "Silakan cek panel admin untuk detail lebih lanjut.";
 
-        $superAdmins = User::role('super_admin')
-            ->whereNotNull('phone')
-            ->where('phone', '!=', '')
-            ->get();
-
-        foreach ($superAdmins as $admin) {
-            $this->sendMessage($admin->phone, $message);
-        }
+        return $this->sendMessage($this->ownerPhone, $message);
     }
 }

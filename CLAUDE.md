@@ -158,10 +158,18 @@ $table->timestamp('picked_up_at')->nullable();
 - Pickup location and hours
 - Reminder to bring pickup code
 
+### Trigger 3: New Customer Order → Superadmin
+**When:** Customer submits pre-order via customer panel
+**Action:** Send WhatsApp message to all super_admin users (with phone number) containing:
+- Order number and customer name
+- Product list and total amount
+- Prompt to check admin panel
+
 **Implementation Notes:**
 - Fonnte API endpoint: `https://api.fonnte.com/send`
 - Store Fonnte token in `.env`: `FONNTE_TOKEN=your_token_here`
 - Queue notifications to avoid blocking admin actions
+- `FonnteService::sendNewOrderToSuperAdmin()` queries `User::role('super_admin')->whereNotNull('phone')`
 
 ## Development Rules & Requirements
 
@@ -429,6 +437,7 @@ app/
 │   │       ├── LatestBatchWidget.php
 │   │       └── AvailableProductsWidget.php
 │   ├── Resources/               # Admin panel resources
+│   │   ├── ActivityLogResource.php  # Audit trail viewer (super_admin only)
 │   │   ├── BatchResource.php
 │   │   ├── CustomerResource.php
 │   │   ├── OrderResource.php
@@ -436,6 +445,8 @@ app/
 │   │   └── UserResource.php     # Super admin only
 │   └── Widgets/
 │       ├── DashboardStatsWidget.php
+│       ├── BatchOrderSummaryWidget.php
+│       ├── ProductionSummaryWidget.php
 │       └── RecentOrdersWidget.php
 ├── Http/
 │   ├── Controllers/OrderPdfController.php
@@ -471,3 +482,67 @@ resources/views/
 ├── pdf/order-report.blade.php
 └── welcome.blade.php
 ```
+
+## Naming & Coding Conventions (Future Codebase)
+
+> These conventions are for **new code going forward**. Do not rename existing files/variables.
+
+### File Naming
+
+| Type | Convention | Example |
+|------|-----------|---------|
+| Model | Singular PascalCase | `Order.php`, `BatchItem.php` |
+| Migration | Laravel snake_case timestamp | `2026_02_16_000001_add_phone_to_users_table.php` |
+| Filament Resource | `{Model}Resource.php` | `OrderResource.php`, `ActivityLogResource.php` |
+| Resource Page | Verb + PascalCase | `ListOrders.php`, `CreateOrder.php`, `EditOrder.php`, `ViewOrder.php` |
+| Filament Widget | Descriptive PascalCase + `Widget` | `DashboardStatsWidget.php`, `WelcomeWidget.php` |
+| Blade View | kebab-case | `order-report.blade.php`, `welcome-widget.blade.php` |
+| Blade Component | kebab-case inside `components/` | `components/landing/product-card.blade.php` |
+| Seeder | `{Model}Seeder.php` | `CustomerSeeder.php`, `UserSeeder.php` |
+| Factory | `{Model}Factory.php` | `CustomerFactory.php`, `UserFactory.php` |
+| Service | `{Purpose}Service.php` | `FonnteService.php`, `ReportService.php` |
+| Controller | `{Purpose}Controller.php` | `OrderPdfController.php` |
+| Middleware | PascalCase descriptive | `CustomerPanelMiddleware.php` |
+| Policy | `{Model}Policy.php` | `OrderPolicy.php`, `ProductPolicy.php` |
+| Customer Page | Context-specific PascalCase | `PreOrder.php`, `EditProfile.php`, `OrderHistory.php` |
+
+### Variable Naming
+
+| Type | Convention | Example |
+|------|-----------|---------|
+| Model instance | `$camelCase` singular | `$order`, `$customer`, `$activeBatch` |
+| Collection | `$camelCase` plural | `$orders`, `$openBatches`, `$activeProducts` |
+| Boolean | `$is/has/can` prefix | `$isSuperAdmin`, `$hasActiveOrders`, `$canEdit` |
+| Count | `$xxxCount` suffix | `$orderCount`, `$pendingPickup` |
+| Amount/Money | `$xxxAmount` or `$xxxTotal` | `$totalAmount`, `$subtotal`, `$totalRevenue` |
+| Query builder | `$query` inside closures | `fn(Builder $query) => $query->where(...)` |
+| Form state | `$data` | `$data = $this->form->getState()` |
+| Config value | descriptive camelCase | `$fonnteToken`, `$apiUrl` |
+
+### Folder Organization
+
+| Concern | Path | Rule |
+|---------|------|------|
+| Admin Resources | `app/Filament/Resources/` | One Resource per model |
+| Admin Widgets | `app/Filament/Widgets/` | Dashboard-level widgets |
+| Customer Pages | `app/Filament/Customer/Pages/` | Feature-specific pages |
+| Customer Widgets | `app/Filament/Customer/Widgets/` | Customer dashboard widgets |
+| Customer Auth | `app/Filament/Customer/Pages/Auth/` | Registration, login customization |
+| Resource Pages | `app/Filament/Resources/{Resource}/Pages/` | List, Create, Edit, View pages |
+| Blade Views | `resources/views/filament/customer/` | Match PHP namespace structure |
+| Landing Components | `resources/views/components/landing/` | Reusable landing page parts |
+| Services | `app/Services/` | Business logic / API integrations |
+
+### Code Style Rules
+
+1. **Labels in Bahasa Indonesia**: All Filament `->label()`, `->description()`, `->helperText()`, notification titles/bodies, empty state text — always Bahasa Indonesia.
+2. **English code**: Variable names, method names, comments, class names — always English.
+3. **Type hints**: Always type-hint method parameters and return types.
+4. **Filament `->native(false)`**: Always set `native(false)` on Select components for consistent styling.
+5. **Guard explicit**: Always specify guard — `auth('customer')->user()`, `auth()->user()` (web guard).
+6. **`firstOrCreate` in seeders**: Use `firstOrCreate` to make seeders idempotent (safe to re-run).
+7. **Price from DB**: Never trust form-submitted prices. Always look up `Product::find($id)->price`.
+8. **Navigation groups**: Resources must specify `$navigationGroup` matching one of: Transaksi, Master Data, Manajemen Produksi, Audit & Log, Pengaturan.
+9. **Soft deletes**: Every model that represents business data must use `SoftDeletes`.
+10. **Activity logging**: Every model must use `LogsActivity` trait with `logFillable()`.
+
