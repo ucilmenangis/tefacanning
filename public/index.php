@@ -32,10 +32,10 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 | Server rumahweb cpanel or local development environment, the vendor directory should be present. If not, we will throw an error.
 */
 
-if (file_exists(__DIR__.'/../laravel/bootstrap/app.php')) {
-    $app = require_once __DIR__.'/../laravel/bootstrap/app.php';
+if (file_exists(__DIR__.'/../laravel/vendor/autoload.php')) {
+    require __DIR__.'/../laravel/vendor/autoload.php';
 }else{
-    $app = require_once __DIR__.'/../vendor/autoload.php';
+    require __DIR__.'/../vendor/autoload.php';
 }
 
 # require __DIR__.'/../vendor/autoload.php';
@@ -51,7 +51,8 @@ if (file_exists(__DIR__.'/../laravel/bootstrap/app.php')) {
 |
 */
 
-// detect if we're running in a cpanel environment or local development environment, and load the appropriate app.php
+// detect if the website is running in a cpanel environment or local development environment, and load the appropriate app.php
+
 if (file_exists(__DIR__.'/../laravel/bootstrap/app.php')) {
     $app = require_once __DIR__.'/../laravel/bootstrap/app.php';
 }else{
