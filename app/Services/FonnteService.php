@@ -14,7 +14,7 @@ class FonnteService
     /**
      * Owner superadmin phone number — only this number receives new order notifications.
      */
-    protected string $ownerPhone = '6281358610650';
+    protected string $ownerPhone = '';
 
     public function __construct()
     {
@@ -121,14 +121,16 @@ class FonnteService
             return "- {$product->name} x{$product->pivot->quantity}";
         })->join("\n");
 
-        $message = "🔔 *Pesanan Baru Masuk!*\n\n"
-            . "📋 *No. Pesanan:* {$order->order_number}\n"
-            . "👤 *Pelanggan:* {$order->customer->name}\n"
-            . "📞 *Kontak:* {$order->customer->phone}\n"
-            . "📦 *Batch:* {$order->batch->name}\n\n"
-            . "*Detail Pesanan:*\n{$items}\n\n"
-            . "💰 *Total:* Rp " . number_format($order->total_amount, 0, ',', '.') . "\n\n"
-            . "Silakan cek panel admin untuk detail lebih lanjut.";
+        $message = "*Hi Owner,*\n"
+            . "Kami dari TEFA Teams memberitahu anda bahwa pesanan baru telah masuk!\n\n"
+            . "- *No. Pesanan:* {$order->order_number}\n"
+            . "- *Pelanggan:* {$order->customer->name}\n"
+            . "- *Kontak:* {$order->customer->phone}\n"
+            . "- *Batch:* {$order->batch->name}\n\n"
+            . "*Detail Pesanan:*\n"
+            . "{$items}\n\n"
+            . "- *Total:* Rp " . number_format($order->total_amount, 0, ',', '.') . "\n\n"
+            . "Silakan cek panel admin tefacanning.my.id/admin untuk detail lebih lanjut. \n_Terima kasih!_";
 
         return $this->sendMessage($this->ownerPhone, $message);
     }
