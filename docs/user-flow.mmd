@@ -1,0 +1,133 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#dc2626', 'primaryTextColor': '#fff', 'lineColor': '#94a3b8', 'fontFamily': 'Inter'}}}%%
+
+%% ══════════════════════════════════════════════════════════════
+%% TEFA Canning SIP — User Flow Diagram
+%% Layout: Top-Down (TD) with isolated subgraphs
+%%   - Each subgraph flows independently (no crossing)
+%%   - Cross-subgraph connections only at edges
+%% ══════════════════════════════════════════════════════════════
+
+flowchart TD
+
+    %% ═══════════════════════════════
+    %% SUBGRAPH 1: PUBLIC
+    %% ═══════════════════════════════
+    subgraph PUBLIC["🌐 Halaman Publik"]
+        direction TB
+        LP["Landing Page<br/>(Produk, Batch, Tentang)"]
+        LP --> BTN_LOGIN["Klik Tombol Login"]
+        LP --> BTN_PO["Klik Pre-Order /<br/>Register"]
+    end
+
+    %% ═══════════════════════════════
+    %% SUBGRAPH 2: CUSTOMER PANEL
+    %% ═══════════════════════════════
+    subgraph CUSTOMER["👤 Customer Panel · /customer"]
+        direction TB
+        C_REG["Register<br/>(Nama, Email, HP,<br/>Organisasi, Alamat)"]
+        C_LOGIN["Login Customer"]
+
+        C_REG --> C_DASH
+        C_LOGIN --> C_DASH
+
+        C_DASH["Dashboard<br/>(4 Widget)"]
+
+        C_DASH --> C_PO["Pre-Order Sarden<br/>Pilih Batch → Pilih Produk"]
+        C_DASH --> C_HIST["Riwayat Pesanan"]
+        C_DASH --> C_PROF["Edit Profil"]
+
+        C_PO --> C_SUBMIT{"Submit<br/>Order?"}
+        C_SUBMIT -->|"Ya"| C_ORDER_OK["Pesanan Dibuat:<br/>• No. Pesanan<br/>• Kode Pickup"]
+        C_SUBMIT -->|"Tidak"| C_DASH
+
+        C_HIST --> C_STATUS{"Status<br/>Pending?"}
+        C_STATUS -->|"Ya"| C_EDIT["Edit / Hapus<br/>Pesanan"]
+        C_STATUS -->|"Tidak"| C_VIEW["Lihat Detail<br/>(Read-Only)"]
+        C_HIST --> C_PDF["Download PDF"]
+
+        C_PROF --> C_ACTIVE{"Pesanan<br/>Aktif?"}
+        C_ACTIVE -->|"Ya"| C_PWD["Hanya Ubah<br/>Password"]
+        C_ACTIVE -->|"Tidak"| C_FULL["Edit Semua<br/>Data Profil"]
+    end
+
+    %% ═══════════════════════════════
+    %% SUBGRAPH 3: ADMIN PANEL
+    %% ═══════════════════════════════
+    subgraph ADMIN["🛡️ Admin Panel · /admin"]
+        direction TB
+        A_LOGIN["Login Admin / Teknisi"]
+        A_LOGIN --> A_DASH
+
+        A_DASH["Dashboard<br/>(Statistik & Widget)"]
+
+        A_DASH --> A_ORDER["📁 Kelola Pesanan"]
+        A_DASH --> A_CUST["📁 Kelola Pelanggan"]
+        A_DASH --> A_PROD["📁 Kelola Produk"]
+        A_DASH --> A_BATCH["📁 Kelola Batch"]
+        A_DASH --> A_AUDIT["📁 Audit Log ⚡"]
+        A_DASH --> A_USER["📁 Kelola Pengguna ⚡"]
+
+        A_ORDER --> A_CRUD_O["CRUD Pesanan +<br/>Export PDF"]
+        A_ORDER --> A_PICKUP_D{"Status<br/>Ready?"}
+        A_PICKUP_D -->|"Ya"| A_PICKUP["Validasi Pickup<br/>→ Picked Up"]
+        A_PICKUP_D -->|"Tidak"| A_CRUD_O
+
+        A_CUST --> A_CRUD_C["CRUD Pelanggan"]
+        A_PROD --> A_CRUD_P["CRUD Produk<br/>(Harga: SA only ⚡)"]
+
+        A_BATCH --> A_BATCH_S["CRUD Batch +<br/>Ubah Status"]
+
+        A_AUDIT --> A_AUDIT_D{"Superadmin?"}
+        A_AUDIT_D -->|"Ya"| A_LOG["View Log Aktivitas<br/>(View Only)"]
+        A_AUDIT_D -->|"Tidak"| A_DENY1["Akses Ditolak"]
+
+        A_USER --> A_USER_D{"Superadmin?"}
+        A_USER_D -->|"Ya"| A_CRUD_U["CRUD Pengguna"]
+        A_USER_D -->|"Tidak"| A_DENY2["Akses Ditolak"]
+    end
+
+    %% ═══════════════════════════════
+    %% SUBGRAPH 4: NOTIFICATIONS
+    %% ═══════════════════════════════
+    subgraph NOTIF["📱 Notifikasi WhatsApp · Fonnte API"]
+        direction TB
+        WA1["📱 WhatsApp ke Superadmin:<br/>Pesanan Baru dari Customer"]
+        WA2["📱 WhatsApp ke Customer:<br/>Konfirmasi Pesanan oleh Admin"]
+        WA3["📱 WhatsApp ke Customer:<br/>Pesanan Siap Diambil"]
+    end
+
+    %% ═══════════════════════════════
+    %% CROSS-SUBGRAPH CONNECTIONS
+    %% (only at edges to avoid crossing)
+    %% ═══════════════════════════════
+
+    %% Public → Customer
+    BTN_LOGIN --> C_LOGIN
+    BTN_PO --> C_REG
+
+    %% Public → Admin
+    BTN_LOGIN --> A_LOGIN
+
+    %% Triggers → Notifications
+    C_ORDER_OK -.->|"Trigger"| WA1
+    A_CRUD_O -.->|"Konfirmasi"| WA2
+    A_BATCH_S -.->|"Status: Ready"| WA3
+
+    %% ══════════════════════════════════════
+    %% STYLING
+    %% ══════════════════════════════════════
+    classDef pub fill:#1e293b,stroke:#64748b,color:#e2e8f0
+    classDef cust fill:#1e3a5f,stroke:#3b82f6,color:#93c5fd
+    classDef adm fill:#3b1f1f,stroke:#dc2626,color:#fca5a5
+    classDef notif fill:#1a3d1a,stroke:#22c55e,color:#86efac
+    classDef decision fill:#334155,stroke:#dc2626,color:#fca5a5,stroke-width:2px
+    classDef denied fill:#451a1a,stroke:#ef4444,color:#fca5a5
+    classDef superonly fill:#4a1d1d,stroke:#f59e0b,color:#fcd34d
+
+    class LP,BTN_LOGIN,BTN_PO pub
+    class C_REG,C_LOGIN,C_DASH,C_PO,C_HIST,C_PROF,C_ORDER_OK,C_EDIT,C_VIEW,C_PDF,C_PWD,C_FULL cust
+    class C_SUBMIT,C_STATUS,C_ACTIVE,A_PICKUP_D,A_AUDIT_D,A_USER_D decision
+    class A_LOGIN,A_DASH,A_ORDER,A_CUST,A_PROD,A_BATCH,A_CRUD_O,A_PICKUP,A_CRUD_C,A_CRUD_P,A_BATCH_S adm
+    class A_AUDIT,A_USER,A_LOG,A_CRUD_U superonly
+    class A_DENY1,A_DENY2 denied
+    class WA1,WA2,WA3 notif
