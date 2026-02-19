@@ -25,6 +25,7 @@ class Order extends Model
         'total_amount',
         'profit',
         'notes',
+        'picked_up_at',
     ];
 
     protected $casts = [
@@ -32,6 +33,21 @@ class Order extends Model
         'profit' => 'decimal:2',
         'picked_up_at' => 'datetime',
     ];
+
+    protected static function booted(): void
+    {
+        static::updating(function (Order $order) {
+            // Auto-set picked_up_at when status changes to picked_up
+            if ($order->isDirty('status') && $order->status === 'picked_up' && !$order->picked_up_at) {
+                $order->picked_up_at = now();
+            }
+
+            // Auto-clear picked_up_at if status changed away from picked_up
+            if ($order->isDirty('status') && $order->status !== 'picked_up') {
+                $order->picked_up_at = null;
+            }
+        });
+    }
 
     public function customer()
     {

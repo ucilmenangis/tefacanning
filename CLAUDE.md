@@ -384,6 +384,13 @@ php artisan make:filament-user
 11. **Edit Tool:** When modifying existing files, use `replace_string_in_file` — never `create_file` on existing files.
 12. **Order Helpers:** Use `Order::generateOrderNumber()`, `Order::generatePickupCode()`, `Order::getStatusColor()`, `Order::getStatusLabel()`, `Order::getStatusIcon()` for consistency.
 13. **Query Optimization:** Consolidate multiple COUNT/SUM queries into single selectRaw. Cache repeated boolean checks in properties.
+14. **Post-Solution Deployment Analysis (MANDATORY):** After every code change, analyze whether the change requires database modifications on the production server. Since the hosting is **Rumahweb entry plan (no SSH access)**, you MUST:
+    - Check if any new migration was created or existing schema changed
+    - If **schema change** (new column, new table, altered column): Tell the user to **export a fresh SQL dump** from local and import via phpMyAdmin, OR provide the exact raw SQL `ALTER TABLE` / `CREATE TABLE` statements to run manually in phpMyAdmin.
+    - If **data-only fix** (UPDATE/INSERT existing rows): Provide the exact raw SQL query to run in phpMyAdmin.
+    - If **code-only change** (no DB impact): Explicitly state "No database changes needed — just upload the updated files."
+    - Always format the SQL in a copyable code block.
+    - Always warn if the SQL is destructive (DELETE, TRUNCATE, DROP).
 
 ### Prompt Suggestions for Common Tasks
 - "Tambahkan fitur [X] di panel customer" → Creates new Page in `app/Filament/Customer/Pages/`

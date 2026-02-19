@@ -128,6 +128,30 @@ php artisan test                     # Run tests
 4. **Filament brand logo dark mode** → Gunakan `politeknik_logo_red.png`
 5. **Google Maps di footer** → Pindah ke kolom ke-4 grid
 6. **create_file on existing file** → Harus pakai replace_string_in_file
+7. **picked_up_at selalu NULL** → `picked_up_at` tidak ada di `$fillable` Order model + tidak ada auto-set saat status diubah via form edit. Fix: tambah ke `$fillable` + `booted()` event di Order model. SQL fix untuk data lama: `UPDATE orders SET picked_up_at = updated_at WHERE status = 'picked_up' AND picked_up_at IS NULL;`
+
+---
+
+## 🚀 Aturan Deploy ke Hosting (Rumahweb Entry Plan — No SSH)
+
+> ⚠️ Rumahweb entry plan TIDAK punya SSH access. Semua database changes harus dilakukan **manual via phpMyAdmin**.
+
+### Setelah Setiap Perubahan Code, Cek:
+
+| Jenis Perubahan | Aksi yang Diperlukan |
+|-----------------|---------------------|
+| **Schema change** (kolom baru, tabel baru, alter column) | Export SQL dump dari local → Import di phpMyAdmin hosting, ATAU jalankan `ALTER TABLE` / `CREATE TABLE` manual di phpMyAdmin |
+| **Data fix** (UPDATE/INSERT baris) | Jalankan query SQL di phpMyAdmin hosting |
+| **Code only** (tidak ada perubahan DB) | Upload file yang berubah saja via File Manager / FTP |
+
+### Workflow Deploy:
+1. Push ke GitHub
+2. Di hosting: pull via Git (jika ada Git) atau upload manual via File Manager
+3. Jika ada migration baru → jalankan SQL equivalent di phpMyAdmin
+4. Clear cache: buat file `clear-cache.php` di public/ yang menjalankan `Artisan::call('optimize:clear')`
+
+### Template Perintah untuk Claude/AI:
+> "Setelah memberikan solusi, WAJIB analisis apakah perubahan membutuhkan update database di server. Jika ya, berikan SQL mentah yang bisa di-copy-paste ke phpMyAdmin."
 
 ---
 

@@ -67,7 +67,8 @@ class DashboardStatsWidget extends BaseWidget
                 ->color('success')
                 ->chart([4, 6, 8, 7, 9, 10, 12]);
 
-            $totalProfit = Order::whereNotNull('picked_up_at')->sum('profit');
+            // Pajak (ppn) 10% , bahan baku 50%, dan biaya operasional 20% dari total omzet, sehingga profit bersih sekitar 20%
+            $totalProfit = Order::whereNotNull('picked_up_at')->sum('total_amount') * 0.2;
             $stats[] = Stat::make('Total Profit', 'Rp ' . number_format($totalProfit, 0, ',', '.'))
                 ->description('Keuntungan bersih')
                 ->icon('heroicon-o-chart-bar')
