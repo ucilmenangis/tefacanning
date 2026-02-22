@@ -1,0 +1,46 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#dc2626', 'primaryTextColor': '#fff', 'lineColor': '#94a3b8', 'fontFamily': 'Inter'}}}%%
+
+flowchart TD
+    START(["🟢 Start"])
+    START --> D1["Buka Halaman Pre-Order<br/>dari Menu Sidebar"]
+
+    D1 --> D2["SECTION 1: Informasi Batch<br/>Pilih Batch Produksi<br/>dari Dropdown"]
+    D2 --> D2a{"Batch<br/>Tersedia?"}
+    D2a -->|"Tidak"| D2b["Tidak Ada Batch Open<br/>Tidak Bisa Pre-Order"]
+    D2b --> DONE_FAIL(["🔴 End"])
+    D2a -->|"Ya"| D3["Sistem Tampilkan<br/>Detail Batch:<br/>Nama, Event, Tanggal"]
+
+    D3 --> D4["SECTION 2: Pilih Produk<br/>Klik '+ Tambah Produk'"]
+    D4 --> D5["Pilih Produk dari Dropdown<br/>(Nama + Harga/unit)"]
+    D5 --> D6["Isi Jumlah Kaleng<br/>(Min: 100, Max: 3000)"]
+    D6 --> D7["Subtotal Dihitung<br/>Otomatis oleh Sistem"]
+    D7 --> D7a{"Tambah<br/>Produk Lagi?"}
+    D7a -->|"Ya (Max 10)"| D4
+    D7a -->|"Tidak"| D8["SECTION 3: Catatan<br/>Tambahan (Opsional)"]
+
+    D8 --> D9["Klik 'Kirim Pre-Order'"]
+    D9 --> V1{"Validasi<br/>Server-Side?"}
+    V1 -->|"❌ Batch Ditutup"| ERR1["Error: Batch Tidak<br/>Tersedia Lagi"]
+    V1 -->|"❌ Produk Kosong"| ERR2["Error: Tambahkan<br/>Minimal 1 Produk"]
+    ERR1 --> D2
+    ERR2 --> D4
+    V1 -->|"✅ Valid"| D10["Kalkulasi Harga dari DB<br/>(Server-Side Price Lookup)"]
+
+    D10 --> D11["Buat Record Order:<br/>• No: ORD-XXXXXXXX<br/>• Kode Pickup: XXXXXX<br/>• Status: Pending<br/>• Total dari DB Price"]
+    D11 --> D12["Simpan Item ke<br/>Tabel Pivot order_product"]
+    D12 --> D13["Kirim Notifikasi WhatsApp<br/>ke Superadmin via Fonnte"]
+    D13 --> D14["Tampilkan Notifikasi:<br/>'Pre-Order Berhasil! 🎉'<br/>+ No. Pesanan + Kode Pickup"]
+    D14 --> D15["Form Direset<br/>(Siap Order Baru)"]
+    D15 --> DONE(["🔴 End"])
+
+    style START fill:#22c55e,color:#fff
+    style DONE fill:#dc2626,color:#fff
+    style DONE_FAIL fill:#dc2626,color:#fff
+    style V1 fill:#f59e0b,color:#000
+    style D2a fill:#f59e0b,color:#000
+    style D7a fill:#f59e0b,color:#000
+    style ERR1 fill:#ef4444,color:#fff
+    style ERR2 fill:#ef4444,color:#fff
+    style D10 fill:#3b82f6,color:#fff
+    style D11 fill:#3b82f6,color:#fff
+    style D13 fill:#22c55e,color:#fff

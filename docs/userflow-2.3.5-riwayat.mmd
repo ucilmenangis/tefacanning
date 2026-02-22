@@ -1,0 +1,48 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#dc2626', 'primaryTextColor': '#fff', 'lineColor': '#94a3b8', 'fontFamily': 'Inter'}}}%%
+
+flowchart TD
+    START(["🟢 Start"])
+    START --> E1["Buka Halaman<br/>Riwayat Pesanan<br/>dari Menu Sidebar"]
+    E1 --> E2["Sistem Menampilkan<br/>Tabel Pesanan Milik Customer<br/>(Urut Terbaru)"]
+    E2 --> E2a{"Ada<br/>Pesanan?"}
+    E2a -->|"Tidak"| E2b["Tampilkan Empty State:<br/>'Belum ada pesanan'"]
+    E2b --> DONE_EMPTY(["🔴 End"])
+    E2a -->|"Ya"| E3["Tabel Menampilkan:<br/>No. Pesanan, Batch, Produk,<br/>Total, Status, Tanggal"]
+
+    E3 --> E4{"Pilih<br/>Aksi?"}
+
+    E4 -->|"📝 Edit"| E5{"Status<br/>Pending?"}
+    E5 -->|"Ya"| E6["Redirect ke<br/>Halaman Edit Pesanan"]
+    E5 -->|"Tidak"| E5a["Tombol Edit<br/>Tidak Muncul"]
+
+    E4 -->|"📄 PDF"| E7["Buka PDF Laporan<br/>di Tab Baru"]
+
+    E4 -->|"🗑️ Hapus"| E8{"Status<br/>Pending?"}
+    E8 -->|"Ya"| E9["Tampilkan Modal<br/>Konfirmasi Hapus"]
+    E9 --> E9a{"Konfirmasi?"}
+    E9a -->|"Ya, Hapus"| E10["Pesanan Dihapus<br/>(Soft Delete)"]
+    E9a -->|"Batal"| E3
+    E8 -->|"Tidak"| E8a["Tombol Hapus<br/>Tidak Muncul"]
+
+    E4 -->|"🔍 Lihat Kode Pickup"| E11{"Status<br/>Ready?"}
+    E11 -->|"Ya"| E12["Kode Pickup Ditampilkan<br/>di Kolom 'Kode Ambil'"]
+    E11 -->|"Tidak"| E12a["Kolom Kode Pickup<br/>Tersembunyi"]
+
+    E10 --> E3
+    E6 --> DONE(["🔴 End"])
+    E7 --> DONE
+    E5a --> E3
+    E8a --> E3
+    E12 --> E3
+    E12a --> E3
+
+    style START fill:#22c55e,color:#fff
+    style DONE fill:#dc2626,color:#fff
+    style DONE_EMPTY fill:#dc2626,color:#fff
+    style E4 fill:#f59e0b,color:#000
+    style E5 fill:#f59e0b,color:#000
+    style E8 fill:#f59e0b,color:#000
+    style E9a fill:#f59e0b,color:#000
+    style E11 fill:#f59e0b,color:#000
+    style E10 fill:#ef4444,color:#fff
+    style E2a fill:#f59e0b,color:#000

@@ -1,0 +1,49 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#dc2626', 'primaryTextColor': '#fff', 'lineColor': '#94a3b8', 'fontFamily': 'Inter'}}}%%
+
+flowchart TD
+    START(["🟢 Start<br/>(Admin Login)"])
+    START --> F1["Buka Menu Sidebar<br/>Grup 'Master Data'"]
+
+    F1 --> F2["Kelola Pelanggan"]
+    F1 --> F3["Kelola Produk"]
+
+    %% ── PELANGGAN ──
+    F2 --> F2a["Tabel Pelanggan:<br/>Nama, Email, HP,<br/>Organisasi, Alamat, Jumlah Order"]
+    F2a --> F2b{"Pilih Aksi?"}
+    F2b -->|"➕ Buat Baru"| F2c["Isi Form:<br/>Nama, Email, HP,<br/>Organisasi, Alamat"]
+    F2b -->|"✏️ Edit"| F2d["Edit Data Pelanggan"]
+    F2b -->|"🗑️ Hapus"| F2e["Soft Delete Pelanggan"]
+    F2b -->|"👁️ Lihat"| F2f["Detail Pelanggan +<br/>Tabel Riwayat Pesanan"]
+    F2c --> F2a
+    F2d --> F2a
+    F2e --> F2a
+    F2f --> F2a
+
+    %% ── PRODUK ──
+    F3 --> F3a["Tabel Produk:<br/>Nama, SKU, Harga,<br/>Satuan, Status"]
+    F3a --> F3b{"Pilih Aksi?"}
+    F3b -->|"➕ Buat Baru"| F3c["Isi Form Produk"]
+    F3b -->|"✏️ Edit"| F3d{"Superadmin?"}
+    F3d -->|"Ya"| F3e["Edit Semua Data<br/>Termasuk Harga"]
+    F3d -->|"Tidak (Teknisi)"| F3f["Edit Data Produk<br/>TANPA Kolom Harga"]
+    F3b -->|"🗑️ Hapus"| F3g{"Produk<br/>Inti?"}
+    F3g -->|"Ya (SST/ASN/SSC)"| F3h["❌ Tombol Hapus<br/>Tersembunyi"]
+    F3g -->|"Tidak"| F3i["Soft Delete Produk"]
+    F3c --> F3a
+    F3e --> F3a
+    F3f --> F3a
+    F3h --> F3a
+    F3i --> F3a
+
+    F2a --> DONE(["🔴 End"])
+    F3a --> DONE
+
+    style START fill:#22c55e,color:#fff
+    style DONE fill:#dc2626,color:#fff
+    style F2b fill:#f59e0b,color:#000
+    style F3b fill:#f59e0b,color:#000
+    style F3d fill:#f59e0b,color:#000
+    style F3g fill:#f59e0b,color:#000
+    style F3h fill:#ef4444,color:#fff
+    style F3e fill:#8b5cf6,color:#fff
+    style F3f fill:#6b7280,color:#fff

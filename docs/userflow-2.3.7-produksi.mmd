@@ -1,0 +1,38 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#dc2626', 'primaryTextColor': '#fff', 'lineColor': '#94a3b8', 'fontFamily': 'Inter'}}}%%
+
+flowchart TD
+    START(["🟢 Start<br/>(Admin Login)"])
+    START --> G1["Buka Menu Sidebar<br/>'Manajemen Produksi'<br/>→ Kelola Batch"]
+    G1 --> G2["Tabel Batch:<br/>Nama, Event, Tanggal,<br/>Status, Jumlah Pesanan"]
+
+    G2 --> G3{"Pilih Aksi?"}
+    G3 -->|"➕ Buat Baru"| G4["Isi Form Batch:<br/>• Nama Batch<br/>• Status (default: Open)<br/>• Nama Event<br/>• Tanggal Event<br/>• Deskripsi"]
+    G4 --> G4a["Simpan Batch Baru"]
+    G4a --> G2
+
+    G3 -->|"✏️ Edit"| G5["Edit Data Batch"]
+    G5 --> G5a{"Ubah Status<br/>ke Ready?"}
+    G5a -->|"Tidak"| G5b["Simpan Perubahan<br/>Biasa"]
+    G5b --> G2
+    G5a -->|"Ya"| G6["Simpan Status = Ready"]
+    G6 --> G7["🔔 Trigger Otomatis:<br/>Kirim WhatsApp ke SEMUA<br/>Customer dalam Batch"]
+    G7 --> G8["Fonnte API Mengirim<br/>Pesan 'Pesanan Siap Diambil'<br/>ke Setiap Pelanggan"]
+    G8 --> G2
+
+    G3 -->|"🗑️ Hapus"| G9["Soft Delete Batch"]
+    G9 --> G2
+
+    G3 -->|"👁️ Lihat"| G10["Detail Batch +<br/>Statistik Pesanan"]
+    G10 --> G2
+
+    %% Siklus Status Batch
+    G2 --> CYCLE["📌 Siklus Status Batch:<br/>🟢 Open → 🟡 Processing<br/>→ 🔵 Ready → 🔴 Closed"]
+    CYCLE --> DONE(["🔴 End"])
+
+    style START fill:#22c55e,color:#fff
+    style DONE fill:#dc2626,color:#fff
+    style G3 fill:#f59e0b,color:#000
+    style G5a fill:#f59e0b,color:#000
+    style G7 fill:#22c55e,color:#fff
+    style G8 fill:#22c55e,color:#fff
+    style CYCLE fill:#6366f1,color:#fff

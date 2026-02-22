@@ -1,0 +1,43 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#dc2626', 'primaryTextColor': '#fff', 'lineColor': '#94a3b8', 'fontFamily': 'Inter'}}}%%
+
+flowchart TD
+    START(["🟢 Start<br/>(Admin Login)"])
+    START --> I1["Buka Menu Sidebar<br/>'Pengaturan'<br/>→ Manajemen Pengguna"]
+
+    I1 --> I2{"Superadmin?"}
+    I2 -->|"❌ Tidak (Teknisi)"| I3["Akses Ditolak<br/>oleh Filament Shield"]
+    I3 --> DONE_DENY(["🔴 End"])
+
+    I2 -->|"✅ Ya"| I4["Tabel Pengguna:<br/>Nama, Email, HP,<br/>Role, Tanggal Dibuat"]
+
+    I4 --> I5{"Pilih Aksi?"}
+
+    I5 -->|"➕ Buat Baru"| I6["Isi Form Pengguna:<br/>• Nama Lengkap<br/>• Email<br/>• No. Telepon<br/>• Password<br/>• Pilih Role"]
+    I6 --> I6a["Simpan Pengguna Baru"]
+    I6a --> I4
+
+    I5 -->|"✏️ Edit"| I7["Edit Data Pengguna"]
+    I7 --> I4
+
+    I5 -->|"🗑️ Hapus"| I8{"Target =<br/>Superadmin?"}
+    I8 -->|"Ya"| I9["❌ Tidak Bisa Hapus<br/>Akun Superadmin"]
+    I8 -->|"Tidak"| I10{"Target =<br/>Diri Sendiri?"}
+    I10 -->|"Ya"| I11["❌ Tidak Bisa Hapus<br/>Akun Sendiri"]
+    I10 -->|"Tidak"| I12["Hapus Akun<br/>Pengguna (Soft Delete)"]
+
+    I9 --> I4
+    I11 --> I4
+    I12 --> I4
+
+    I4 --> DONE(["🔴 End"])
+
+    style START fill:#22c55e,color:#fff
+    style DONE fill:#dc2626,color:#fff
+    style DONE_DENY fill:#dc2626,color:#fff
+    style I2 fill:#f59e0b,color:#000
+    style I5 fill:#f59e0b,color:#000
+    style I8 fill:#f59e0b,color:#000
+    style I10 fill:#f59e0b,color:#000
+    style I3 fill:#ef4444,color:#fff
+    style I9 fill:#ef4444,color:#fff
+    style I11 fill:#ef4444,color:#fff

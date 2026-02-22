@@ -22,16 +22,18 @@
   - 1.5 Batasan Masalah
 
 - **BAB II — PENGEMBANGAN ALUR SISTEM TRANSAKSI PADA TEFA CANNING**
-  - 2.1 Gambaran Umum Alur Sistem
-  - 2.2 Alur Pengguna Publik (Landing Page)
-  - 2.3 Alur Pelanggan (Customer Panel)
-    - 2.3.1 Registrasi Akun
-    - 2.3.2 Login Pelanggan
-    - 2.3.3 Dashboard Pelanggan
-    - 2.3.4 Pre-Order Sarden
-    - 2.3.5 Riwayat Pesanan
-    - 2.3.6 Edit Pesanan
-    - 2.3.7 Edit Profil
+  - 2.1 User Flow
+  - 2.2 Gambaran Umum Alur Sistem
+  - 2.3 Alur Pengguna Publik (Landing Page)
+    - 2.3.1 Registrasi Akun *(+ User Flow Diagram)*
+    - 2.3.2 Login Pelanggan *(+ User Flow Diagram)*
+    - 2.3.3 Dashboard Pelanggan *(+ User Flow Diagram)*
+    - 2.3.4 Pre-Order Sarden *(+ User Flow Diagram)*
+    - 2.3.5 Riwayat Pesanan *(+ User Flow Diagram)*
+    - 2.3.6 Halaman Master Data (Pelanggan & Produk) *(+ User Flow Diagram)*
+    - 2.3.7 Halaman Manajemen Produksi (Kelola Batch) *(+ User Flow Diagram)*
+    - 2.3.8 Halaman Audit Log *(+ User Flow Diagram)*
+    - 2.3.9 Halaman Pengaturan (Manajemen Pengguna) *(+ User Flow Diagram)*
   - 2.4 Alur Administrator (Admin Panel)
     - 2.4.1 Login Administrator
     - 2.4.2 Dashboard Admin
@@ -213,6 +215,9 @@ Registrasi akun merupakan langkah pertama bagi pelanggan baru yang ingin menggun
 
 <!-- #image: Tampilan halaman registrasi customer -->
 
+**User Flow Diagram — Registrasi Akun:**
+> 📊 Lihat diagram: [`docs/userflow-per-fitur.md` → 2.3.1 User Flow — Registrasi Akun](userflow-per-fitur.md#231-user-flow--registrasi-akun)
+
 ### 2.3.2 Login Pelanggan
 
 Pelanggan yang sudah memiliki akun dapat langsung login melalui halaman `/customer/login`.
@@ -226,6 +231,9 @@ Pelanggan yang sudah memiliki akun dapat langsung login melalui halaman `/custom
 3. **Verifikasi dan redirect** — Sistem memverifikasi kredensial menggunakan *guard* `customer` yang terpisah dari guard admin. Jika berhasil, pelanggan diarahkan ke dashboard customer (`/customer`). Jika gagal, sistem menampilkan pesan kesalahan.
 
 <!-- #image: Tampilan halaman login customer -->
+
+**User Flow Diagram — Login Pelanggan:**
+> 📊 Lihat diagram: [`docs/userflow-per-fitur.md` → 2.3.2 User Flow — Login Pelanggan](userflow-per-fitur.md#232-user-flow--login-pelanggan)
 
 ### 2.3.3 Dashboard Pelanggan
 
@@ -242,6 +250,9 @@ Dashboard pelanggan merupakan halaman utama setelah login yang menyajikan ringka
 4. **Widget Produk Tersedia (Available Products Widget)** — Menampilkan daftar produk sarden kaleng yang berstatus aktif beserta harga per unit. Widget ini membantu pelanggan mengetahui produk apa saja yang tersedia dan berapa harganya sebelum memulai proses pre-order.
 
 <!-- #image: Tampilan dashboard customer dengan 4 widget -->
+
+**User Flow Diagram — Dashboard Pelanggan:**
+> 📊 Lihat diagram: [`docs/userflow-per-fitur.md` → 2.3.3 User Flow — Dashboard Pelanggan](userflow-per-fitur.md#233-user-flow--dashboard-pelanggan)
 
 ### 2.3.4 Pre-Order Sarden
 
@@ -266,6 +277,9 @@ Halaman pre-order merupakan fitur utama panel customer yang memungkinkan pelangg
 5. **Konfirmasi sukses** — Sistem menampilkan notifikasi hijau "Pre-Order Berhasil! 🎉" yang berisi nomor pesanan, total pembayaran, dan kode pengambilan. Formulir direset untuk memungkinkan pelanggan membuat pesanan baru.
 
 <!-- #image: Tampilan halaman pre-order (formulir terisi) -->
+
+**User Flow Diagram — Pre-Order Sarden:**
+> 📊 Lihat diagram: [`docs/userflow-per-fitur.md` → 2.3.4 User Flow — Pre-Order Sarden](userflow-per-fitur.md#234-user-flow--pre-order-sarden)
 
 ### 2.3.5 Riwayat Pesanan
 
@@ -294,6 +308,9 @@ Halaman riwayat pesanan menampilkan seluruh pesanan yang pernah dibuat oleh pela
 Tabel diurutkan berdasarkan tanggal pembuatan terbaru (descending) dan mendukung paginasi dengan pilihan 5, 10, atau 25 baris per halaman. Jika belum ada pesanan, tabel menampilkan pesan "Belum ada pesanan — Silakan buat pre-order terlebih dahulu."
 
 <!-- #image: Tampilan halaman riwayat pesanan (tabel dengan data) -->
+
+**User Flow Diagram — Riwayat Pesanan:**
+> 📊 Lihat diagram: [`docs/userflow-per-fitur.md` → 2.3.5 User Flow — Riwayat Pesanan](userflow-per-fitur.md#235-user-flow--riwayat-pesanan)
 
 ### 2.3.6 Edit Pesanan
 
@@ -454,6 +471,9 @@ Terdapat **aturan proteksi khusus** pada halaman ini:
 <!-- #image: Tampilan halaman daftar produk -->
 <!-- #image: Tampilan formulir edit produk (login Super Admin — harga dapat diedit) -->
 
+**User Flow Diagram — Master Data (Pelanggan & Produk):**
+> 📊 Lihat diagram: [`docs/userflow-per-fitur.md` → 2.3.6 User Flow — Halaman Master Data](userflow-per-fitur.md#236-user-flow--halaman-master-data-pelanggan--produk)
+
 ### 2.4.5 Halaman Manajemen Produksi (Kelola Batch)
 
 Halaman kelola batch merupakan pusat pengelolaan siklus produksi. Setiap batch merepresentasikan satu periode produksi yang terhubung dengan event kampus. Halaman ini berada di bawah grup navigasi "Manajemen Produksi" dan menampilkan *badge* pada sidebar yang menunjukkan jumlah batch berstatus *Open*.
@@ -478,6 +498,9 @@ Ketika admin mengubah status batch menjadi **Ready for Pickup**, sistem secara o
 
 <!-- #image: Tampilan halaman daftar batch -->
 <!-- #image: Tampilan formulir buat/edit batch -->
+
+**User Flow Diagram — Manajemen Produksi (Kelola Batch):**
+> 📊 Lihat diagram: [`docs/userflow-per-fitur.md` → 2.3.7 User Flow — Manajemen Produksi](userflow-per-fitur.md#237-user-flow--halaman-manajemen-produksi-kelola-batch)
 
 ### 2.4.6 Halaman Audit Log
 
@@ -506,6 +529,9 @@ Data audit log diperbarui secara otomatis setiap 30 detik.
 <!-- #image: Tampilan halaman audit log (tabel) -->
 <!-- #image: Tampilan detail audit log (perbandingan old/new values) -->
 
+**User Flow Diagram — Audit Log:**
+> 📊 Lihat diagram: [`docs/userflow-per-fitur.md` → 2.3.8 User Flow — Halaman Audit Log](userflow-per-fitur.md#238-user-flow--halaman-audit-log)
+
 ### 2.4.7 Halaman Pengaturan (Manajemen Pengguna)
 
 Halaman manajemen pengguna digunakan untuk mengelola akun admin dan teknisi. Halaman ini berada di bawah grup navigasi "Pengaturan" dan **hanya dapat diakses oleh Super Admin**.
@@ -529,6 +555,9 @@ Halaman manajemen pengguna digunakan untuk mengelola akun admin dan teknisi. Hal
 - Teknisi **tidak dapat mengakses** halaman ini sama sekali.
 
 <!-- #image: Tampilan halaman manajemen pengguna -->
+
+**User Flow Diagram — Pengaturan (Manajemen Pengguna):**
+> 📊 Lihat diagram: [`docs/userflow-per-fitur.md` → 2.3.9 User Flow — Manajemen Pengguna](userflow-per-fitur.md#239-user-flow--halaman-pengaturan-manajemen-pengguna)
 
 ## 2.5 Alur Notifikasi WhatsApp (Fonnte API)
 

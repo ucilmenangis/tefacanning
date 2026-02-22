@@ -1,0 +1,24 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#dc2626', 'primaryTextColor': '#fff', 'lineColor': '#94a3b8', 'fontFamily': 'Inter'}}}%%
+
+flowchart TD
+    START(["🟢 Start"])
+    START --> B1["Buka Landing Page"]
+    B1 --> B2["Klik Tombol 'Login'<br/>di Navbar"]
+    B2 --> B3["Sistem Menampilkan<br/>Halaman Login Customer<br/>(/customer/login)"]
+    B3 --> B4["Isi Email & Password"]
+    B4 --> B5["Klik Tombol 'Login'"]
+    B5 --> V1{"Verifikasi<br/>Kredensial?"}
+    V1 -->|"❌ Gagal"| ERR1["Tampilkan Error:<br/>'Email atau password salah'"]
+    ERR1 --> B4
+    V1 -->|"✅ Berhasil"| B6["Autentikasi dengan<br/>Guard 'customer'"]
+    B6 --> B7["Redirect ke<br/>Dashboard Customer<br/>(/customer)"]
+    B7 --> DONE(["🔴 End"])
+
+    B3 --> B8["Belum punya akun?<br/>Klik 'Register'"]
+    B8 --> B9["Redirect ke<br/>Halaman Registrasi"]
+
+    style START fill:#22c55e,color:#fff
+    style DONE fill:#dc2626,color:#fff
+    style V1 fill:#f59e0b,color:#000
+    style ERR1 fill:#ef4444,color:#fff
+    style B6 fill:#3b82f6,color:#fff

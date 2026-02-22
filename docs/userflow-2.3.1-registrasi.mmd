@@ -1,0 +1,22 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#dc2626', 'primaryTextColor': '#fff', 'lineColor': '#94a3b8', 'fontFamily': 'Inter'}}}%%
+
+flowchart TD
+    START(["🟢 Start"])
+    START --> A1["Buka Landing Page<br/>(tefacanning.my.id)"]
+    A1 --> A2["Klik 'Pre-Order Sekarang'<br/>atau 'Register'"]
+    A2 --> A3["Sistem Menampilkan<br/>Formulir Registrasi"]
+    A3 --> A4["Isi Formulir:<br/>• Nama Lengkap<br/>• Email<br/>• No. Telepon<br/>• Organisasi (opsional)<br/>• Alamat<br/>• Password<br/>• Konfirmasi Password"]
+    A4 --> A5["Klik Tombol 'Register'"]
+    A5 --> V1{"Validasi<br/>Data?"}
+    V1 -->|"❌ Gagal"| ERR1["Tampilkan Pesan Error:<br/>• Email sudah terdaftar<br/>• Format telepon salah<br/>• Password < 8 karakter<br/>• Konfirmasi tidak cocok"]
+    ERR1 --> A4
+    V1 -->|"✅ Berhasil"| A6["Akun Pelanggan Dibuat<br/>di Database"]
+    A6 --> A7["Auto-Login dengan<br/>Guard 'customer'"]
+    A7 --> A8["Redirect ke<br/>Dashboard Customer"]
+    A8 --> DONE(["🔴 End"])
+
+    style START fill:#22c55e,color:#fff
+    style DONE fill:#dc2626,color:#fff
+    style V1 fill:#f59e0b,color:#000
+    style ERR1 fill:#ef4444,color:#fff
+    style A6 fill:#3b82f6,color:#fff

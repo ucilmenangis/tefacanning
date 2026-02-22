@@ -1,0 +1,34 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#dc2626', 'primaryTextColor': '#fff', 'lineColor': '#94a3b8', 'fontFamily': 'Inter'}}}%%
+
+flowchart TD
+    START(["🟢 Start<br/>(Sudah Login)"])
+    START --> C1["Sistem Menampilkan<br/>Dashboard Customer<br/>(/customer)"]
+
+    C1 --> W1["📋 Widget 1: Selamat Datang<br/>Nama, Email, Organisasi,<br/>Tanggal Bergabung"]
+    C1 --> W2["📊 Widget 2: Ringkasan Pesanan<br/>Total Pesanan, Total Belanja,<br/>Dikonfirmasi, Menunggu"]
+    C1 --> W3["📅 Widget 3: Batch Terbaru<br/>Nama Batch, Event, Tanggal"]
+    C1 --> W4["🛒 Widget 4: Produk Tersedia<br/>Daftar Produk Aktif + Harga"]
+
+    W1 --> NAV{"Navigasi<br/>Menu?"}
+    W2 --> NAV
+    W3 --> NAV
+    W4 --> NAV
+
+    NAV -->|"Pre-Order"| N1["Buka Halaman<br/>Pre-Order"]
+    NAV -->|"Riwayat Pesanan"| N2["Buka Halaman<br/>Riwayat Pesanan"]
+    NAV -->|"Profil Saya"| N3["Buka Halaman<br/>Edit Profil"]
+
+    W3 --> CTA["Klik Tombol<br/>'Pre-Order Sekarang'<br/>pada Widget Batch"]
+    CTA --> N1
+
+    N1 --> DONE(["🔴 End"])
+    N2 --> DONE
+    N3 --> DONE
+
+    style START fill:#22c55e,color:#fff
+    style DONE fill:#dc2626,color:#fff
+    style NAV fill:#f59e0b,color:#000
+    style W1 fill:#6366f1,color:#fff
+    style W2 fill:#6366f1,color:#fff
+    style W3 fill:#6366f1,color:#fff
+    style W4 fill:#6366f1,color:#fff

@@ -1,0 +1,36 @@
+%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#dc2626', 'primaryTextColor': '#fff', 'lineColor': '#94a3b8', 'fontFamily': 'Inter'}}}%%
+
+flowchart TD
+    START(["🟢 Start<br/>(Admin Login)"])
+    START --> H1["Buka Menu Sidebar<br/>'Audit & Log'<br/>→ Activity Log"]
+
+    H1 --> H2{"Superadmin?"}
+    H2 -->|"❌ Tidak (Teknisi)"| H3["Akses Ditolak<br/>oleh Filament Shield"]
+    H3 --> DONE_DENY(["🔴 End"])
+
+    H2 -->|"✅ Ya"| H4["Tabel Audit Log:<br/>Waktu, Aktor, Aksi,<br/>Target, Deskripsi"]
+
+    H4 --> H5{"Filter<br/>Data?"}
+    H5 -->|"Filter Aksi"| H5a["Created / Updated /<br/>Deleted"]
+    H5 -->|"Filter Model"| H5b["Batch / Order /<br/>Product / Customer"]
+    H5 -->|"Tanpa Filter"| H4
+    H5a --> H4
+    H5b --> H4
+
+    H4 --> H6{"Lihat<br/>Detail?"}
+    H6 -->|"Ya"| H7["Halaman Detail Log:<br/>• Timestamp Lengkap<br/>• Nama Aktor<br/>• Model & ID Target<br/>• Old Values vs New Values"]
+    H6 -->|"Tidak"| H4
+    H7 --> H4
+
+    H4 --> INFO["ℹ️ VIEW ONLY<br/>Tidak Ada CRUD<br/>Data Dicatat Otomatis<br/>oleh Spatie Activity Log"]
+    INFO --> DONE(["🔴 End"])
+
+    style START fill:#22c55e,color:#fff
+    style DONE fill:#dc2626,color:#fff
+    style DONE_DENY fill:#dc2626,color:#fff
+    style H2 fill:#f59e0b,color:#000
+    style H5 fill:#f59e0b,color:#000
+    style H6 fill:#f59e0b,color:#000
+    style H3 fill:#ef4444,color:#fff
+    style INFO fill:#6366f1,color:#fff
+    style H7 fill:#3b82f6,color:#fff
