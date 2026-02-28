@@ -32,7 +32,7 @@ class OrderHistory extends Page implements HasTable
         return $table
             ->query(
                 Order::query()
-                    ->where('customer_id', auth('customer')->id())
+                    ->where('customer_id', auth('customer')->id() ?? 0) // fallback to 0 when no user
                     ->with(['batch', 'products'])
             )
             ->columns([

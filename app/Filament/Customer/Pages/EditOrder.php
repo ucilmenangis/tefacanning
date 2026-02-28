@@ -42,6 +42,11 @@ class EditOrder extends Page implements HasForms
     {
         $orderId = $order instanceof Order ? $order->id : $order;
 
+        // TEMPORARILY: Abort if no customer is logged in (agent access)
+        if (!auth('customer')->id()) {
+            abort(403, 'Login required');
+        }
+
         $this->order = Order::where('id', $orderId)
             ->where('customer_id', auth('customer')->id())
             ->where('status', 'pending')

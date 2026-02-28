@@ -20,3 +20,8 @@ README 2.md
 *.blade.php.bak
 *.sql
 tefa_canning_db*.sql
+/docs
+/dummy_pages
+/dummy_pages_2
+*.html
+*.DS_Store

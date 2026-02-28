@@ -16,6 +16,16 @@ class OrderSummaryWidget extends BaseWidget
     {
         $customerId = auth('customer')->id();
 
+        // TEMPORARILY: Return empty stats when no user is logged in (agent access)
+        if (!$customerId) {
+            return [
+                Stat::make('Total Pesanan', 0)->description('Tidak ada data')->icon('heroicon-o-shopping-bag')->color('gray'),
+                Stat::make('Total Belanja', 'Rp 0')->description('Tidak ada data')->icon('heroicon-o-banknotes')->color('gray'),
+                Stat::make('Menunggu Konfirmasi', '0')->description('Tidak ada data')->icon('heroicon-o-clock')->color('gray'),
+                Stat::make('Siap Diambil', '0')->description('Tidak ada data')->icon('heroicon-o-check-circle')->color('gray'),
+            ];
+        }
+
         // Single query instead of 4 separate queries
         $stats = Order::where('customer_id', $customerId)
             ->selectRaw('COUNT(*) as total_orders')

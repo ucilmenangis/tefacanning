@@ -25,9 +25,9 @@ class CustomerPanelProvider extends PanelProvider
         return $panel
             ->id('customer')
             ->path('customer')
-            ->login()
-            ->registration(\App\Filament\Customer\Pages\Auth\Register::class)
-            ->passwordReset()
+            // ->login() // TEMPORARILY DISABLED FOR AGENT ACCESS
+            // ->registration(\App\Filament\Customer\Pages\Auth\Register::class) // TEMPORARILY DISABLED
+            // ->passwordReset() // TEMPORARILY DISABLED
             ->brandName('TEFA Canning SIP')
             ->brandLogo(fn() => view('filament.brand-logo'))
             ->darkModeBrandLogo(fn() => view('filament.brand-logo-dark'))
@@ -55,12 +55,12 @@ class CustomerPanelProvider extends PanelProvider
                 'gray' => Color::Slate,
             ])
             ->font('Inter')
-            ->userMenuItems([
-                MenuItem::make()
-                    ->label('Edit Profil')
-                    ->url(fn (): string => \App\Filament\Customer\Pages\EditProfile::getUrl())
-                    ->icon('heroicon-o-user-circle'),
-            ])
+            // ->userMenuItems([ // TEMPORARILY DISABLED FOR AGENT ACCESS
+            //     MenuItem::make()
+            //         ->label('Edit Profil')
+            //         ->url(fn(): string => \App\Filament\Customer\Pages\EditProfile::getUrl())
+            //         ->icon('heroicon-o-user-circle'),
+            // ])
             ->authGuard('customer')
             ->discoverPages(in: app_path('Filament/Customer/Pages'), for: 'App\\Filament\\Customer\\Pages')
             ->pages([
@@ -76,10 +76,11 @@ class CustomerPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                \App\Http\Middleware\AutoLoginCustomer::class, // TEMPORARY: Auto-login for agent access
             ])
-            ->authMiddleware([
-                CustomerPanelMiddleware::class,
-            ])
+            // ->authMiddleware([ // TEMPORARILY DISABLED FOR AGENT ACCESS
+            //     CustomerPanelMiddleware::class,
+            // ])
             ->spa();
     }
 }

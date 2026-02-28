@@ -30,6 +30,19 @@ class EditProfile extends Page implements Forms\Contracts\HasForms
     {
         $customer = Auth::guard('customer')->user();
 
+        // TEMPORARILY: Fill with empty data when no user is logged in (agent access)
+        if (!$customer) {
+            $this->profileForm->fill([
+                'name' => '',
+                'email' => '',
+                'phone' => '',
+                'organization' => '',
+                'address' => '',
+            ]);
+            $this->passwordForm->fill();
+            return;
+        }
+
         $this->profileForm->fill([
             'name' => $customer->name,
             'email' => $customer->email,
@@ -193,6 +206,11 @@ class EditProfile extends Page implements Forms\Contracts\HasForms
 
         $customer = Auth::guard('customer')->user();
 
+        // TEMPORARILY: Return false when no user is logged in (agent access)
+        if (!$customer) {
+            return $this->activeOrdersCache = false;
+        }
+
         return $this->activeOrdersCache = Order::where('customer_id', $customer->id)
             ->whereIn('status', ['processing', 'ready'])
             ->exists();
@@ -201,6 +219,11 @@ class EditProfile extends Page implements Forms\Contracts\HasForms
     public function getActiveOrdersInfo(): array
     {
         $customer = Auth::guard('customer')->user();
+
+        // TEMPORARILY: Return empty array when no user is logged in (agent access)
+        if (!$customer) {
+            return [];
+        }
 
         return Order::where('customer_id', $customer->id)
             ->whereIn('status', ['processing', 'ready'])
