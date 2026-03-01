@@ -353,6 +353,59 @@ php artisan make:filament-user
 2. **Feature Tests:** Batch status transitions, notification triggers
 3. **Browser Tests:** Filament admin workflows with Dusk
 
+## Guest Mode (Auto-Login for Agent/Testing)
+
+When you need to browse the admin or customer panel **without manual login** (e.g., for AI agent access, automated screenshots, or UI testing), use the auto-login middleware system.
+
+### How to Enable Guest Mode
+
+**Step 1:** Comment out `->login()` and `->authMiddleware()` in both panel providers:
+
+```php
+// AdminPanelProvider.php
+// ->login()                              // comment this
+// ->authMiddleware([Authenticate::class]) // comment this
+
+// CustomerPanelProvider.php
+// ->login()                                           // comment this
+// ->registration(...)                                 // comment this
+// ->passwordReset()                                   // comment this
+// ->userMenuItems([...])                              // comment this
+// ->authMiddleware([CustomerPanelMiddleware::class])   // comment this
+```
+
+**Step 2:** Add auto-login middleware to the `->middleware([...])` array:
+
+```php
+// AdminPanelProvider.php → middleware array
+\App\Http\Middleware\AutoLoginAdmin::class,
+
+// CustomerPanelProvider.php → middleware array
+\App\Http\Middleware\AutoLoginCustomer::class,
+```
+
+**Middleware files:**
+- `app/Http/Middleware/AutoLoginAdmin.php` → Logs in as `User::first()` (web guard)
+- `app/Http/Middleware/AutoLoginCustomer.php` → Logs in as `Customer::first()` (customer guard)
+
+**Null-safe guards already in place** (these stay permanently, they don't hurt normal operation):
+- `WelcomeWidget.php` → Returns "Guest" data if no customer
+- `OrderSummaryWidget.php` → Returns empty stats if no customer
+- `OrderHistory.php` → Uses `auth('customer')->id() ?? 0` fallback
+- `EditOrder.php` → `abort(403)` if no customer
+- `EditProfile.php` → Fills empty form if no customer
+- `pre-order.blade.php` → `->name ?? 'Guest'` + conditional orders query
+
+### How to Disable Guest Mode (Restore Normal Auth)
+
+1. **Remove** `AutoLoginAdmin::class` from `AdminPanelProvider.php` middleware array
+2. **Remove** `AutoLoginCustomer::class` from `CustomerPanelProvider.php` middleware array
+3. **Uncomment** `->login()` and `->authMiddleware()` in both providers
+4. **Uncomment** `->registration()`, `->passwordReset()`, `->userMenuItems()` in CustomerPanelProvider
+5. Optionally delete the middleware files (they won't affect anything if not registered)
+
+> ⚠️ **NEVER deploy Guest Mode to production.** It bypasses all authentication.
+
 ## Security Considerations
 
 - All routes with Filament middleware are auto-protected

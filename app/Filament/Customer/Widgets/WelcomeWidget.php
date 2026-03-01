@@ -17,15 +17,15 @@ class WelcomeWidget extends Widget
         $customer = auth('customer')->user();
 
         // TEMPORARILY: Return placeholder data when no user is logged in (agent access)
-        if (!$customer) {
-            return [
-                'name' => 'Guest',
-                'organization' => '-',
-                'phone' => '-',
-                'email' => '-',
-                'member_since' => '-',
-            ];
-        }
+        // if (!$customer) {
+        //     return [
+        //         'name' => 'Guest',
+        //         'organization' => '-',
+        //         'phone' => '-',
+        //         'email' => '-',
+        //         'member_since' => '-',
+        //     ];
+        // }
 
         return [
             'name' => $customer->name,

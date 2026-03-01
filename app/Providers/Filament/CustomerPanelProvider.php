@@ -25,9 +25,10 @@ class CustomerPanelProvider extends PanelProvider
         return $panel
             ->id('customer')
             ->path('customer')
-            // ->login() // TEMPORARILY DISABLED FOR AGENT ACCESS
-            // ->registration(\App\Filament\Customer\Pages\Auth\Register::class) // TEMPORARILY DISABLED
-            // ->passwordReset() // TEMPORARILY DISABLED
+            ->login()
+            ->registration(\App\Filament\Customer\Pages\Auth\Register::class)
+            ->passwordReset()
+            // [GUEST MODE] comment 3 lines above to disable login/registration/password-reset
             ->brandName('TEFA Canning SIP')
             ->brandLogo(fn() => view('filament.brand-logo'))
             ->darkModeBrandLogo(fn() => view('filament.brand-logo-dark'))
@@ -55,12 +56,13 @@ class CustomerPanelProvider extends PanelProvider
                 'gray' => Color::Slate,
             ])
             ->font('Inter')
-            // ->userMenuItems([ // TEMPORARILY DISABLED FOR AGENT ACCESS
-            //     MenuItem::make()
-            //         ->label('Edit Profil')
-            //         ->url(fn(): string => \App\Filament\Customer\Pages\EditProfile::getUrl())
-            //         ->icon('heroicon-o-user-circle'),
-            // ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Edit Profil')
+                    ->url(fn(): string => \App\Filament\Customer\Pages\EditProfile::getUrl())
+                    ->icon('heroicon-o-user-circle'),
+            ])
+            // [GUEST MODE] comment ->userMenuItems() above to disable profile menu
             ->authGuard('customer')
             ->discoverPages(in: app_path('Filament/Customer/Pages'), for: 'App\\Filament\\Customer\\Pages')
             ->pages([
@@ -76,11 +78,12 @@ class CustomerPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                \App\Http\Middleware\AutoLoginCustomer::class, // TEMPORARY: Auto-login for agent access
+                // \App\Http\Middleware\AutoLoginCustomer::class, // [GUEST MODE] uncomment to enable auto-login
             ])
-            // ->authMiddleware([ // TEMPORARILY DISABLED FOR AGENT ACCESS
-            //     CustomerPanelMiddleware::class,
-            // ])
+            ->authMiddleware([
+                CustomerPanelMiddleware::class,
+            ])
+            // [GUEST MODE] comment ->authMiddleware() above and uncomment AutoLoginCustomer to enable guest mode
             ->spa();
     }
 }

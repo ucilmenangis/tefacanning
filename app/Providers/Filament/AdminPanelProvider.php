@@ -27,7 +27,8 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            // ->login() // TEMPORARILY DISABLED FOR AGENT ACCESS
+            ->login()
+            // ->login() // [GUEST MODE] uncomment this line and comment the line above to disable login page
             ->brandName('TEFA Canning SIP')
             ->brandLogo(fn() => view('filament.brand-logo'))
             ->darkModeBrandLogo(fn() => view('filament.brand-logo-dark'))
@@ -94,11 +95,12 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                \App\Http\Middleware\AutoLoginAdmin::class, // TEMPORARY: Auto-login for agent access
+                // \App\Http\Middleware\AutoLoginAdmin::class, // [GUEST MODE] uncomment to enable auto-login
             ])
-            // ->authMiddleware([ // TEMPORARILY DISABLED FOR AGENT ACCESS
-            //     Authenticate::class,
-            // ])
+            ->authMiddleware([
+                Authenticate::class,
+            ])
+            // [GUEST MODE] comment ->authMiddleware() above and uncomment AutoLoginAdmin to enable guest mode
             ->databaseNotifications()
             ->spa();
     }
