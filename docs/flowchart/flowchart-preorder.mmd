@@ -1,0 +1,39 @@
+%% ══════════════════════════════════════════════════════════════
+%% TEFA Canning SIP — Flowchart Proses Pre-Order
+%% ══════════════════════════════════════════════════════════════
+
+flowchart TD
+    START(["MULAI"])
+    LOGIN["Customer Login<br/>/ Register"]
+    OPEN_PO["Buka Halaman<br/>Pre-Order"]
+    DASHBOARD["Dashboard<br/>Customer"]
+
+    CHOOSE_BATCH["Memilih Batch<br/>Produksi"]
+    CHECK_BATCH{"Batch Status<br/>Open?"}
+
+    CHECK_BATCH -->|"Ya"| CHOOSE_PRODUCT["Memilih Produk<br/>& Jumlah Pesanan"]
+    CHECK_BATCH -->|"Tidak"| DENIED["Tidak Bisa Memesan<br/>(Batch Tertutup)"]
+    DENIED --> DASHBOARD
+    DASHBOARD --> FINISH(["SELESAI"])
+
+    CHOOSE_PRODUCT --> CHECK_SEND{"Kirim<br/>Pre-Order?"}
+    CHECK_SEND -->|"Tidak"| DASHBOARD
+    CHECK_SEND -->|"Ya"| PROCESS_ORDER["Sistem Memproses Pesanan:<br/>1. Generate No. Pesanan<br/>2. Generate Kode Pickup<br/>3. Hitung Total dari DB"]
+    PROCESS_ORDER --> SEND_WA["Kirim Notifikasi<br/>WhatsApp ke Superadmin<br/>(Detail Pesanan)"]
+    SEND_WA --> SUCCESS["Pre-Order Berhasil<br/>Tampilkan No. Pesanan<br/>& Kode Pickup"]
+    SUCCESS --> DASHBOARD
+
+    START --> LOGIN --> OPEN_PO --> CHOOSE_BATCH --> CHECK_BATCH
+
+    %% ═══ STYLING ═══
+    classDef startEnd fill:#ffffff,stroke:#1f2937,color:#1f2937,stroke-width:3px,font-weight:bold
+    classDef process fill:#ffffff,stroke:#6b7280,color:#1f2937
+    classDef decision fill:#ffffff,stroke:#1f2937,color:#1f2937,stroke-width=2px
+    classDef denied fill:#ffffff,stroke:#ef4444,color:#ef4444,stroke-dasharray: 5 5
+    classDef notify fill:#ffffff,stroke:#6b7280,color:#1f2937,stroke-dasharray: 5 5
+
+    class START,FINISH startEnd
+    class LOGIN,OPEN_PO,DASHBOARD,CHOOSE_BATCH,CHOOSE_PRODUCT,PROCESS_ORDER,SUCCESS process
+    class CHECK_BATCH,CHECK_SEND decision
+    class DENIED denied
+    class SEND_WA notify

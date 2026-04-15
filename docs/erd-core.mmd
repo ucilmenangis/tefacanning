@@ -1,0 +1,62 @@
+erDiagram
+    CUSTOMERS ||--o{ ORDERS : "memiliki"
+    BATCHES ||--o{ ORDERS : "berisi"
+    ORDERS ||--|{ ORDER_PRODUCT : "terdiri_dari"
+    PRODUCTS ||--o{ ORDER_PRODUCT : "dipesan_dalam"
+
+    CUSTOMERS {
+        bigint id PK
+        varchar name "NOT NULL"
+        varchar phone "NULL"
+        varchar email "UNIQUE NULL"
+        varchar password "NULL"
+        text address "NULL"
+        varchar organization "NULL"
+        timestamp deleted_at "Soft Delete"
+    }
+
+    BATCHES {
+        bigint id PK
+        varchar name "NOT NULL"
+        varchar event_name "NOT NULL"
+        date event_date "NULL"
+        enum status "open, processing, ready, closed"
+        text description "NULL"
+        timestamp deleted_at "Soft Delete"
+    }
+
+    PRODUCTS {
+        bigint id PK
+        varchar name "NOT NULL"
+        varchar sku "UNIQUE NOT NULL"
+        text description "NULL"
+        decimal_15_2 price "NOT NULL"
+        int stock "DEFAULT 0"
+        varchar unit "DEFAULT pcs"
+        tinyint is_active "DEFAULT 1"
+        varchar image "NULL"
+        timestamp deleted_at "Soft Delete"
+    }
+
+    ORDERS {
+        bigint id PK
+        bigint customer_id FK
+        bigint batch_id FK
+        varchar order_number "UNIQUE"
+        varchar pickup_code "UNIQUE"
+        enum status "pending, processing, ready, picked_up"
+        decimal_15_2 total_amount "DEFAULT 0"
+        decimal_15_2 profit "DEFAULT 0"
+        timestamp picked_up_at "NULL"
+        text notes "NULL"
+        timestamp deleted_at "Soft Delete"
+    }
+
+    ORDER_PRODUCT {
+        bigint id PK
+        bigint order_id FK
+        bigint product_id FK
+        int quantity "NOT NULL"
+        decimal_15_2 unit_price "Snapshot harga"
+        decimal_15_2 subtotal "Pre-calculated"
+    }

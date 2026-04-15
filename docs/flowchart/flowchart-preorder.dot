@@ -1,0 +1,53 @@
+digraph FlowchartPreOrder {
+    rankdir=TB;
+    splines=ortho;
+    nodesep=0.8;
+    ranksep=1.0;
+    fontname="Inter";
+    dpi=150;
+
+    node [style=filled, fillcolor=white, fontcolor="#1f2937", fontsize=11, fontname="Inter"];
+    edge [color="#6b7280", arrowsize=0.8, penwidth=1.2];
+
+    // ═══ TERMINAL ═══
+    START [shape=ellipse, label="MULAI", penwidth=2.5, color="#1f2937"];
+    FINISH [shape=ellipse, label="SELESAI", penwidth=2.5, color="#1f2937"];
+
+    // ═══ PROSES ═══
+    LOGIN [shape=box, label="Customer Login\n/ Register", color="#6b7280"];
+    OPEN_PO [shape=box, label="Buka Halaman\nPre-Order", color="#6b7280"];
+    DASHBOARD [shape=box, label="Dashboard\nCustomer", color="#6b7280"];
+
+    // ═══ ALUR UTAMA ═══
+    CHOOSE_BATCH [shape=box, label="Memilih Batch\nProduksi", color="#6b7280"];
+    CHECK_BATCH [shape=diamond, label="Batch Status\nOpen?", color="#1f2937", penwidth=2, width=2, height=1.2];
+    DENIED [shape=box, label="Tidak Bisa Memesan\n(Batch Tertutup)", color="#ef4444", fontcolor="#ef4444", style="filled,dashed"];
+
+    CHOOSE_PRODUCT [shape=box, label="Memilih Produk\n& Jumlah Pesanan", color="#6b7280"];
+
+    CHECK_SEND [shape=diamond, label="Kirim\nPre-Order?", color="#1f2937", penwidth=2, width=2, height=1.2];
+
+    PROCESS_ORDER [shape=box, label="Sistem Memproses Pesanan:\n1. Generate No. Pesanan\n2. Generate Kode Pickup\n3. Hitung Total dari DB", color="#6b7280"];
+    SEND_WA [shape=box, label="Kirim Notifikasi\nWhatsApp ke Superadmin\n(Detail Pesanan)", color="#6b7280", style="filled,dashed"];
+    SUCCESS [shape=box, label="Pre-Order Berhasil\nTampilkan No. Pesanan\n& Kode Pickup", color="#6b7280"];
+
+    // ═══ EDGES ═══
+    START -> LOGIN;
+    LOGIN -> OPEN_PO;
+    OPEN_PO -> CHOOSE_BATCH;
+    CHOOSE_BATCH -> CHECK_BATCH;
+
+    CHECK_BATCH -> DENIED [label="Tidak", fontsize=9, fontcolor="#1f2937"];
+    DENIED -> DASHBOARD;
+    DASHBOARD -> FINISH [label="Keluar", fontsize=9];
+
+    CHECK_BATCH -> CHOOSE_PRODUCT [label="Ya", fontsize=9, fontcolor="#1f2937"];
+    CHOOSE_PRODUCT -> CHECK_SEND;
+
+    CHECK_SEND -> DASHBOARD [label="Tidak", fontsize=9, fontcolor="#1f2937", style=dashed, constraint=false];
+    CHECK_SEND -> PROCESS_ORDER [label="Ya", fontsize=9, fontcolor="#1f2937"];
+
+    PROCESS_ORDER -> SEND_WA;
+    SEND_WA -> SUCCESS;
+    SUCCESS -> DASHBOARD [style=dashed, constraint=false];
+}

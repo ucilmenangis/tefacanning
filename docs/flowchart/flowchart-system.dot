@@ -1,0 +1,208 @@
+digraph FlowchartFull {
+    rankdir=TB;
+    splines=ortho;
+    nodesep=0.6;
+    ranksep=0.8;
+    fontname="Inter";
+    newrank=true;
+    dpi=150;
+
+    node [style=filled, fillcolor=white, fontcolor="#1f2937", fontsize=10, fontname="Inter"];
+    edge [color="#6b7280", arrowsize=0.7, penwidth=1.2];
+
+    // ════════════════════════════════════
+    // TERMINAL
+    // ════════════════════════════════════
+    START [shape=ellipse, label="MULAI", penwidth=2.5, color="#1f2937"];
+    FINISH [shape=ellipse, label="SELESAI", penwidth=2.5, color="#1f2937"];
+
+    // ════════════════════════════════════
+    // SHARED ENTRY
+    // ════════════════════════════════════
+    LANDING [shape=box, label="Menampilkan\nLanding Page", color="#6b7280"];
+    LOGIN_BTN [shape=box, label="Tombol Login\nDiklik", color="#6b7280"];
+    DECIDE_ROLE [shape=diamond, label="Login\nsebagai?", color="#1f2937", penwidth=2, width=2, height=1.2];
+    LOGOUT [shape=box, label="Logout", color="#6b7280"];
+
+    START -> LANDING -> LOGIN_BTN -> DECIDE_ROLE;
+
+    // ════════════════════════════════════
+    // CUSTOMER BRANCH
+    // ════════════════════════════════════
+    CUST_AUTH [shape=box, label="Login / Register\nsebagai Customer", color="#6b7280"];
+    CUST_DASH [shape=box, label="Dashboard\nCustomer", color="#6b7280"];
+    WIDGET [shape=box, label="Widget:\nTotal Pesanan | Batch\nProduk Tersedia", color="#6b7280"];
+
+    DECIDE_ROLE -> CUST_AUTH [label="Customer", fontsize=9];
+    CUST_AUTH -> CUST_DASH;
+    CUST_DASH -> WIDGET;
+    WIDGET -> CUST_DASH [style=dashed, constraint=false];
+
+    // ── Menu Utama ──
+    MENU_PO [shape=box, label="Pre-Order", color="#6b7280"];
+    MENU_HIST [shape=box, label="Riwayat\nPesanan", color="#6b7280"];
+    MENU_PROF [shape=box, label="Profil", color="#6b7280"];
+
+    CUST_DASH -> MENU_PO;
+    CUST_DASH -> MENU_HIST;
+    CUST_DASH -> MENU_PROF;
+
+    // ── Pre-Order Sub-flow ──
+    PO_CHOOSE [shape=box, label="Memilih\nBatch Produksi", color="#6b7280"];
+    PO_BATCH [shape=diamond, label="Batch\nOpen?", color="#1f2937", penwidth=2];
+    PO_PRODUCT [shape=box, label="Memilih Produk\n& Jumlah", color="#6b7280"];
+    PO_DENIED [shape=box, label="Tidak Bisa\nMemesan\n(Batch Tertutup)", color="#6b7280"];
+    PO_SNI [shape=diamond, label="Setujui\nDisclaimer\nSNI?", color="#1f2937", penwidth=2];
+    PO_DENIED_SNI [shape=box, label="Kembali ke\nDaftar Produk", color="#6b7280"];
+    PO_DECIDE [shape=diamond, label="Kirim\nPre-Order?", color="#1f2937", penwidth=2];
+    PO_CREATE [shape=box, label="Sistem Buat Pesanan:\nGenerate No. Pesanan\nGenerate Pickup Code\nHitung Total dari DB", color="#6b7280"];
+    PO_WA [shape=box, label="Kirim Notifikasi\nWhatsApp ke\nSuperadmin", color="#6b7280", style="filled,dashed"];
+    PO_DONE [shape=box, label="Sukses:\nNo. Pesanan &\nPickup Code", color="#6b7280"];
+
+    MENU_PO -> PO_CHOOSE -> PO_BATCH;
+    PO_BATCH -> PO_PRODUCT [label="Ya", fontsize=9, fontcolor="#1f2937"];
+    PO_BATCH -> PO_DENIED [label="Tidak", fontsize=9, fontcolor="#1f2937"];
+    PO_DENIED -> CUST_DASH [style=dashed, constraint=false];
+    PO_PRODUCT -> PO_SNI;
+    PO_SNI -> PO_DECIDE [label="Ya", fontsize=9, fontcolor="#1f2937"];
+    PO_SNI -> PO_DENIED_SNI [label="Tidak", fontsize=9, fontcolor="#1f2937"];
+    PO_DENIED_SNI -> PO_PRODUCT [style=dashed, constraint=false];
+    PO_DECIDE -> PO_CREATE [label="Ya", fontsize=9, fontcolor="#1f2937"];
+    PO_DECIDE -> CUST_DASH [label="Tidak", fontsize=9, fontcolor="#1f2937", style=dashed, constraint=false];
+    PO_CREATE -> PO_WA -> PO_DONE;
+    PO_DONE -> CUST_DASH [style=dashed, constraint=false];
+
+    // ── Riwayat Pesanan Sub-flow ──
+    HIST_LIST [shape=box, label="Daftar Pesanan\ndengan Status", color="#6b7280"];
+    HIST_DECIDE [shape=diamond, label="Status\nPending?", color="#1f2937", penwidth=2];
+    HIST_EDIT [shape=box, label="Edit Produk/Jumlah\natau Hapus", color="#6b7280"];
+    HIST_VIEW [shape=box, label="Lihat Detail\n(Tidak Bisa\nDiubah)", color="#6b7280"];
+    HIST_PDF [shape=box, label="Export\nLaporan PDF", color="#6b7280"];
+
+    MENU_HIST -> HIST_LIST;
+    HIST_LIST -> HIST_DECIDE;
+    HIST_DECIDE -> HIST_EDIT [label="Ya", fontsize=9, fontcolor="#1f2937"];
+    HIST_DECIDE -> HIST_VIEW [label="Tidak", fontsize=9, fontcolor="#1f2937"];
+    HIST_LIST -> HIST_PDF;
+    HIST_EDIT -> HIST_LIST [style=dashed, constraint=false];
+    HIST_VIEW -> HIST_LIST [style=dashed, constraint=false];
+    HIST_PDF -> HIST_LIST [style=dashed, constraint=false];
+
+    // ── Profil Sub-flow ──
+    PROF_DECIDE [shape=diamond, label="Ada Pesanan\nAktif?", color="#1f2937", penwidth=2];
+    PROF_PWD [shape=box, label="Hanya Bisa\nUbah Password", color="#6b7280"];
+    PROF_FULL [shape=box, label="Edit Nama, Email,\nTelepon, Organisasi,\nAlamat", color="#6b7280"];
+
+    MENU_PROF -> PROF_DECIDE;
+    PROF_DECIDE -> PROF_PWD [label="Ya", fontsize=9, fontcolor="#1f2937"];
+    PROF_DECIDE -> PROF_FULL [label="Tidak", fontsize=9, fontcolor="#1f2937"];
+    PROF_PWD -> CUST_DASH [style=dashed, constraint=false];
+    PROF_FULL -> CUST_DASH [style=dashed, constraint=false];
+
+    // ════════════════════════════════════
+    // ADMIN / TEKNISI BRANCH
+    // ════════════════════════════════════
+    ADM_AUTH [shape=box, label="Login sebagai\nAdmin / Teknisi", color="#6b7280"];
+    ADM_DASH [shape=box, label="Dashboard\nAdmin", color="#6b7280"];
+    ADM_STATS [shape=box, label="Statistik:\nBatch | Order | Pelanggan\nOmzet (Superadmin)\nProfit (Superadmin)", color="#6b7280"];
+
+    DECIDE_ROLE -> ADM_AUTH [label="Admin/Teknisi", fontsize=9];
+    ADM_AUTH -> ADM_DASH;
+    ADM_DASH -> ADM_STATS;
+    ADM_STATS -> ADM_DASH [style=dashed, constraint=false];
+
+    // ── Navigasi Admin ──
+    NAV_TRX [shape=box, label="Halaman\nTransaksi", color="#6b7280"];
+    NAV_MASTER [shape=box, label="Halaman\nMaster Data", color="#6b7280"];
+    NAV_PROD [shape=box, label="Halaman\nManajemen Produksi", color="#6b7280"];
+    NAV_AUDIT [shape=box, label="Halaman\nAudit Log", color="#6b7280"];
+    NAV_SET [shape=box, label="Halaman\nPengaturan", color="#6b7280"];
+
+    ADM_DASH -> NAV_TRX;
+    ADM_DASH -> NAV_MASTER;
+    ADM_DASH -> NAV_PROD;
+    ADM_DASH -> NAV_AUDIT;
+    ADM_DASH -> NAV_SET;
+
+    // ── Transaksi Sub-flow ──
+    TRX_LIST [shape=box, label="Data Pesanan", color="#6b7280"];
+    TRX_ACTION [shape=diamond, label="Pilih\nAksi", color="#1f2937", penwidth=2];
+    TRX_CRUD [shape=box, label="CRUD Pesanan\n+ Export PDF", color="#6b7280"];
+    TRX_ORDER_ADM [shape=box, label="Admin Buat Pesanan:\nPilih Customer\nPilih Batch\nPilih Produk", color="#6b7280"];
+    TRX_ORDER_WA [shape=box, label="Kirim WhatsApp\nke Customer\n(Detail & Pickup Code)", color="#6b7280", style="filled,dashed"];
+    TRX_PICKUP_D [shape=diamond, label="Status\nReady?", color="#1f2937", penwidth=2];
+    TRX_PICKUP [shape=box, label="Validasi Pickup:\nStatus → Picked Up\nCatat Waktu", color="#6b7280"];
+
+    NAV_TRX -> TRX_LIST -> TRX_ACTION;
+    TRX_ACTION -> TRX_CRUD [label="CRUD", fontsize=9];
+    TRX_ACTION -> TRX_ORDER_ADM [label="Buat Order\nCustomer", fontsize=9];
+    TRX_ACTION -> TRX_PICKUP_D [label="Validasi\nPickup", fontsize=9];
+    TRX_ORDER_ADM -> TRX_ORDER_WA;
+    TRX_ORDER_WA -> TRX_LIST [style=dashed, constraint=false];
+    TRX_CRUD -> TRX_LIST [style=dashed, constraint=false];
+    TRX_PICKUP_D -> TRX_PICKUP [label="Ya", fontsize=9, fontcolor="#1f2937"];
+    TRX_PICKUP_D -> TRX_LIST [label="Tidak", fontsize=9, fontcolor="#1f2937", style=dashed, constraint=false];
+    TRX_PICKUP -> TRX_LIST [style=dashed, constraint=false];
+
+    // ── Master Data Sub-flow ──
+    MD_CUST [shape=box, label="Data Pelanggan", color="#6b7280"];
+    MD_PROD [shape=box, label="Data Produk", color="#6b7280"];
+    MD_CRUD_C [shape=box, label="CRUD\nPelanggan", color="#6b7280"];
+    MD_CRUD_P [shape=diamond, label="Login\nSuperadmin?", color="#1f2937", penwidth=2];
+    MD_PRICE [shape=box, label="CRUD Produk\n+ Ubah Harga", color="#6b7280"];
+    MD_VIEW [shape=box, label="CRUD Produk\n(Harga Dikunci)", color="#6b7280"];
+
+    NAV_MASTER -> MD_CUST;
+    NAV_MASTER -> MD_PROD;
+    MD_CUST -> MD_CRUD_C;
+    MD_PROD -> MD_CRUD_P;
+    MD_CRUD_P -> MD_PRICE [label="Ya", fontsize=9, fontcolor="#1f2937"];
+    MD_CRUD_P -> MD_VIEW [label="Tidak", fontsize=9, fontcolor="#1f2937"];
+    MD_CRUD_C -> NAV_MASTER [style=dashed, constraint=false];
+    MD_PRICE -> NAV_MASTER [style=dashed, constraint=false];
+    MD_VIEW -> NAV_MASTER [style=dashed, constraint=false];
+
+    // ── Manajemen Produksi Sub-flow ──
+    BATCH_LIST [shape=box, label="Data Batch", color="#6b7280"];
+    BATCH_CRUD [shape=box, label="CRUD Batch\nUbah Status:\nOpen → Processing\n→ Ready → Closed", color="#6b7280"];
+    BATCH_DECIDE [shape=diamond, label="Status\nmenjadi\nReady?", color="#1f2937", penwidth=2];
+    BATCH_WA [shape=box, label="Kirim WhatsApp\nke Semua Customer\ndalam Batch", color="#6b7280", style="filled,dashed"];
+
+    NAV_PROD -> BATCH_LIST -> BATCH_CRUD -> BATCH_DECIDE;
+    BATCH_DECIDE -> BATCH_WA [label="Ya", fontsize=9, fontcolor="#1f2937"];
+    BATCH_DECIDE -> BATCH_LIST [label="Tidak", fontsize=9, fontcolor="#1f2937", style=dashed, constraint=false];
+    BATCH_WA -> BATCH_LIST [style=dashed, constraint=false];
+
+    // ── Audit Log Sub-flow ──
+    AUDIT_D [shape=diamond, label="Login\nSuperadmin?", color="#1f2937", penwidth=2];
+    AUDIT_VIEW [shape=box, label="Log Aktivitas\n(View Only)", color="#1f2937", penwidth=2];
+    AUDIT_DENY [shape=box, label="Akses Ditolak", color="#ef4444", fontcolor="#ef4444", style="filled,dashed"];
+
+    NAV_AUDIT -> AUDIT_D;
+    AUDIT_D -> AUDIT_VIEW [label="Ya", fontsize=9, fontcolor="#1f2937"];
+    AUDIT_D -> AUDIT_DENY [label="Tidak", fontsize=9, fontcolor="#ef4444"];
+    AUDIT_VIEW -> NAV_AUDIT [style=dashed, constraint=false];
+    AUDIT_DENY -> ADM_DASH [style=dashed, constraint=false];
+
+    // ── Pengaturan Sub-flow ──
+    SET_D [shape=diamond, label="Login\nSuperadmin?", color="#1f2937", penwidth=2];
+    SET_USER [shape=box, label="Manajemen\nPengguna", color="#1f2937", penwidth=2];
+    SET_CRUD [shape=box, label="CRUD Pengguna\n(Tidak bisa hapus\nSuper Admin)", color="#1f2937", penwidth=2];
+    SET_DENY [shape=box, label="Akses Ditolak", color="#ef4444", fontcolor="#ef4444", style="filled,dashed"];
+
+    NAV_SET -> SET_D;
+    SET_D -> SET_USER [label="Ya", fontsize=9, fontcolor="#1f2937"];
+    SET_D -> SET_DENY [label="Tidak", fontsize=9, fontcolor="#ef4444"];
+    SET_USER -> SET_CRUD;
+    SET_CRUD -> NAV_SET [style=dashed, constraint=false];
+    SET_DENY -> ADM_DASH [style=dashed, constraint=false];
+
+    // ═══ LOGOUT ═══
+    CUST_DASH -> LOGOUT [label="Logout", fontsize=9, style=dashed, constraint=false];
+    ADM_DASH -> LOGOUT [label="Logout", fontsize=9, style=dashed, constraint=false];
+    LOGOUT -> LANDING [constraint=false];
+    LANDING -> FINISH [label="Keluar", fontsize=9];
+
+    // ═══ RANK ALIGNMENT ═══
+    {rank=same; CUST_DASH; ADM_DASH}
+}

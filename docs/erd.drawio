@@ -1,0 +1,406 @@
+<mxfile host="app.diagrams.net" modified="2026-03-28T00:00:00.000Z" agent="TEFA Canning SIP" version="21.0.0" type="device">
+  <diagram id="erd_chen_core" name="ERD Chen Notation - Core Business">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ===== TITLE ===== -->
+        <mxCell id="title" value="ERD TEFA Canning SIP — Core Business (Chen Notation)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;fontColor=#DC2626;" vertex="1" parent="1">
+          <mxGeometry x="480" y="10" width="500" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!-- ENTITAS: CUSTOMERS                                           -->
+        <!-- Posisi: (80, 320) 160x60                                     -->
+        <!-- ============================================================ -->
+        <mxCell id="entity_customers" value="CUSTOMERS" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#DC2626;strokeWidth=2;fontStyle=1;fontSize=13;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="80" y="320" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Atribut CUSTOMERS -->
+        <mxCell id="attr_c_id" value="id" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=1;fontStyle=5;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="20" y="140" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_c_name" value="name" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="120" y="140" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_c_phone" value="phone" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="220" y="140" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_c_email" value="email" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="20" y="210" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_c_address" value="address" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="120" y="210" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_c_org" value="organization" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="220" y="210" width="100" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: Atribut CUSTOMERS → Entity -->
+        <mxCell id="edge_c_id" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_c_id" target="entity_customers" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_c_name" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_c_name" target="entity_customers" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_c_phone" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_c_phone" target="entity_customers" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_c_email" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_c_email" target="entity_customers" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_c_address" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_c_address" target="entity_customers" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_c_org" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_c_org" target="entity_customers" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!-- ENTITAS: ORDERS                                              -->
+        <!-- Posisi: (520, 320) 160x60                                    -->
+        <!-- ============================================================ -->
+        <mxCell id="entity_orders" value="ORDERS" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#DC2626;strokeWidth=2;fontStyle=1;fontSize=13;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="520" y="320" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Atribut ORDERS -->
+        <mxCell id="attr_o_id" value="id" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=1;fontStyle=5;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="460" y="120" width="70" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_o_number" value="order_number" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=10;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="550" y="100" width="100" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_o_pickup" value="pickup_code" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=10;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="670" y="120" width="100" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_o_status" value="status" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="460" y="195" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_o_total" value="total_amount" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=10;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="560" y="195" width="100" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_o_profit" value="profit" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="680" y="195" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_o_picked" value="picked_up_at" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=10;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="560" y="255" width="100" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: Atribut ORDERS → Entity -->
+        <mxCell id="edge_o_id" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_o_id" target="entity_orders" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_o_number" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_o_number" target="entity_orders" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_o_pickup" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_o_pickup" target="entity_orders" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_o_status" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_o_status" target="entity_orders" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_o_total" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_o_total" target="entity_orders" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_o_profit" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_o_profit" target="entity_orders" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_o_picked" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_o_picked" target="entity_orders" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!-- ENTITAS: ORDER_PRODUCT                                       -->
+        <!-- Posisi: (950, 320) 170x60                                    -->
+        <!-- ============================================================ -->
+        <mxCell id="entity_order_product" value="ORDER_PRODUCT" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#DC2626;strokeWidth=2;fontStyle=1;fontSize=13;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="950" y="320" width="170" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Atribut ORDER_PRODUCT -->
+        <mxCell id="attr_op_qty" value="quantity" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="960" y="150" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_op_price" value="unit_price" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="150" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_op_sub" value="subtotal" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="220" width="80" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: Atribut ORDER_PRODUCT → Entity -->
+        <mxCell id="edge_op_qty" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_op_qty" target="entity_order_product" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_op_price" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_op_price" target="entity_order_product" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_op_sub" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_op_sub" target="entity_order_product" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!-- ENTITAS: BATCHES                                             -->
+        <!-- Posisi: (440, 680) 160x60                                    -->
+        <!-- ============================================================ -->
+        <mxCell id="entity_batches" value="BATCHES" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#DC2626;strokeWidth=2;fontStyle=1;fontSize=13;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="440" y="680" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Atribut BATCHES -->
+        <mxCell id="attr_b_id" value="id" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=1;fontStyle=5;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="370" y="790" width="70" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_b_name" value="name" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="460" y="790" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_b_event" value="event_name" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=10;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="560" y="790" width="90" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_b_date" value="event_date" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=10;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="400" y="850" width="90" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_b_status" value="status" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="510" y="850" width="80" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: Atribut BATCHES → Entity -->
+        <mxCell id="edge_b_id" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_b_id" target="entity_batches" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_b_name" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_b_name" target="entity_batches" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_b_event" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_b_event" target="entity_batches" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_b_date" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_b_date" target="entity_batches" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_b_status" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_b_status" target="entity_batches" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!-- ENTITAS: PRODUCTS                                            -->
+        <!-- Posisi: (940, 680) 160x60                                    -->
+        <!-- ============================================================ -->
+        <mxCell id="entity_products" value="PRODUCTS" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#DC2626;strokeWidth=2;fontStyle=1;fontSize=13;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="940" y="680" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Atribut PRODUCTS -->
+        <mxCell id="attr_p_id" value="id" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=1;fontStyle=5;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="870" y="790" width="70" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_p_name" value="name" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="960" y="790" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_p_sku" value="sku" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="790" width="70" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_p_price" value="price" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="870" y="850" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_p_stock" value="stock" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="970" y="850" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="attr_p_unit" value="unit" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;fontSize=11;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="850" width="70" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: Atribut PRODUCTS → Entity -->
+        <mxCell id="edge_p_id" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_p_id" target="entity_products" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_p_name" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_p_name" target="entity_products" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_p_sku" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_p_sku" target="entity_products" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_p_price" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_p_price" target="entity_products" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_p_stock" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_p_stock" target="entity_products" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge_p_unit" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" source="attr_p_unit" target="entity_products" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!-- RELASI: MEMILIKI (CUSTOMERS 1:N ORDERS)                      -->
+        <!-- Diamond posisi: (310, 310) 130x80                            -->
+        <!-- ============================================================ -->
+        <mxCell id="rel_memiliki" value="MEMILIKI" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#DC2626;strokeWidth=2;fontStyle=1;fontSize=12;fontColor=#991B1B;" vertex="1" parent="1">
+          <mxGeometry x="310" y="310" width="130" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: CUSTOMERS → MEMILIKI -->
+        <mxCell id="edge_rel_memiliki1" style="endArrow=none;html=1;strokeWidth=2;strokeColor=#DC2626;" edge="1" source="entity_customers" target="rel_memiliki" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: MEMILIKI → ORDERS -->
+        <mxCell id="edge_rel_memiliki2" style="endArrow=none;html=1;strokeWidth=2;strokeColor=#DC2626;" edge="1" source="rel_memiliki" target="entity_orders" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Kardinalitas MEMILIKI -->
+        <mxCell id="card_memiliki_1" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;fontColor=#DC2626;" vertex="1" parent="1">
+          <mxGeometry x="255" y="290" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="card_memiliki_n" value="N" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;fontColor=#DC2626;" vertex="1" parent="1">
+          <mxGeometry x="455" y="290" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!-- RELASI: TERDIRI DARI (ORDERS 1:N ORDER_PRODUCT)              -->
+        <!-- Diamond posisi: (750, 310) 140x80                            -->
+        <!-- ============================================================ -->
+        <mxCell id="rel_terdiri" value="TERDIRI&#xa;DARI" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#DC2626;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#991B1B;" vertex="1" parent="1">
+          <mxGeometry x="750" y="310" width="140" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: ORDERS → TERDIRI DARI -->
+        <mxCell id="edge_rel_terdiri1" style="endArrow=none;html=1;strokeWidth=2;strokeColor=#DC2626;" edge="1" source="entity_orders" target="rel_terdiri" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: TERDIRI DARI → ORDER_PRODUCT -->
+        <mxCell id="edge_rel_terdiri2" style="endArrow=none;html=1;strokeWidth=2;strokeColor=#DC2626;" edge="1" source="rel_terdiri" target="entity_order_product" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Kardinalitas TERDIRI DARI -->
+        <mxCell id="card_terdiri_1" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;fontColor=#DC2626;" vertex="1" parent="1">
+          <mxGeometry x="695" y="290" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="card_terdiri_n" value="N" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;fontColor=#DC2626;" vertex="1" parent="1">
+          <mxGeometry x="900" y="290" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!-- RELASI: BERISI (BATCHES 1:N ORDERS)                          -->
+        <!-- Diamond posisi: (450, 490) 130x80                            -->
+        <!-- ============================================================ -->
+        <mxCell id="rel_berisi" value="BERISI" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#DC2626;strokeWidth=2;fontStyle=1;fontSize=12;fontColor=#991B1B;" vertex="1" parent="1">
+          <mxGeometry x="450" y="490" width="130" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: BERISI → ORDERS -->
+        <mxCell id="edge_rel_berisi1" style="endArrow=none;html=1;strokeWidth=2;strokeColor=#DC2626;" edge="1" source="rel_berisi" target="entity_orders" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: BATCHES → BERISI -->
+        <mxCell id="edge_rel_berisi2" style="endArrow=none;html=1;strokeWidth=2;strokeColor=#DC2626;" edge="1" source="entity_batches" target="rel_berisi" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Kardinalitas BERISI -->
+        <mxCell id="card_berisi_n" value="N" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;fontColor=#DC2626;" vertex="1" parent="1">
+          <mxGeometry x="480" y="400" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="card_berisi_1" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;fontColor=#DC2626;" vertex="1" parent="1">
+          <mxGeometry x="530" y="650" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!-- RELASI: DIPESAN DALAM (PRODUCTS 1:N ORDER_PRODUCT)           -->
+        <!-- Diamond posisi: (940, 490) 140x80                            -->
+        <!-- ============================================================ -->
+        <mxCell id="rel_dipesan" value="DIPESAN&#xa;DALAM" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#DC2626;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#991B1B;" vertex="1" parent="1">
+          <mxGeometry x="940" y="490" width="140" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: DIPESAN DALAM → ORDER_PRODUCT -->
+        <mxCell id="edge_rel_dipesan1" style="endArrow=none;html=1;strokeWidth=2;strokeColor=#DC2626;" edge="1" source="rel_dipesan" target="entity_order_product" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Edge: PRODUCTS → DIPESAN DALAM -->
+        <mxCell id="edge_rel_dipesan2" style="endArrow=none;html=1;strokeWidth=2;strokeColor=#DC2626;" edge="1" source="entity_products" target="rel_dipesan" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Kardinalitas DIPESAN DALAM -->
+        <mxCell id="card_dipesan_n" value="N" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;fontColor=#DC2626;" vertex="1" parent="1">
+          <mxGeometry x="980" y="400" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="card_dipesan_1" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;fontColor=#DC2626;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="650" width="30" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!-- LEGENDA                                                      -->
+        <!-- ============================================================ -->
+        <mxCell id="legend_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#E5E7EB;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="560" width="280" height="300" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend_title" value="LEGENDA" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=13;fontStyle=1;fontColor=#374151;" vertex="1" parent="1">
+          <mxGeometry x="110" y="565" width="80" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Legenda: Entitas -->
+        <mxCell id="leg_ent" value="" style="shape=rectangle;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#DC2626;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="600" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_ent_lbl" value="Entitas" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontColor=#374151;" vertex="1" parent="1">
+          <mxGeometry x="110" y="602" width="60" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Legenda: Atribut -->
+        <mxCell id="leg_attr" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#F87171;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="645" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_attr_lbl" value="Atribut" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontColor=#374151;" vertex="1" parent="1">
+          <mxGeometry x="110" y="647" width="60" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Legenda: Atribut PK -->
+        <mxCell id="leg_pk" value="id" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;strokeWidth=1;fontStyle=5;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="690" width="60" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_pk_lbl" value="Primary Key" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontColor=#374151;" vertex="1" parent="1">
+          <mxGeometry x="110" y="692" width="80" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Legenda: Relasi -->
+        <mxCell id="leg_rel" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#DC2626;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="740" width="60" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_rel_lbl" value="Relasi" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontColor=#374151;" vertex="1" parent="1">
+          <mxGeometry x="110" y="747" width="60" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Legenda: Garis -->
+        <mxCell id="leg_line" value="" style="endArrow=none;html=1;strokeWidth=2;strokeColor=#DC2626;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="40" y="810" as="sourcePoint"/>
+            <mxPoint x="100" y="810" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_line_lbl" value="Hubungan Entitas" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontColor=#374151;" vertex="1" parent="1">
+          <mxGeometry x="110" y="800" width="120" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Legenda: Garis Atribut -->
+        <mxCell id="leg_aline" value="" style="endArrow=none;html=1;strokeColor=#9CA3AF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="40" y="840" as="sourcePoint"/>
+            <mxPoint x="100" y="840" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg_aline_lbl" value="Hubungan Atribut" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;fontColor=#374151;" vertex="1" parent="1">
+          <mxGeometry x="110" y="830" width="120" height="30" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

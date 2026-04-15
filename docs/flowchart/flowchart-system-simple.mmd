@@ -1,0 +1,54 @@
+%% ══════════════════════════════════════════════════════════════
+%% TEFA Canning SIP — System Flowchart (Ringkas)
+%% Hanya menampilkan flow utama tanpa sub-detail
+%% ══════════════════════════════════════════════════════════════
+
+flowchart TD
+    START(["MULAI"])
+    LANDING["Landing Page"]
+    LOGIN{"Login<br/>sebagai?"}
+
+    START --> LANDING --> LOGIN
+
+    %% ═══ CUSTOMER ═══
+    LOGIN -->|"Customer"| C_DASH["Dashboard Customer"]
+    C_DASH --> C_PO["Pre-Order"]
+    C_DASH --> C_HIST["Riwayat Pesanan"]
+    C_DASH --> C_PROF["Profil"]
+
+    C_PO --> C_DASH
+    C_HIST --> C_DASH
+    C_PROF --> C_DASH
+
+    %% ═══ ADMIN / TEKNISI ═══
+    LOGIN -->|"Admin / Teknisi"| A_DASH["Dashboard Admin"]
+    A_DASH --> A_TRX["Manajemen Transaksi"]
+    A_DASH --> A_MASTER["Master Data"]
+    A_DASH --> A_PROD["Manajemen Produksi"]
+    A_DASH --> A_AUDIT["Audit Log"]
+    A_DASH --> A_SET["Pengaturan"]
+
+    A_TRX --> A_DASH
+    A_MASTER --> A_DASH
+    A_PROD --> A_DASH
+    A_AUDIT --> A_DASH
+    A_SET --> A_DASH
+
+    %% ═══ LOGOUT ═══
+    C_DASH -->|"Logout"| LOGOUT["Logout"]
+    A_DASH -->|"Logout"| LOGOUT
+    LOGOUT --> LANDING
+    LANDING -->|"Keluar"| FINISH(["SELESAI"])
+
+    %% ═══ STYLING ═══
+    classDef startEnd fill:#ffffff,stroke:#1f2937,color:#1f2937,stroke-width:3px,font-weight:bold
+    classDef process fill:#ffffff,stroke:#6b7280,color:#1f2937
+    classDef decision fill:#ffffff,stroke:#1f2937,color:#1f2937,stroke-width:2px
+    classDef customer fill:#ffffff,stroke:#6b7280,color:#1f2937
+    classDef admin fill:#ffffff,stroke:#6b7280,color:#1f2937
+
+    class START,FINISH startEnd
+    class LANDING,LOGOUT process
+    class LOGIN decision
+    class C_DASH,C_PO,C_HIST,C_PROF customer
+    class A_DASH,A_TRX,A_MASTER,A_PROD,A_AUDIT,A_SET admin

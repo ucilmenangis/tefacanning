@@ -1,5 +1,3 @@
-%%{init: {'theme': 'dark', 'themeVariables': {'primaryColor': '#dc2626', 'primaryTextColor': '#fff', 'primaryBorderColor': '#991b1b', 'lineColor': '#94a3b8', 'secondaryColor': '#1e293b', 'tertiaryColor': '#334155', 'fontFamily': 'Inter'}}}%%
-
 %% ══════════════════════════════════════════════════════════════
 %% TEFA Canning SIP — System Flowchart
 %% Layout Strategy: Top-Down (TD)
@@ -7,11 +5,12 @@
 %%   - Decision branches LEFT (Customer) and RIGHT (Admin)
 %%   - Each sub-branch goes straight down (no crossing)
 %%   - All Yes/No labeled on every diamond
+%%   - White theme (no colored backgrounds)
 %% ══════════════════════════════════════════════════════════════
 
 flowchart TD
     %% ═══ SHARED ENTRY (Center Top) ═══
-    START(["🔴 MULAI"])
+    START(["MULAI"])
     LANDING["Menampilkan<br/>Halaman Landing Page"]
     LOGIN_BTN["Tombol Login Diklik"]
     DECIDE_ROLE{"Login sebagai<br/>siapa?"}
@@ -26,19 +25,27 @@ flowchart TD
     CUST_AUTH --> CUST_DASH["Menampilkan<br/>Dashboard Customer"]
 
     CUST_DASH --> WIDGET["Menampilkan Widget:<br/>• Total Pesanan & Belanja<br/>• Konfirmasi Order<br/>• Batch Terbaru<br/>• Produk Tersedia"]
+    WIDGET --> CUST_DASH
 
     CUST_DASH --> MENU_PO["Menampilkan Fitur:<br/>Pre-Order"]
     CUST_DASH --> MENU_HIST["Menampilkan Fitur:<br/>Riwayat Pesanan"]
     CUST_DASH --> MENU_PROF["Menampilkan Fitur:<br/>Profil"]
 
     %% ── Pre-Order (straight down) ──
-    MENU_PO --> PO_BATCH["Memilih Batch Produksi<br/>(Status: Open)"]
-    PO_BATCH --> PO_PRODUCT["Memilih Produk &<br/>Jumlah (100-3000)"]
-    PO_PRODUCT --> PO_DECIDE{"Kirim<br/>Pre-Order?"}
+    MENU_PO --> PO_CHOOSE["Memilih<br/>Batch Produksi"]
+    PO_CHOOSE --> PO_BATCH{"Batch Status<br/>Open?"}
+    PO_BATCH -->|"Ya"| PO_PRODUCT["Memilih Produk &<br/>Jumlah Pesanan"]
+    PO_BATCH -->|"Tidak"| PO_DENIED["Tidak Bisa Memesan<br/>(Batch Tertutup)"]
+    PO_DENIED --> CUST_DASH
+    PO_PRODUCT --> PO_SNI{"Setujui<br/>Disclaimer SNI?"}
+    PO_SNI -->|"Ya"| PO_DECIDE{"Kirim<br/>Pre-Order?"}
+    PO_SNI -->|"Tidak"| PO_DENIED_SNI["Kembali ke<br/>Daftar Produk"]
+    PO_DENIED_SNI --> PO_PRODUCT
     PO_DECIDE -->|"Ya"| PO_CREATE["Sistem Membuat Pesanan:<br/>• Generate No. Pesanan<br/>• Generate Kode Pickup<br/>• Hitung Total dari DB"]
     PO_DECIDE -->|"Tidak"| CUST_DASH
-    PO_CREATE --> PO_WA["📱 Kirim Notifikasi<br/>WhatsApp ke Superadmin"]
+    PO_CREATE --> PO_WA["Kirim Notifikasi<br/>WhatsApp ke Superadmin"]
     PO_WA --> PO_DONE["Notifikasi Sukses:<br/>No. Pesanan & Kode Pickup"]
+    PO_DONE --> CUST_DASH
 
     %% ── Riwayat Pesanan (straight down) ──
     MENU_HIST --> HIST_LIST["Menampilkan Daftar<br/>Pesanan dengan Status"]
@@ -46,11 +53,16 @@ flowchart TD
     HIST_DECIDE -->|"Ya"| HIST_EDIT["Edit Produk/Jumlah<br/>atau Hapus Pesanan"]
     HIST_DECIDE -->|"Tidak"| HIST_VIEW["Lihat Detail<br/>(Tidak Bisa Diubah)"]
     HIST_LIST --> HIST_PDF["Export Laporan PDF"]
+    HIST_EDIT --> HIST_LIST
+    HIST_VIEW --> HIST_LIST
+    HIST_PDF --> HIST_LIST
 
     %% ── Profil (straight down) ──
     MENU_PROF --> PROF_DECIDE{"Ada Pesanan<br/>Aktif?"}
     PROF_DECIDE -->|"Ya"| PROF_PWD["Hanya Bisa<br/>Ubah Password"]
     PROF_DECIDE -->|"Tidak"| PROF_FULL["Edit Nama, Email,<br/>Telepon, Organisasi,<br/>Alamat"]
+    PROF_PWD --> CUST_DASH
+    PROF_FULL --> CUST_DASH
 
     %% ══════════════════════════════════════
     %% RIGHT BRANCH — ADMIN / TEKNISI FLOW
@@ -59,36 +71,52 @@ flowchart TD
     DECIDE_ROLE -->|"Admin / Teknisi"| ADM_AUTH["Login sebagai<br/>Admin / Teknisi"]
     ADM_AUTH --> ADM_DASH["Menampilkan<br/>Dashboard Admin"]
 
-    ADM_DASH --> ADM_STATS["Menampilkan Statistik:<br/>• Batch Aktif & Order Batch<br/>• Siap Diambil & Total Pelanggan<br/>• Total Omzet ⚡ (Superadmin)<br/>• Total Profit ⚡ (Superadmin)"]
+    ADM_DASH --> ADM_STATS["Menampilkan Statistik:<br/>• Batch Aktif & Order Batch<br/>• Siap Diambil & Total Pelanggan<br/>• Total Omzet (Superadmin)<br/>• Total Profit (Superadmin)"]
+    ADM_STATS --> ADM_DASH
 
-    ADM_DASH --> NAV_TRX["📁 Halaman Transaksi"]
-    ADM_DASH --> NAV_MASTER["📁 Halaman Master Data"]
-    ADM_DASH --> NAV_PROD["📁 Halaman Manajemen Produksi"]
-    ADM_DASH --> NAV_AUDIT["📁 Halaman Audit Log"]
-    ADM_DASH --> NAV_SET["📁 Halaman Pengaturan"]
+    ADM_DASH --> NAV_TRX["Halaman Transaksi"]
+    ADM_DASH --> NAV_MASTER["Halaman Master Data"]
+    ADM_DASH --> NAV_PROD["Halaman Manajemen Produksi"]
+    ADM_DASH --> NAV_AUDIT["Halaman Audit Log"]
+    ADM_DASH --> NAV_SET["Halaman Pengaturan"]
 
     %% ── Transaksi (straight down) ──
     NAV_TRX --> TRX_LIST["Menampilkan<br/>Data Pesanan"]
-    TRX_LIST --> TRX_CRUD["CRUD Pesanan +<br/>Export PDF"]
-    TRX_LIST --> TRX_PICKUP_D{"Status<br/>Ready?"}
+    TRX_LIST --> TRX_ACTION{"Pilih Aksi"}
+    TRX_ACTION -->|"CRUD Pesanan"| TRX_CRUD["CRUD Pesanan +<br/>Export PDF"]
+    TRX_ACTION -->|"Buat Order Customer"| TRX_ORDER_ADM["Admin Buat Pesanan<br/>untuk Customer:<br/>• Pilih Customer<br/>• Pilih Batch<br/>• Pilih Produk & Jumlah"]
+    TRX_ACTION -->|"Validasi Pickup"| TRX_PICKUP_D{"Status<br/>Ready?"}
+    TRX_ORDER_ADM --> TRX_ORDER_WA["Kirim WhatsApp<br/>ke Customer<br/>(Detail & Pickup Code)"]
+    TRX_ORDER_WA --> TRX_LIST
+    TRX_CRUD --> TRX_LIST
     TRX_PICKUP_D -->|"Ya"| TRX_PICKUP["Validasi Pickup:<br/>Status → Picked Up<br/>Catat Waktu Pengambilan"]
-    TRX_PICKUP_D -->|"Tidak"| TRX_CRUD
+    TRX_PICKUP_D -->|"Tidak"| TRX_LIST
+    TRX_PICKUP --> TRX_LIST
 
     %% ── Master Data (straight down) ──
     NAV_MASTER --> MD_CUST["Menampilkan Data Pelanggan"]
     NAV_MASTER --> MD_PROD["Menampilkan Data Produk"]
     MD_CUST --> MD_CRUD_C["CRUD Pelanggan"]
-    MD_PROD --> MD_CRUD_P["CRUD Produk<br/>(Harga: Superadmin only ⚡)"]
+    MD_PROD --> MD_CRUD_P{"Login sebagai<br/>Superadmin?"}
+    MD_CRUD_P -->|"Ya"| MD_PRICE["CRUD Produk +<br/>Ubah Harga"]
+    MD_CRUD_P -->|"Tidak"| MD_VIEW["CRUD Produk<br/>(Harga Dikunci)"]
+    MD_CRUD_C --> NAV_MASTER
+    MD_PRICE --> NAV_MASTER
+    MD_VIEW --> NAV_MASTER
 
     %% ── Manajemen Produksi (straight down) ──
     NAV_PROD --> BATCH_LIST["Menampilkan Data Batch"]
     BATCH_LIST --> BATCH_CRUD["CRUD Batch + Ubah Status:<br/>Open → Processing →<br/>Ready → Closed"]
-    BATCH_CRUD -->|"Status: Ready"| BATCH_WA["📱 Kirim WhatsApp<br/>ke Semua Customer<br/>dalam Batch"]
+    BATCH_CRUD --> BATCH_DECIDE{"Status Berubah<br/>menjadi Ready?"}
+    BATCH_DECIDE -->|"Ya"| BATCH_WA["Kirim WhatsApp<br/>ke Semua Customer<br/>dalam Batch"]
+    BATCH_DECIDE -->|"Tidak"| BATCH_LIST
+    BATCH_WA --> BATCH_LIST
 
     %% ── Audit Log (Superadmin Only — VIEW ONLY) ──
     NAV_AUDIT --> AUDIT_D{"Login sebagai<br/>Superadmin?"}
     AUDIT_D -->|"Ya"| AUDIT_VIEW["Menampilkan Log Aktivitas<br/>(View Only — Tidak ada CRUD)"]
     AUDIT_D -->|"Tidak"| AUDIT_DENY["Akses Ditolak:<br/>Kembali ke Dashboard"]
+    AUDIT_VIEW --> NAV_AUDIT
     AUDIT_DENY --> ADM_DASH
 
     %% ── Pengaturan (Superadmin Only) ──
@@ -96,27 +124,35 @@ flowchart TD
     SET_D -->|"Ya"| SET_USER["Menampilkan<br/>Manajemen Pengguna"]
     SET_D -->|"Tidak"| SET_DENY["Akses Ditolak:<br/>Kembali ke Dashboard"]
     SET_USER --> SET_CRUD["CRUD Pengguna Admin<br/>(Tidak bisa hapus Super Admin)"]
+    SET_CRUD --> NAV_SET
     SET_DENY --> ADM_DASH
 
     %% ═══ END ═══
-    FINISH(["🔴 SELESAI"])
+    LOGOUT["Logout"]
+    FINISH(["SELESAI"])
+
+    CUST_DASH -->|"Logout"| LOGOUT
+    ADM_DASH -->|"Logout"| LOGOUT
+    LOGOUT --> LANDING
+    LANDING -->|"Keluar"| FINISH
 
     %% ══════════════════════════════════════
-    %% STYLING
+    %% STYLING — White Theme
     %% ══════════════════════════════════════
-    classDef startEnd fill:#dc2626,stroke:#991b1b,color:#fff,stroke-width:3px,font-weight:bold
-    classDef process fill:#1e293b,stroke:#475569,color:#e2e8f0
-    classDef decision fill:#334155,stroke:#dc2626,color:#fca5a5,stroke-width:2px
-    classDef customer fill:#1e3a5f,stroke:#3b82f6,color:#93c5fd
-    classDef admin fill:#3b1f1f,stroke:#dc2626,color:#fca5a5
-    classDef superadmin fill:#4a1d1d,stroke:#f59e0b,color:#fcd34d
-    classDef notify fill:#1a3d1a,stroke:#22c55e,color:#86efac
-    classDef denied fill:#451a1a,stroke:#ef4444,color:#fca5a5
+    classDef startEnd fill:#ffffff,stroke:#1f2937,color:#1f2937,stroke-width:3px,font-weight:bold
+    classDef process fill:#ffffff,stroke:#6b7280,color:#1f2937
+    classDef decision fill:#ffffff,stroke:#1f2937,color:#1f2937,stroke-width:2px
+    classDef customer fill:#ffffff,stroke:#6b7280,color:#1f2937
+    classDef admin fill:#ffffff,stroke:#6b7280,color:#1f2937
+    classDef superadmin fill:#ffffff,stroke:#1f2937,color:#1f2937,stroke-width:2px
+    classDef notify fill:#ffffff,stroke:#6b7280,color:#1f2937,stroke-dasharray: 5 5
+    classDef denied fill:#ffffff,stroke:#ef4444,color:#ef4444,stroke-dasharray: 5 5
 
     class START,FINISH startEnd
-    class LANDING,LOGIN_BTN process
-    class DECIDE_ROLE,PO_DECIDE,HIST_DECIDE,PROF_DECIDE,TRX_PICKUP_D,AUDIT_D,SET_D decision
-    class CUST_AUTH,CUST_DASH,WIDGET,MENU_PO,MENU_HIST,MENU_PROF,PO_BATCH,PO_PRODUCT,PO_CREATE,PO_DONE,HIST_LIST,HIST_EDIT,HIST_VIEW,HIST_PDF,PROF_PWD,PROF_FULL customer
-    class ADM_AUTH,ADM_DASH,ADM_STATS,NAV_TRX,NAV_MASTER,NAV_PROD,NAV_AUDIT,NAV_SET,TRX_LIST,TRX_CRUD,TRX_PICKUP,MD_CUST,MD_PROD,MD_CRUD_C,MD_CRUD_P,BATCH_LIST,BATCH_CRUD,AUDIT_VIEW,SET_USER,SET_CRUD admin
+    class LANDING,LOGIN_BTN,LOGOUT process
+    class DECIDE_ROLE,PO_BATCH,PO_SNI,PO_DECIDE,HIST_DECIDE,PROF_DECIDE,TRX_ACTION,TRX_PICKUP_D,AUDIT_D,SET_D,MD_CRUD_P,BATCH_DECIDE decision
+    class CUST_AUTH,CUST_DASH,WIDGET,MENU_PO,MENU_HIST,MENU_PROF,PO_CHOOSE,PO_PRODUCT,PO_DENIED,PO_DENIED_SNI,PO_CREATE,PO_DONE,HIST_LIST,HIST_EDIT,HIST_VIEW,HIST_PDF,PROF_PWD,PROF_FULL customer
+    class ADM_AUTH,ADM_DASH,ADM_STATS,NAV_TRX,NAV_MASTER,NAV_PROD,NAV_AUDIT,NAV_SET,TRX_LIST,TRX_CRUD,TRX_ORDER_ADM,TRX_ORDER_WA,TRX_PICKUP,MD_CUST,MD_PROD,MD_CRUD_C,MD_PRICE,MD_VIEW,BATCH_LIST,BATCH_CRUD admin
+    class AUDIT_VIEW,SET_USER,SET_CRUD superadmin
     class PO_WA,BATCH_WA notify
     class AUDIT_DENY,SET_DENY denied

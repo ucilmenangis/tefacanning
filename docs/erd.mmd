@@ -1,0 +1,122 @@
+%% ============================================================
+%% TEFA Canning SIP - ERD Chen Notation (Core Business)
+%% ============================================================
+%% Simbol Chen:
+%%   [Kotak]      = Entitas
+%%   {Diamond}    = Relasi
+%%   ([Oval])     = Atribut
+%%   <u>teks</u>  = Primary Key (bergaris bawah)
+%%   1, N         = Kardinalitas
+%% ============================================================
+
+flowchart TD
+
+    %% ==================== ENTITAS ==============================
+
+    C[/"CUSTOMERS"\]
+    B[/"BATCHES"\]
+    O[/"ORDERS"\]
+    P[/"PRODUCTS"\]
+    OP[/"ORDER_PRODUCT"\]
+
+    %% ============= ATRIBUT CUSTOMERS ==========================
+
+    c_id([<u>id</u>])
+    c_name([name])
+    c_phone([phone])
+    c_email([email])
+    c_address([address])
+    c_org([organization])
+
+    C --- c_id
+    C --- c_name
+    C --- c_phone
+    C --- c_email
+    C --- c_address
+    C --- c_org
+
+    %% ============= ATRIBUT BATCHES ============================
+
+    b_id([<u>id</u>])
+    b_name([name])
+    b_event([event_name])
+    b_date([event_date])
+    b_status([status])
+
+    B --- b_id
+    B --- b_name
+    B --- b_event
+    B --- b_date
+    B --- b_status
+
+    %% ============= ATRIBUT PRODUCTS ===========================
+
+    p_id([<u>id</u>])
+    p_name([name])
+    p_sku([sku])
+    p_price([price])
+    p_stock([stock])
+    p_unit([unit])
+
+    P --- p_id
+    P --- p_name
+    P --- p_sku
+    P --- p_price
+    P --- p_stock
+    P --- p_unit
+
+    %% ============= ATRIBUT ORDERS =============================
+
+    o_id([<u>id</u>])
+    o_number([order_number])
+    o_pickup([pickup_code])
+    o_status([status])
+    o_total([total_amount])
+    o_profit([profit])
+    o_picked([picked_up_at])
+
+    O --- o_id
+    O --- o_number
+    O --- o_pickup
+    O --- o_status
+    O --- o_total
+    O --- o_profit
+    O --- o_picked
+
+    %% ============= ATRIBUT ORDER_PRODUCT ======================
+
+    op_qty([quantity])
+    op_price([unit_price])
+    op_sub([subtotal])
+
+    OP --- op_qty
+    OP --- op_price
+    OP --- op_sub
+
+    %% ============= RELASI (Diamond) ===========================
+
+    r1{"MEMILIKI"}
+    C -- "1" --- r1
+    r1 -- "N" --- O
+
+    r2{"BERISI"}
+    B -- "1" --- r2
+    r2 -- "N" --- O
+
+    r3{"TERDIRI DARI"}
+    O -- "1" --- r3
+    r3 -- "N" --- OP
+
+    r4{"DIPESAN DALAM"}
+    P -- "1" --- r4
+    r4 -- "N" --- OP
+
+    %% ============= STYLING ====================================
+
+    classDef entity fill:#ffffff,stroke:#DC2626,stroke-width:2px,color:#1f2937
+    classDef attr fill:#FEF2F2,stroke:#F87171,stroke-width:1px,color:#374151
+    classDef rel fill:#FEE2E2,stroke:#DC2626,stroke-width:2px,color:#991B1B
+
+    class C,B,O,P,OP entity
+    class c_id,c_name,c_phone,c_email,c_address,c_org,b_id,b_name,b_event,b_date,b_status,p_id,p_name,p_sku,p_price,p_stock,p_unit,o_id,o_number,o_pickup,o_status,o_total,o_profit,o_picked,op_qty,op_price,op_sub attr
+    class r1,r2,r3,r4 rel

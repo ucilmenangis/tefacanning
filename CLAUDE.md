@@ -24,7 +24,7 @@ TEFA Canning Transaction & Monitoring System - A web-based transaction system fo
 **Frontend:**
 - Tailwind CSS
 - DaisyUI component library
-- ApexCharts for data visualization
+- Filament built-in charts (StatsOverviewWidget with `chart()` method) for data visualization
 
 **Admin Panel:**
 - FilamentPHP (Admin interface builder)
@@ -36,7 +36,7 @@ TEFA Canning Transaction & Monitoring System - A web-based transaction system fo
 - **Spatie Activity Log** - Audit trail for admin actions
 - **Laravel Excel (Maatwebsite)** - Export reports to Excel
 - **DomPDF** - Generate PDF reports
-- **ApexCharts.php** - Chart visualization integration
+- **Filament Charts** - Built-in chart visualization via StatsOverviewWidget
 
 ## UI Identity & Colors
 
@@ -290,8 +290,8 @@ OrderItem (pivot: order_product)
 
 ### For Superadmin
 **Financial Metrics:**
-- Total Revenue (Omzet) - ApexCharts line chart
-- Total Profit - ApexCharts area chart
+- Total Revenue (Omzet) - Filament line chart
+- Total Profit - Filament area chart
 - Capital (Modal) breakdown
 
 **Operational Metrics:**
@@ -309,7 +309,7 @@ OrderItem (pivot: order_product)
 **Implementation:**
 - Create separate dashboard widgets in Filament
 - Use conditional rendering based on user role
-- ApexCharts widgets for visual trends
+- Filament chart widgets for visual trends
 
 ## Common Development Commands
 
@@ -510,7 +510,10 @@ app/
 │       └── RecentOrdersWidget.php
 ├── Http/
 │   ├── Controllers/OrderPdfController.php
-│   └── Middleware/CustomerPanelMiddleware.php
+│   └── Middleware/
+│       ├── CustomerPanelMiddleware.php
+│       ├── AutoLoginAdmin.php      # [GUEST MODE] Auto-login admin
+│       └── AutoLoginCustomer.php   # [GUEST MODE] Auto-login customer
 ├── Models/
 │   ├── Batch.php, Customer.php, Order.php, Product.php, User.php
 ├── Policies/
@@ -541,6 +544,17 @@ resources/views/
 │           └── available-products-widget.blade.php
 ├── pdf/order-report.blade.php
 └── welcome.blade.php
+
+docs/
+├── BKPM/                        # BKPM assignments (image-based PDFs)
+│   ├── BKPM1/                   # Week 4/1 pages (JPG)
+│   └── LAPORAN PROSEDUR/        # Laporan pengembangan ide (JPG)
+├── design-sprint.md             # Design Sprint report (6 phases + user testing template)
+├── flowchart-system.mmd         # System flowchart (Mermaid)
+├── laporan-bab-1-2.md           # Laporan Proyek Akhir (Bab I-III)
+├── user-flow.mmd                # Main user flow diagram
+├── userflow-per-fitur.md        # All user flows documentation
+└── userflow-2.3.*.mmd           # Individual user flow diagrams per feature
 ```
 
 ## Naming & Coding Conventions (Future Codebase)

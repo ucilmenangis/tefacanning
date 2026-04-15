@@ -1,0 +1,74 @@
+digraph FlowchartSimple {
+    rankdir=TB;
+    splines=ortho;
+    nodesep=0.8;
+    ranksep=1.0;
+    fontname="Inter";
+    dpi=150;
+
+    node [style=filled, fillcolor=white, fontcolor="#1f2937", fontsize=11, fontname="Inter"];
+    edge [color="#6b7280", arrowsize=0.8, penwidth=1.2];
+
+    // ═══ TERMINAL ═══
+    START [shape=ellipse, label="MULAI", penwidth=2.5, color="#1f2937"];
+    FINISH [shape=ellipse, label="SELESAI", penwidth=2.5, color="#1f2937"];
+
+    // ═══ SHARED ═══
+    LANDING [shape=box, label="Landing Page", color="#6b7280"];
+    LOGOUT [shape=box, label="Logout", color="#6b7280"];
+    LOGIN [shape=diamond, label="Login\nsebagai?", color="#1f2937", penwidth=2, width=2, height=1.2];
+
+    // ═══ CUSTOMER ═══
+    C_DASH [shape=box, label="Dashboard\nCustomer", color="#6b7280"];
+    C_PO [shape=box, label="Pre-Order", color="#6b7280"];
+    C_HIST [shape=box, label="Riwayat\nPesanan", color="#6b7280"];
+    C_PROF [shape=box, label="Profil", color="#6b7280"];
+
+    // ═══ ADMIN ═══
+    A_DASH [shape=box, label="Dashboard\nAdmin", color="#6b7280"];
+    A_TRX [shape=box, label="Manajemen\nTransaksi", color="#6b7280"];
+    A_MASTER [shape=box, label="Master Data", color="#6b7280"];
+    A_PROD [shape=box, label="Manajemen\nProduksi", color="#6b7280"];
+    A_AUDIT [shape=box, label="Audit Log", color="#6b7280"];
+    A_SET [shape=box, label="Pengaturan", color="#6b7280"];
+
+    // ═══ EDGES — MAIN FLOW ═══
+    START -> LANDING;
+    LANDING -> LOGIN;
+
+    // Customer branch
+    LOGIN -> C_DASH [label="Customer", fontsize=9, fontcolor="#1f2937"];
+    C_DASH -> C_PO;
+    C_DASH -> C_HIST;
+    C_DASH -> C_PROF;
+
+    // Customer return
+    C_PO -> C_DASH [style=dashed, constraint=false];
+    C_HIST -> C_DASH [style=dashed, constraint=false];
+    C_PROF -> C_DASH [style=dashed, constraint=false];
+
+    // Admin branch
+    LOGIN -> A_DASH [label="Admin/Teknisi", fontsize=9, fontcolor="#1f2937"];
+    A_DASH -> A_TRX;
+    A_DASH -> A_MASTER;
+    A_DASH -> A_PROD;
+    A_DASH -> A_AUDIT;
+    A_DASH -> A_SET;
+
+    // Admin return
+    A_TRX -> A_DASH [style=dashed, constraint=false];
+    A_MASTER -> A_DASH [style=dashed, constraint=false];
+    A_PROD -> A_DASH [style=dashed, constraint=false];
+    A_AUDIT -> A_DASH [style=dashed, constraint=false];
+    A_SET -> A_DASH [style=dashed, constraint=false];
+
+    // Logout
+    C_DASH -> LOGOUT [label="Logout", fontsize=9, style=dashed, constraint=false];
+    A_DASH -> LOGOUT [label="Logout", fontsize=9, style=dashed, constraint=false];
+    LOGOUT -> LANDING [constraint=false];
+    LANDING -> FINISH [label="Keluar", fontsize=9];
+
+    // ═══ RANK ALIGNMENT ═══
+    {rank=same; C_DASH; A_DASH}
+    {rank=same; C_PO; C_HIST; C_PROF; A_TRX; A_MASTER; A_PROD; A_AUDIT; A_SET}
+}
